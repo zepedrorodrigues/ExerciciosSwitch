@@ -1,0 +1,66 @@
+
+f	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İ‘Åî
+f	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÉÓ½
+f	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ëçêµ
+k	java:S117#"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Üİ¾ñıÿÿÿÿ
+k	java:S117#"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Üİ¾ñıÿÿÿÿ
+k	java:S117#"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Üİ¾ñıÿÿÿÿ
+k	java:S117)"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ª´îÀúÿÿÿÿ
+k	java:S117)"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ª´îÀúÿÿÿÿ
+k	java:S117)"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ª´îÀúÿÿÿÿ
+k	java:S117)"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ª´îÀúÿÿÿÿ
+k	java:S117)"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ª´îÀúÿÿÿÿ
+k	java:S117)"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ª´îÀúÿÿÿÿ
+k	java:S117)"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ª´îÀúÿÿÿÿ
+k	java:S1170"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ş›Åäûÿÿÿÿ
+k	java:S1170"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ş›Åäûÿÿÿÿ
+f	java:S1171"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®’Ìš
+f	java:S1174"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°Áêì
+f	java:S1174"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°Áêì
+k	java:S1178"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«ö–¬øÿÿÿÿ
+k	java:S117;"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬‘ÆÖÿÿÿÿÿ
+k	java:S117;"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬‘ÆÖÿÿÿÿÿ
+k	java:S117A"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ú¶Ğ¾ùÿÿÿÿ
+k	java:S117A"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ú¶Ğ¾ùÿÿÿÿ
+k	java:S117L"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğªá¸ÿÿÿÿÿ
+k	java:S117Q"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûÇü÷ÿÿÿÿÿ
+k	java:S117Q"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûÇü÷ÿÿÿÿÿ
+k	java:S117a"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(º‡§¡üÿÿÿÿ
+s
+java:S1488"]Immediately return this expression instead of assigning it to the temporary variable "total".(êæ¥
+t
+java:S1488"^Immediately return this expression instead of assigning it to the temporary variable "volume".(ƒÅùÓ
+w
+java:S1488"\Immediately return this expression instead of assigning it to the temporary variable "dist".(ş¶èÿÿÿÿÿ
+o
+java:S1488"YImmediately return this expression instead of assigning it to the temporary variable "D".(ëçêµ
+‚
+java:S14888"gImmediately return this expression instead of assigning it to the temporary variable "distancia_final".(«ö–¬øÿÿÿÿ
+b
+java:S3973"GUse indentation to denote the code conditionally executed by this "if".(îíèõÿÿÿÿÿ
+]
+java:S3973"GUse indentation to denote the code conditionally executed by this "if".(ü˜ú
+\
+java:S39735"GUse indentation to denote the code conditionally executed by this "if".(–ş
+
+b
+java:S3973<"GUse indentation to denote the code conditionally executed by this "if".(ßÂäıÿÿÿÿ
+]
+java:S3973B"GUse indentation to denote the code conditionally executed by this "if".(™¹°—
+b
+java:S3973H"GUse indentation to denote the code conditionally executed by this "if".(¡«õ¼ùÿÿÿÿ
+]
+java:S3973M"GUse indentation to denote the code conditionally executed by this "if".(Èç˜™
+b
+java:S3973R"GUse indentation to denote the code conditionally executed by this "if".(×äøûÿÿÿÿ
+
+java:S2681O"†This line will not be executed conditionally; only the first line of this 2-line block will be. The rest will execute unconditionally.(†§
+U
+java:S1118":Add a private constructor to hide the implicit public one.(®Óæõúÿÿÿÿ
+h	java:S100#"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Üİ¾ñıÿÿÿÿ
+h	java:S100)"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ª´îÀúÿÿÿÿ
+D
+java:S16590")Declare "tempo_Manel" on a separate line.(Ş›Åäûÿÿÿÿ
+c	java:S1004"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°Áêì
+h	java:S100L"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğªá¸ÿÿÿÿÿ
+h	java:S100Q"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûÇü÷ÿÿÿÿÿ
