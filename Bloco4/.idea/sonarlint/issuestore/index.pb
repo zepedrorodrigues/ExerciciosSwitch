@@ -69,3 +69,5 @@ W
 'src/test/java/org/example/Ex12Test.java,d\8\d8bd7b505547326c1db37b4222aa25c07074323d
 S
 #src/main/java/org/example/Ex12.java,e\8\e8f3ff936aaf59c76517fbd41f216b05cf175082
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
