@@ -3,7 +3,7 @@ package org.example;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class sudokuFunction {
+public class SudokuFunction {
     public static void main(String[] args) {
         int[][] matrizSudoku = {
                 {4, 3, 5, 2, 6, 9, 7, 8, 1},
@@ -25,25 +25,18 @@ public class sudokuFunction {
         for (int i = 0; i < matrizSudoku.length; i++)
             sudokuCopia[i] = Arrays.copyOf(matrizSudoku[i], matrizSudoku[i].length);
         int[][] base = Ex22.matrizBase(matrizSudoku);
-        boolean gameOn = true;
-        while (gameOn) {
-            if(!Ex22.verificarSudokuTerminado(matrizSudoku))
-                break;
+        while (Ex22.verificarSudokuTerminado(matrizSudoku)) {
             printMatrix(matrizSudoku);
-            System.out.println("Escolha uma opção: ");
-            System.out.println("1 - Inserir número");
-            System.out.println("2 - Remover número");
+            System.out.println("Escolha uma opção: \n1 - Inserir número\n2 - Remover número");
             int opcao = scanner.nextInt();
             if (opcao == 1) {
                 matrizSudoku = inserirNumeroMatrizSudoku(matrizSudoku);
-                base = Ex22.alterarBase(matrizSudoku, base);
-            }
+                base = Ex22.alterarBase(matrizSudoku, base);}
             if (opcao == 2) {
-                matrizSudoku = removerNumeroMatrizSudoku(sudokuCopia, base, matrizSudoku);
-                base = Ex22.alterarBase(matrizSudoku, base);
-            }
-        }
-    }
+                matrizSudoku = removerNumeroMatrizSudoku(base, matrizSudoku);
+                base = Ex22.alterarBase(matrizSudoku, base);}
+            if (opcao != 1 && opcao != 2) {
+                System.out.println("Opção inválida.");}}}
 
     public static int[][] inserirNumeroMatrizSudoku(int[][] matrizSudoku) {
         Scanner scanner = new Scanner(System.in);
@@ -63,7 +56,7 @@ public class sudokuFunction {
             }
             System.out.println();}}
 
-    public static int[][] removerNumeroMatrizSudoku(int[][] sudokuCopia, int[][] base, int[][] matrizSudoku) {
+    public static int[][] removerNumeroMatrizSudoku(int[][] base, int[][] matrizSudoku) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insira a linha: ");
         int linha = scanner.nextInt();
