@@ -71,3 +71,17 @@ S
 #src/main/java/org/example/Ex12.java,e\8\e8f3ff936aaf59c76517fbd41f216b05cf175082
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+S
+#src/main/java/org/example/Ex22.java,3\7\3748b4638f542f6d9fce23ccc9472c144c1db7b4
+S
+#src/main/java/org/example/Main.java,0\b\0ba1b9c7a4878802f938e331cc2d8a042087ec6b
+]
+-src/main/java/org/example/sudokuFunction.java,8\c\8c385e1f6c7645e736278fe58cb22435fa3f487b
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+Å
+Q.idea/sonarlint/securityhotspotstore/3/7/3748b4638f542f6d9fce23ccc9472c144c1db7b4,7\c\7c09b01f18b4d9fc2ed6c680e0ee8291a1027afe
+]
+-.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
+Å
+Q.idea/sonarlint/securityhotspotstore/0/b/0ba1b9c7a4878802f938e331cc2d8a042087ec6b,a\b\abe25e851ee828e40a94fcb1c1be6f78ff7a04cf

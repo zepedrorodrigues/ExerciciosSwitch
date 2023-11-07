@@ -1,3 +1,7 @@
 
-v
-java:S3012+"YUse "Arrays.copyOf", "Arrays.asList", "Collections.addAll" or "System.arraycopy" instead.(Õ¡—‡8ïÊ½°¹1
+t
+java:S3776."RRefactor this method to reduce its Cognitive Complexity from 41 to the 15 allowed.(ÚÿÂõıÿÿÿÿ8ü¿ôÎº1
+t
+java:S3776d"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(àáó×ûÿÿÿÿ8ş¿ôÎº1
+O
+java:S1128"-Remove this unused import 'java.util.Arrays'.(î–˜Éüÿÿÿÿ8ÿ¿ôÎº1
