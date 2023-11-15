@@ -4,22 +4,22 @@ import java.util.LinkedHashSet;
 
 public class Ex13 {
     public static int devolverMenorValordeArray(int[] array) {
-        int menorValor = Integer.MAX_VALUE;
-        for (int value : array) {
+        if (array.length==0)
+            return -Integer.MIN_VALUE;
+        int menorValor = array[0];
+        for (int value : array)
             if (value < menorValor)
                 menorValor = value;
-        }
-        return menorValor;
-    }
+        return menorValor;}
 
     public static int devolverMaiorValordeArray(int[] array) {
-        int maiorValor = Integer.MIN_VALUE;
+        if(array.length==0)
+            return Integer.MIN_VALUE;
+        int maiorValor = array[0];
         for (int value : array) {
             if (value > maiorValor)
-                maiorValor = value;
-        }
-        return maiorValor;
-    }
+                maiorValor = value;}
+        return maiorValor;}
 
     public static double mediaArray(int[] array) {
         if (array.length == 0)

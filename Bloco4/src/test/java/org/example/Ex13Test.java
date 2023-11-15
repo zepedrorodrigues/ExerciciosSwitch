@@ -16,6 +16,34 @@ class Ex13Test {
         //Assert
         assertEquals(exp, res);
     }
+    @Test
+    void devolverMenorValordeArraysocomMinInteger(){
+        //Arrange
+        int[] array = {Integer.MIN_VALUE, 3, 4, 5};
+        //Act
+        int exp = Integer.MIN_VALUE;
+        int res = Ex13.devolverMenorValordeArray(array);
+        //Assert
+        assertEquals(exp, res);}
+
+    @Test
+    void devolverMenorValordeArraycomNumerosTodosIguais(){
+        //Arrange
+        int[] array = {1, 1, 1, 1};
+        //Act
+        int exp = 1;
+        int res = Ex13.devolverMenorValordeArray(array);
+        //Assert
+        assertEquals(exp, res);}
+    @Test
+    void devolverMenorValordeArraycomUmNumero(){
+        //Arrange
+        int[] array = {1};
+        //Act
+        int exp = 1;
+        int res = Ex13.devolverMenorValordeArray(array);
+        //Assert
+        assertEquals(exp, res);}
 
     @Test
     void devolverMenorValordeArrayDesordenado() {
@@ -33,11 +61,10 @@ class Ex13Test {
         //Arrange
         int[] array = {};
         //Act
-        int exp = Integer.MAX_VALUE;
+        int exp = Integer.MIN_VALUE;
         int res = Ex13.devolverMenorValordeArray(array);
         //Assert
-        assertEquals(exp, res);
-    }
+        assertEquals(exp, res);}
 
     @Test
     void devolverMenorValordeArrayComNegativos() {
@@ -47,19 +74,7 @@ class Ex13Test {
         int exp = -2;
         int res = Ex13.devolverMenorValordeArray(array);
         //Assert
-        assertEquals(exp, res);
-    }
-
-    @Test
-    void devolverMenorValordeArrayTodosIguais() {
-        //Arrange
-        int[] array = {1, 1, 1, 1};
-        //Act
-        int exp = 1;
-        int res = Ex13.devolverMenorValordeArray(array);
-        //Assert
-        assertEquals(exp, res);
-    }
+        assertEquals(exp, res);}
 
     @Test
     void devolverMaiorValordeArraycomZeroeNegativos() {

@@ -11,6 +11,43 @@ class Ex21Test {
         boolean exp = false;
         boolean res = Ex21.sopadeLetrasTesteValidade(x);
         assertEquals(exp,res);}
+
+    @Test
+    void verificarSequadradoCharactersQuadrado1x1(){
+        char[][] sopa = {{1}};
+        boolean exp = true;
+        boolean res = Ex21.verificarSeQuadradoCharacters(sopa);
+        assertEquals(exp,res);}
+    @Test
+    void verificarSeQuadradoCharactersRetangulo3x4(){
+        char[][] sopa = {{1,2,3,4},{1,2,3,4},{1,2,3,4}};
+        boolean exp = false;
+        boolean res = Ex21.verificarSeQuadradoCharacters(sopa);
+        assertEquals(exp,res);}
+    @Test
+    void verificarSeQuadradoCharactersArrayVazio(){
+        char[][] sopa = {};
+        boolean exp = false;
+        boolean res = Ex21.verificarSeQuadradoCharacters(sopa);
+        assertEquals(exp,res);}
+    @Test
+    void verificarSeLinhasEColunasDeUmaMatrizLinhasTamanhoDiferente(){
+        char[][] sopa = {{1,2,3},{1,2,3,4},{1,2,3}};
+        int exp = -1;
+        int res = Ex21.verificarSeLinhasEColunasDeUmaMatrizChar(sopa);
+        assertEquals(exp,res);}
+    @Test
+    void verificarSeLinhaseColunasDeumaMatrizLinhasTamanhoIgual(){
+        char[][] sopa = {{1,2,3},{1,2,3},{1,2,3}};
+        int exp = 3;
+        int res = Ex21.verificarSeLinhasEColunasDeUmaMatrizChar(sopa);
+        assertEquals(exp,res);}
+    @Test
+    void verificarSeLinhaseColunasdeUmaMatrizLinhasZero(){
+        char[][] sopa = {{}};
+        int exp = 0;
+        int res = Ex21.verificarSeLinhasEColunasDeUmaMatrizChar(sopa);
+        assertEquals(exp,res);}
     @Test
     void sopadeLetrasTesteValidadeNaoQuadrado(){
         char[][] sopa = {{1,2},{1,2},{1,2}};
@@ -18,10 +55,16 @@ class Ex21Test {
         boolean res = Ex21.sopadeLetrasTesteValidade(sopa);
         assertEquals(exp,res);}
     @Test
+    void sopadeLetrasNaoQuadradaVazia(){
+        char[][] sopa = {};
+        boolean exp = false;
+        boolean res = Ex21.sopadeLetrasTesteValidade(sopa);
+        assertEquals(exp,res);}
+    @Test
     void sopadeLetrasLinhasAssimétricas(){
         char[][] sopa = {{1,2,3},{1,2},{1,2,3}};
         boolean exp = false;
-        boolean res = Ex21.sopadeLetrasTesteValidade(sopa);
+        boolean res = Ex21.verificarSeQuadradoCharacters(sopa);
         assertEquals(exp,res);}
     @Test
     void sopadeLetrasTesteValidadeNormal(){
