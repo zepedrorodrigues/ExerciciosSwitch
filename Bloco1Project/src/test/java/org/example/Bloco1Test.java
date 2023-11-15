@@ -299,7 +299,7 @@ class Bloco1Test {
         int h = 1, m =1;
         int expected = 61;
         //Act
-        int result = Bloco1.MinutosPassados(h,m);
+        int result = Bloco1.minutosPassados(h,m);
         //Assert
         assertEquals(expected, result);
     }
@@ -308,7 +308,7 @@ class Bloco1Test {
         //Arrange
         int h=0, m=0, expected = 0;
         //Act
-        int result = Bloco1.MinutosPassados(h,m);
+        int result = Bloco1.minutosPassados(h,m);
         //Assert
         assertEquals(expected,result);
     }
@@ -317,7 +317,7 @@ class Bloco1Test {
         //Arrange
         int h=-1, m=6, expected = -1;
         //Act
-        int result = Bloco1.MinutosPassados(h,m);
+        int result = Bloco1.minutosPassados(h,m);
         //Assert
         assertEquals(expected,result);
     }

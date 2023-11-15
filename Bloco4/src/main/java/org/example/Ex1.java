@@ -10,5 +10,4 @@ public class Ex1 {
             index++;
         }
         return index;
-    }
-}
+    }}

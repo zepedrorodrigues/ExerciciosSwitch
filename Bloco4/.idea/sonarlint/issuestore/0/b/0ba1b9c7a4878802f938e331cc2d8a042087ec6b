@@ -1,15 +1,0 @@
-
-Y
-java:S2589"7Remove this expression which always evaluates to "true"(şé•àşÿÿÿÿ8Îªòİº1
-L	java:S106!"+Replace this use of System.out by a logger.(“Óÿñıÿÿÿÿ8×ªòİº1
-G	java:S106""+Replace this use of System.out by a logger.(µò€‚8×ªòİº1
-G	java:S106#"+Replace this use of System.out by a logger.(—áÃ¬8×ªòİº1
-L	java:S1062"+Replace this use of System.out by a logger.(Ô¿¼ßüÿÿÿÿ8Ùªòİº1
-L	java:S1064"+Replace this use of System.out by a logger.(Ñ¶ğîÿÿÿÿÿ8Ùªòİº1
-G	java:S1066"+Replace this use of System.out by a logger.(ù”êÉ8Ùªòİº1
-L	java:S106>"+Replace this use of System.out by a logger.(å×ñûÿÿÿÿ8Úªòİº1
-G	java:S106@"+Replace this use of System.out by a logger.(Æª•8Úªòİº1
-T
-java:S1172B"2Remove this unused method parameter "sudokuCopia".(Éæ´Üûÿÿÿÿ8Úªòİº1
-L	java:S106D"+Replace this use of System.out by a logger.(Ô¿¼ßüÿÿÿÿ8Úªòİº1
-L	java:S106F"+Replace this use of System.out by a logger.(Ñ¶ğîÿÿÿÿÿ8Ûªòİº1

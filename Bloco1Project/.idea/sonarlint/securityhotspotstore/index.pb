@@ -29,3 +29,11 @@ S
 #src/main/java/org/example/Ex13.java,7\b\7bdb3e1f3c5973f1f5ff394dca86c4e9bda62ed6
 W
 'src/test/java/org/example/Ex13Test.java,a\a\aa295cc25157172f933b8272ada32442a6263ae8
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+Y
+)src/test/java/org/example/Bloco1Test.java,c\6\c6381ef67ab0f390ad3c85fd27991fbd9462c4d5
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+]
+-.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
