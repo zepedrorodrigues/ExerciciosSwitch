@@ -1,6 +1,6 @@
 package org.example;
 public class Bloco1 {
-    public static double processamento(int rosas, int tulipas, double precoRosa, double precoTulipa){
+    public static double processamento(double rosas, double tulipas, double precoRosa, double precoTulipa){
     // preço de ramo de rosas + tulipas conforme combo de tulipas e rosas, tendo em conta o preço de ambos
         if(rosas<0||tulipas<0||precoRosa<0||precoTulipa<0)
             return -1.00;
@@ -52,8 +52,6 @@ public class Bloco1 {
         return Math.sqrt(Math.pow(cateto_a,2)+Math.pow(cateto_b,2));
     }}
     public static double equacao2ograu(double x){// equaçao segundo grau do enunciado ((x^2)-3x + 1)
-        if (!Double.isNaN(x)){
-            return -1;}
         return Math.pow(x,2)-3*x+1;}
     public static double temperatura_Farenheit(double temperatura_Celsius) {//conversor para Farenheit de temperatura em Celsius
         if(temperatura_Celsius<-273.15)

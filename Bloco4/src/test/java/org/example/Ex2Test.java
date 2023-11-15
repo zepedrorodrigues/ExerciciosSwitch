@@ -13,8 +13,25 @@ class Ex2Test {
         // Act
         int[] res = Ex2.devolverUmVetorComNumerosDeDigitos(num);
         // Assert
-        assertArrayEquals(exp, res);
-    }
+        assertArrayEquals(exp, res);}
+    @Test
+    void devolverNumerosDentroDeumArrayUm(){
+        //Arrange
+        int num = 1;
+        int[] exp = {1};
+        //Act
+        int[]res = Ex2.devolverUmVetorComNumerosDeDigitos(num);
+        //Assert
+        assertArrayEquals(exp,res);}
+    @Test
+    void devolverNumerosDentroDeumArrayUmNegativo(){
+        //Arrange
+        int num = -1;
+        int[] exp = {};
+        //Act
+        int[]res = Ex2.devolverUmVetorComNumerosDeDigitos(num);
+        //Assert
+        assertArrayEquals(exp,res);}
 
     @Test
     void devolverNumerosDentroDeUmArrayNumeroNegativo() {
@@ -24,8 +41,7 @@ class Ex2Test {
         // Act
         int[] res = Ex2.devolverUmVetorComNumerosDeDigitos(num);
         // Assert
-        assertArrayEquals(exp, res);
-    }
+        assertArrayEquals(exp, res);}
 
     @Test
     void devolverNumerosDentroDeUmArrayZero() {

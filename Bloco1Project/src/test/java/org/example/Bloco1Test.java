@@ -4,19 +4,90 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class Bloco1Test {
     @Test
-    public void processamentoFlores(){   //Arrange
+    public void processamentoFloresSucesso(){
+        //Arrange
         double rosasSucesso = 5, tulipasSucesso = 6, precoRosasSucesso = 5, precoTulipasSucesso=10, resultadoSucesso=85;
-        double rosasFronteira = 0, tulipasFronteira = 1, precoRosasFronteira = 10, precoTulipasFronteira = 5, resultadoFronteira = 5;
-        double rosasInsucesso = -1, tulipasInsucesso = 0, precoRosasInsucesso = 10, precoTulipasInsucesso = 7, resultadoInsucesso = -1.00;
         //Act
-        double expectedSucesso = Bloco1.processamento(5,6,5,10);
-        double expectedFronteira = Bloco1.processamento(0,1,10,5);
-        double expectedInsucesso = Bloco1.processamento(-1,0,10,7);
+        double expectedSucesso = Bloco1.processamento(rosasSucesso,tulipasSucesso,precoRosasSucesso,precoTulipasSucesso);
         //Assert
-        assertEquals(expectedSucesso,resultadoSucesso,0.01);
-        assertEquals(expectedFronteira,resultadoFronteira,0.01);
-        assertEquals(expectedInsucesso,resultadoInsucesso,0.01);
+        assertEquals(expectedSucesso,resultadoSucesso,0.01);}
+    @Test
+    public void processamentoFloresSucessoValorTulipaseRosas1(){
+        //Arrange
+        double rosasSucesso = 1, tulipasSucesso = 1, precoRosasSucesso = 1, precoTulipasSucesso = 1;
+        double expectedSucesso = 2;
+        //Act
+        double resultSucesso =
     }
+
+    @Test
+    public void processamentoFloresFronteiraRosasZero(){
+        //Arrange
+        double rosasFronteira = 0, tulipasFronteira = 6, precoRosasFronteira = 5, precoTulipasFronteira = 10, resultadoFronteira = 60;
+        //Act
+        double expectedFronteira = Bloco1.processamento(rosasFronteira,tulipasFronteira,precoRosasFronteira,precoTulipasFronteira);
+        //Assert
+        assertEquals(expectedFronteira,resultadoFronteira,0.01);}
+
+    @Test
+    public void processamentoFloresFronteiraPrecoRosasZero(){
+        //Arrange
+        double rosasFronteira = 5, tulipasFronteira = 6, precoRosasFronteira = 0, precoTulipasFronteira = 10, resultadoFronteira = 60;
+        double expectedFronteira = Bloco1.processamento(rosasFronteira,tulipasFronteira,precoRosasFronteira,precoTulipasFronteira);
+        //Act
+        double resultFronteira = Bloco1.processamento(rosasFronteira,tulipasFronteira,precoRosasFronteira,precoTulipasFronteira);
+        //Assert
+        assertEquals(expectedFronteira,resultFronteira,0.01);}
+
+    @Test
+    public void processamentoFloresFronteiraTulipasQuantidadeZero(){
+        //Arrange
+        double rosasFronteira = 5, tulipasFronteira = 0, precoRosasFronteira = 5, precoTulipasFronteira = 10, resultadoFronteira = 25;
+        //Act
+        double expectedFronteira = Bloco1.processamento(rosasFronteira,tulipasFronteira,precoRosasFronteira,precoTulipasFronteira);
+        //Assert
+        assertEquals(expectedFronteira,resultadoFronteira,0.01);}
+    @Test
+    public void processamentoFloresFronteiraTulipasPreçoZeor(){
+        //Arrange
+        double rosasFronteira = 5, tulipasFronteira = 6, precoRosasFronteira = 5, precoTulipasFronteira = 0, resultadoFronteira = 25;
+        //Act
+        double expectedFronteira = Bloco1.processamento(rosasFronteira,tulipasFronteira,precoRosasFronteira,precoTulipasFronteira);
+        //Assert
+        assertEquals(expectedFronteira,resultadoFronteira,0.01);}
+    @Test
+    public void testeprocessamentoValorRosasNegativo(){
+        //Arrange
+        double rosasInsucesso = -1, tulipasInsucesso = 2, precoRosasInsucesso = 4, precoTulipasInsucesso = 8;
+        //Act
+        double resultInsucessoRosas = Bloco1.processamento(rosasInsucesso,tulipasInsucesso,precoRosasInsucesso,precoTulipasInsucesso);
+        //Assert
+        assertEquals(resultInsucessoRosas,-1,0.01);}
+    @Test
+    public void testeprocessamentoQuantidadeRosasNegativa(){
+        //Arrange
+        double rosasInsucesso = -1, tulipasInsucesso = 2, precoRosasInsucesso = 4, precoTulipasInsucesso = 8;
+        //Act
+        double resultInsucessoRosas = Bloco1.processamento(rosasInsucesso,tulipasInsucesso,precoRosasInsucesso,precoTulipasInsucesso);
+        //Assert
+        assertEquals(resultInsucessoRosas,-1,0.01);}
+    @Test
+    public void testeprocessamentoQuantidadeTulipasNegativa(){
+        //Arrange
+        double rosasInsucesso = 1, tulipasInsucesso = -2, precoRosasInsucesso = 4, precoTulipasInsucesso = 8;
+        //Act
+        double resultInsucessoTulipas = Bloco1.processamento(rosasInsucesso,tulipasInsucesso,precoRosasInsucesso,precoTulipasInsucesso);
+        //Assert
+        assertEquals(resultInsucessoTulipas,-1,0.01);}
+    @Test
+    public void testeprocessamentoValorTulipasNegativo(){
+        //Arrange
+        double rosasInsucesso = 2, tulipasInsucesso = -2, precoRosasInsucesso = 4, precoTulipasInsucesso = 8;
+        //Act
+        double resultInsucessoRosas = Bloco1.processamento(rosasInsucesso,tulipasInsucesso,precoRosasInsucesso,precoTulipasInsucesso);
+        //Assert
+        assertEquals(resultInsucessoRosas,-1,0.01);}
+
     @Test
     public void litrosSucesso(){
     //Arrange
@@ -29,14 +100,16 @@ class Bloco1Test {
     assertEquals(expectedSucesso, resultadoSucesso, 0.01);}
     @Test
     public void litrosFronteira(){   //Arrange
-        double altura_metrosFronteira = 0.00000000001;
-        double raioFronteira = 10;
-        double expectedFronteira = 3.141592653589793E-6;
+        double altura_metrosFronteira = 0.00000000001, raioFronteira = 0.00000000001;
+        double raioNormal = 10, alturaNormal = 10;
+        double expectedraioFronteira = alturaNormal*Math.PI*Math.pow(raioFronteira,2)*1000;
+        double expectedalturaFronteira = altura_metrosFronteira*Math.PI*Math.pow(raioNormal,2)*1000;
         //Act
-        double resultFronteira = Bloco1.litros(altura_metrosFronteira,raioFronteira);
+        double resultalturaFronteira = Bloco1.litros(altura_metrosFronteira,raioNormal);
+        double resultRaioFronteira = Bloco1.litros(alturaNormal,raioFronteira);
         //Assert
-        assertEquals(expectedFronteira,resultFronteira,0.01);
-    }
+        assertEquals(expectedalturaFronteira,resultalturaFronteira,0.01);
+        assertEquals(expectedraioFronteira,resultRaioFronteira,0.01);}
     @Test
     public void litrosInsucesso(){   //Arrange
         double altura_metrosInsucesso = 0;
@@ -53,7 +126,7 @@ class Bloco1Test {
         double tempo_sucesso = 14.7;
         double expectedSucesso = 4998;
         //Act
-        double resultSucesso = Bloco1.distancerelampago(14.7);
+        double resultSucesso = Bloco1.distancerelampago(tempo_sucesso);
         //Assert
         assertEquals(expectedSucesso, resultSucesso, 0.01);}
     @Test
@@ -90,7 +163,7 @@ class Bloco1Test {
         double tempo = 0;
         double expectedFronteira = 0;
         //Act
-        double resultFronteira = Bloco1.altura(0);
+        double resultFronteira = Bloco1.altura(tempo);
         //Assert
         assertEquals(expectedFronteira,resultFronteira,0.01);}
     @Test
@@ -99,7 +172,7 @@ class Bloco1Test {
         double tempo =-2;
         double expectedInsucesso = -1;
         //Act
-        double resultInsuceso =Bloco1.altura(-2);
+        double resultInsuceso =Bloco1.altura(tempo);
         //Assert
         assertEquals(expectedInsucesso, resultInsuceso, 0.01);}
     @Test
@@ -155,7 +228,33 @@ class Bloco1Test {
         double distancia_Manel = 7000;
         double expected_distancia_Ze = -1.00;
         //Act
-        double result_distancia_Ze = -1.00;
+        double result_distancia_Ze = Bloco1.distancia_Ze(tempo_Ze_horas,tempo_Ze_minutos,tempo_Ze_segundos,distancia_Manel,tempo_Manel_horas,tempo_Manel_minutos,tempo_Manel_segundos);
+        //Assert
+        assertEquals(expected_distancia_Ze,result_distancia_Ze,0.01);
+    }
+
+    @Test
+    public void distanciaZetempoZeNegativo(){
+        //Arrange
+        double tempo_Ze_horas = -1, tempo_Ze_minutos = 60, tempo_Ze_segundos = 3;
+        double tempo_Manel_horas = 4, tempo_Manel_minutos = 4, tempo_Manel_segundos = 7;
+        double distancia_Manel = 7000;
+        double expected_distancia_Ze = -1.00;
+        //Act
+        double result_distancia_Ze = Bloco1.distancia_Ze(tempo_Ze_horas,tempo_Ze_minutos,tempo_Ze_segundos,distancia_Manel,tempo_Manel_horas,tempo_Manel_minutos,tempo_Manel_segundos);
+        //Assert
+        assertEquals(expected_distancia_Ze,result_distancia_Ze,0.01);
+    }
+
+    @Test
+    public void distanciaZetempoManelNegativo(){
+        //Arrange
+        double tempo_Ze_horas = 1, tempo_Ze_minutos = 60, tempo_Ze_segundos = 3;
+        double tempo_Manel_horas = -4, tempo_Manel_minutos = 4, tempo_Manel_segundos = 7;
+        double distancia_Manel = 7000;
+        double expected_distancia_Ze = -1.00;
+        //Act
+        double result_distancia_Ze = Bloco1.distancia_Ze(tempo_Ze_horas,tempo_Ze_minutos,tempo_Ze_segundos,distancia_Manel,tempo_Manel_horas,tempo_Manel_minutos,tempo_Manel_segundos);
         //Assert
         assertEquals(expected_distancia_Ze,result_distancia_Ze,0.01);
     }
@@ -252,7 +351,7 @@ class Bloco1Test {
     public void equacao_Test_Sucesso() {
         //Arrange
         int x = 3;
-        double expected = Math.pow(3, 2) - 3 * 3 + 1;
+        double expected = 1;
         //Act
         double result = Bloco1.equacao2ograu(x);
         assertEquals(expected, result, 0.01);

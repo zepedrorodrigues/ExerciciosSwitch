@@ -1,5 +1,4 @@
 package org.example;
-
 public class Ex1 {
     public static int devolverNumeroDeAlgarismos(int num) {
         if (num <= 0)
@@ -7,7 +6,6 @@ public class Ex1 {
         int index = 0;
         while (num != 0) {
             num = num / 10;
-            index++;
-        }
+            index++;}
         return index;
     }}

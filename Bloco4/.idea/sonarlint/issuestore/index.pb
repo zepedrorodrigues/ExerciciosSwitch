@@ -87,3 +87,5 @@ S
 #src/main/java/org/example/Ex17.java,b\4\b455f64cd0f29e5a93ce153e01e7792dbfaf7e0e
 S
 #src/main/java/org/example/Ex20.java,9\b\9b98942350a2081025c719eb9ff6887db8ac68f4
+V
+&src/test/java/org/example/Ex2Test.java,a\6\a6a69a2e34ca4dacca343ae003549914359fa393

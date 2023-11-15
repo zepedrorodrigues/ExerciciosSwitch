@@ -37,3 +37,7 @@ S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
 ]
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
+Y
+)src/test/java/org/example/Bloco2Test.java,b\b\bb27c7ae0e75f1a03206d2c686973b49e013128a
+U
+%src/main/java/org/example/Bloco2.java,0\c\0ca2081104c14fe6196087a237c7962e1ab37c64
