@@ -685,4 +685,15 @@ class Ex21Test {
         boolean resultado = Ex21.verificarValidade(difX,difY);
         //Assert
         assertTrue(resultado);}
+    @Test
+    void verificarPalavraNumSegmentoInvalido(){
+        //Arrange
+        char[][] sopa = {{'C', 'C', 'D', 'O'}, {'G', 'G', 'D', 'C'}, {'D', 'O', 'D', 'A'}, {'T', 'T', 'T', 'T'}};
+        String palavra = "CDA";
+        int[] posicaoInicial = {0,0};
+        int[] posicaoFinal = {3,2};
+        //Act
+        boolean resultado = Ex21.verificarPalavraNumSegmento(sopa,palavra,posicaoInicial,posicaoFinal);
+        //Assert
+        assertFalse(resultado);}
     }

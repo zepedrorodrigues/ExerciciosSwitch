@@ -104,9 +104,7 @@ public class Ex21 {
                         posicoes[i][1]=posicao[1]+i*direccao[1];}}}}
         return posicoes;}
     public static boolean verificarPalavraNumSegmento(char[][]sopa, String palavra, int[]pontoA, int[]pontoB){
-        int difX = pontoB[0]-pontoA[0];
-        int difY = pontoB[1]-pontoA[1];
-        if(!verificarValidade(difX,difY)||sopa.length==0||!verificarSeQuadradoCharacters(sopa))
+        if(!verificarValidade(pontoB[0]-pontoA[0],pontoB[1]-pontoA[1])||sopa.length==0||!verificarSeQuadradoCharacters(sopa))
             return false;
         int[]direccao = direccao(pontoA,pontoB);
         char[]palavraArray = palavraParaArray(palavra);
