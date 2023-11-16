@@ -299,7 +299,7 @@ class Ex21Test {
         int[] posicaoInicial = {0,0};
         int[] direccao = {0,1};
         //Act
-        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao,0);
         //Assert
         assertTrue(resultado);}
     @Test
@@ -310,7 +310,7 @@ class Ex21Test {
         int[] posicaoInicial = {0,0};
         int[] direccao = {1,0};
         //Act
-        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao,0);
         //Assert
         assertTrue(resultado);}
     @Test
@@ -321,7 +321,7 @@ class Ex21Test {
         int[] posicaoInicial = {0,0};
         int[] direccao = {1,1};
         //Act
-        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao,0);
         //Assert
         assertTrue(resultado);}
     @Test
@@ -332,7 +332,7 @@ class Ex21Test {
         int[] posicaoInicial = {0,0};
         int[] direccao = {1,0};
         //Act
-        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao,0);
         //Assert
         assertFalse(resultado);}
     @Test
@@ -343,7 +343,7 @@ class Ex21Test {
         int[] posicaoInicial = {0,1};
         int[] direccao = {0,1};
         //Act
-        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao,0);
         //Assert
         assertFalse(resultado);}
     @Test
@@ -354,7 +354,7 @@ class Ex21Test {
         int[] posicaoInicial = {0,1};
         int[] direccao = {0,-1};
         //Act
-        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao,0);
         //Assert
         assertFalse(resultado);}
     @Test
@@ -365,7 +365,7 @@ class Ex21Test {
         int[] posicaoInicial = {0,1};
         int[] direccao = {0,-1};
         //Act
-        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao,0);
         //Assert
         assertFalse(resultado);}
     @Test
@@ -376,7 +376,7 @@ class Ex21Test {
         int[] posicaoInicial = {0,1};
         int[] direccao = {0,-1};
         //Act
-        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao,0);
         //Assert
         assertFalse(resultado);}
     @Test
@@ -387,7 +387,7 @@ class Ex21Test {
         int[] posicaoInicial = {3,0};
         int[] direccao = {-1,0};
         //Act
-        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao,0);
         //Assert
         assertFalse(resultado);}
     @Test

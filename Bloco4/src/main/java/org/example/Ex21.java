@@ -1,9 +1,6 @@
 package org.example;
 import java.util.Arrays;
 public class Ex21 {
-    //Verificar que Sopa de Letras não vazia e Quadrada
-
-    //Criar Matriz Máscara para letra "X"
     public static int[][] matrizMascara(char[][]sopa, char letra) {
         int[][] matrizMascara = new int[sopa.length][sopa[0].length];
         letra = Character.toUpperCase(letra);
@@ -16,32 +13,24 @@ public class Ex21 {
                 matrizMascara[line][column]=1;}
              column++;}
          line++;}
-     return matrizMascara;}
-
-    //Teste para verificarr se Array de Char é Quadrado
-    public static boolean verificarSeQuadradoCharacters(char[][] arraydeArrays)
-    {if(arraydeArrays.length==0)
+     return matrizMascara;}//Devolve matriz de 0s e 1s, 1s nas posições onde a letra aparece
+    public static boolean verificarSeQuadradoCharacters(char[][] arraydeArrays){if(arraydeArrays.length==0)
         return false;
      int linhas = arraydeArrays.length;
      int colunas = verificarSeLinhasEColunasDeUmaMatrizChar(arraydeArrays);
-     return (linhas==colunas);}
-
-    //Teste para verificar se matriz tem linhas com mesmo comprimento
+     return (linhas==colunas);}//Verifica se matriz é quadrada
     public static int verificarSeLinhasEColunasDeUmaMatrizChar(char[][] array) {
         if(array.length==0)
             return -1;
         for (int i = 0; i < array.length; i++) {
         if (array[i].length != array[0].length)
             return -1;}
-     return array[0].length;}
-
-    //Transforma Palavra Num Array
+     return array[0].length;}//Verifica se todas as linhas têm o mesmo comprimento
     public static char[] palavraParaArray(String palavra) {palavra = palavra.toUpperCase().strip();
      char[] palavraArray = new char[palavra.length()];
      for (int i = 0; i < palavra.length(); i++)
          palavraArray[i] = palavra.charAt(i);
-     return palavraArray;}
-
+     return palavraArray;}//Transforma Palavra Num Array
     public static boolean verificarPalavra(char[][]sopa, String palavra){
         if(!verificarSeQuadradoCharacters(sopa))
             return false;
@@ -50,19 +39,22 @@ public class Ex21 {
         int[][]direccoes = {{1,0},{0,1},{-1,0},{0,-1},{1,1},{-1,-1},{1,-1},{-1,1}};
         for(int[] posicao : posicoesIniciais){
             for(int[] direccao : direccoes){
-                if(verificador(sopa,palavraArray,posicao,direccao))
+                if(verificador(sopa,palavraArray,posicao,direccao,0))
                     return true;}}
-        return false;}
-
-    public static boolean verificador(char[][]sopa, char[]palavra, int[] posicaoInicial, int[]direccao){
-        for(int i=0;i<palavra.length;i++){
-            int linha = posicaoInicial[0]+i*direccao[0];
-            int coluna = posicaoInicial[1]+i*direccao[1];
-            if(linha<0||linha>=sopa.length||coluna<0||coluna>=sopa[linha].length)
-                return false;
-            if(sopa[linha][coluna]!=palavra[i])
-                return false;}
-        return true;}
+        return false;}//Coordena verificação
+    // se a palavra existe na sopa
+    public static boolean verificador(char[][]sopa, char[]palavra, int[] posicao, int[]direccao, int ind){
+        if(ind==palavra.length)
+            return true;
+        int linha = posicao[0]+direccao[0]*ind;
+        int coluna = posicao[1]+direccao[1]*ind;
+        if(linha<0||linha>=sopa.length||coluna<0||coluna>=sopa[linha].length)
+            return false;
+        if(sopa[linha][coluna]!=palavra[ind])
+            return false;
+        ind++;
+        return verificador(sopa,palavra,posicao,direccao,ind);}
+    //Verifica se a palavra existe na sopa numa determinada direcção
     public static int[][] verificarPosicoesIniciais (char[][]sopa, char[] palavra){
         int[][] posicoesInicial = new int[0][2];
         for(int i=0; i<sopa.length;i++)
@@ -72,12 +64,13 @@ public class Ex21 {
                     posicaoInicial[0]=i;
                     posicaoInicial[1]=j;
                     posicoesInicial = adicionarPosicao(posicoesInicial,posicaoInicial);}}
-        return posicoesInicial;}
+        return posicoesInicial;}//Devolve as posições iniciais
+    // da palavra na sopa
     public static int[][] adicionarPosicao(int[][]posicoesInicial, int[]posicaoInicial){
         int[][]novaMatriz = Arrays.copyOf(posicoesInicial,posicoesInicial.length+1);
         novaMatriz[novaMatriz.length-1]=posicaoInicial;
-        return novaMatriz;}
-
+        return novaMatriz;}//Estende a Matriz
+    //de posições iniciais
     public static boolean verificarCruzamentos(char[][]sopa, String palavra1, String palavra2){
         if(!verificarPalavra(sopa,palavra1)||!verificarPalavra(sopa,palavra2))
             return false;
@@ -89,25 +82,27 @@ public class Ex21 {
             for(int[] posicoes2 : posicoesPalavra2)
                 if(posicoes[0]==posicoes2[0] && posicoes[1]==posicoes2[1])
                     return true;
-        return false;}
-
+        return false;}//Verifica se as
+    // palavras se cruzam
     public static int[][] posicoesPalavra(char[][]sopa, char[]palavra){
         int[][]posicoesIniciais = verificarPosicoesIniciais(sopa,palavra);
         int[][]direccoes = {{1,0},{0,1},{-1,0},{0,-1},{1,1},{-1,-1},{1,-1},{-1,1}};
         int[][]posicoes = new int[palavra.length][2];
         for(int[] posicao : posicoesIniciais){
             for(int[] direccao : direccoes){
-                if(verificador(sopa,palavra,posicao,direccao)){
+                if(verificador(sopa,palavra,posicao,direccao,0)){
                     for(int i=0;i<palavra.length;i++){
                         posicoes[i][0]=posicao[0]+i*direccao[0];
                         posicoes[i][1]=posicao[1]+i*direccao[1];}}}}
-        return posicoes;}
+        return posicoes;}//Devolve as posições que a palavra
+    //ocupa na sopa
     public static boolean verificarPalavraNumSegmento(char[][]sopa, String palavra, int[]pontoA, int[]pontoB){
         if(!verificarValidade(pontoB[0]-pontoA[0],pontoB[1]-pontoA[1])||sopa.length==0||!verificarSeQuadradoCharacters(sopa))
             return false;
         int[]direccao = direccao(pontoA,pontoB);
         char[]palavraArray = palavraParaArray(palavra);
-        return verificador(sopa,palavraArray,pontoA,direccao);}
+        return verificador(sopa,palavraArray,pontoA,direccao,0);}
+    //Verifica se a palavra existe num segmento entre PontoA e PontoB
     public static int[] direccao(int[]pontoA, int[]pontoB){
         int[]direccao = new int[2];
         direccao[0]=pontoB[0]-pontoA[0];
@@ -117,11 +112,12 @@ public class Ex21 {
         if(direccao[1]!=0)
             direccao[1]=direccao[1]/Math.abs(direccao[1]);
         return direccao;}
-
+    //Devolve vetor com direcçção de PontoA a PontoB
     public static boolean verificarValidade(int difX, int difY){
         if(difX==0 && difY!=0)
             return true;
         if(difX!=0 && difY==0)
             return true;
         return (difX==difY && difX!=0 && difY!=0);}
+    //Verifica se o segmento é válido(só pode ser vertical, horizontal ou diagonais (principal/2ária)
 }
