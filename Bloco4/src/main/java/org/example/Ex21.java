@@ -1,6 +1,5 @@
 package org.example;
 import java.util.Arrays;
-import java.util.Arrays.*;
 public class Ex21 {
     //Verificar que Sopa de Letras não vazia e Quadrada
 
@@ -124,7 +123,5 @@ public class Ex21 {
             return true;
         if(difX!=0 && difY==0)
             return true;
-        if(difX==difY && difX!=0 && difY!=0)
-            return true;
-        return false;}
+        return (difX==difY && difX!=0 && difY!=0);}
 }
