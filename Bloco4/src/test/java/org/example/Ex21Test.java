@@ -6,417 +6,683 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class Ex21Test {
     @Test
-    void sopadeLetrasTesteValidadeVazio() {
-        char[][] x = {};
-        boolean exp = false;
-        boolean res = Ex21.sopadeLetrasTesteValidade(x);
-        assertEquals(exp,res);}
+    void matrizMascaraValida() {
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C'}, {'D', 'E', 'F'}, {'G', 'H', 'I'}};
+        char letra = 'A';
+        //Act
+        int[][] matrizMascara = {{1, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+        //Assert
+        assertArrayEquals(matrizMascara, Ex21.matrizMascara(sopa, letra));
+    }
 
     @Test
-    void verificarSequadradoCharactersQuadrado1x1(){
-        char[][] sopa = {{1}};
-        boolean exp = true;
-        boolean res = Ex21.verificarSeQuadradoCharacters(sopa);
-        assertEquals(exp,res);}
-    @Test
-    void verificarSeQuadradoCharactersRetangulo3x4(){
-        char[][] sopa = {{1,2,3,4},{1,2,3,4},{1,2,3,4}};
-        boolean exp = false;
-        boolean res = Ex21.verificarSeQuadradoCharacters(sopa);
-        assertEquals(exp,res);}
-    @Test
-    void verificarSeQuadradoCharactersArrayVazio(){
-        char[][] sopa = {};
-        boolean exp = false;
-        boolean res = Ex21.verificarSeQuadradoCharacters(sopa);
-        assertEquals(exp,res);}
-    @Test
-    void verificarSeLinhasEColunasDeUmaMatrizLinhasTamanhoDiferente(){
-        char[][] sopa = {{1,2,3},{1,2,3,4},{1,2,3}};
-        int exp = -1;
-        int res = Ex21.verificarSeLinhasEColunasDeUmaMatrizChar(sopa);
-        assertEquals(exp,res);}
-    @Test
-    void verificarSeLinhaseColunasDeumaMatrizLinhasTamanhoIgual(){
-        char[][] sopa = {{1,2,3},{1,2,3},{1,2,3}};
-        int exp = 3;
-        int res = Ex21.verificarSeLinhasEColunasDeUmaMatrizChar(sopa);
-        assertEquals(exp,res);}
-    @Test
-    void verificarSeLinhaseColunasdeUmaMatrizLinhasZero(){
+    void matrizMascaraVazia() {
+        //Arrange
         char[][] sopa = {{}};
-        int exp = 0;
-        int res = Ex21.verificarSeLinhasEColunasDeUmaMatrizChar(sopa);
-        assertEquals(exp,res);}
-    @Test
-    void sopadeLetrasTesteValidadeNaoQuadrado(){
-        char[][] sopa = {{1,2},{1,2},{1,2}};
-        boolean exp = false;
-        boolean res = Ex21.sopadeLetrasTesteValidade(sopa);
-        assertEquals(exp,res);}
-    @Test
-    void sopadeLetrasNaoQuadradaVazia(){
-        char[][] sopa = {};
-        boolean exp = false;
-        boolean res = Ex21.sopadeLetrasTesteValidade(sopa);
-        assertEquals(exp,res);}
-    @Test
-    void sopadeLetrasLinhasAssimétricas(){
-        char[][] sopa = {{1,2,3},{1,2},{1,2,3}};
-        boolean exp = false;
-        boolean res = Ex21.verificarSeQuadradoCharacters(sopa);
-        assertEquals(exp,res);}
-    @Test
-    void sopadeLetrasTesteValidadeNormal(){
-        char[][] x = {{1,2,3},{1,2,3},{1,2,3}};
-        boolean exp = true;
-        boolean res = Ex21.sopadeLetrasTesteValidade(x);
-        assertEquals(exp,res);}
-    @Test
-    void matrizMascara() {
-        char a = 'A';
-        char[][] sopa = {{'A','B','D'},{'C','A','J'},{'G','H','A'}};
-        int[][] exp = {{1,0,0},{0,1,0},{0,0,1}};
-        int[][] res = Ex21.matrizMascara(sopa,a);
-        assertArrayEquals(exp,res);}
-    @Test
-    void matrizMascaraSemValores(){
-        char a = 'A';
-        char[][]x = {{1,1,1},{1,1,1},{2,2,2}};
-        int[][] exp = {{0,0,0},{0,0,0},{0,0,0}};
-        int[][]res = Ex21.matrizMascara(x,a);
-        assertArrayEquals(exp,res);}
-    @Test
-    void encontrarPalavraVazio(){
-        char[][] x = {};
-        String pal = "CORNETO";
-        boolean exp = false;
-        boolean res = Ex21.verificarDireccao(x,pal);
-        assertEquals(exp,res);
+        char letra = 'A';
+        //Act
+        int[][] matrizMascara = {{}};
+        //Assert
+        assertArrayEquals(matrizMascara, Ex21.matrizMascara(sopa, letra));
     }
-    @Test
-    void encontrarPalavraHorizontalEsqDir() {
-        char [][] x = {{'B','O','L','A'},{'A','A','A','A'},{'A','A','A','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        boolean exp = true;
-        boolean res = Ex21.verificarDireccao(x,bola);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraHorizontalDirEsq() {
-        char [][] x = {{'A','L','O','B'},{'A','A','A','A'},{'A','A','A','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        boolean exp = true;
-        boolean res = Ex21.verificarDireccao(x,bola);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraInexistente(){
-        char [][] x = {{'A','L','A','B'},{'A','A','A','A'},{'A','A','A','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        boolean exp = false;
-        boolean res = Ex21.verificarDireccao(x,bola);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraVerticalCimaBaixo(){
-        char [][] x = {{'B','A','A','A'},{'O','A','A','A'},{'L','A','A','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        boolean exp = true;
-        boolean res = Ex21.verificarDireccao(x,bola);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraVerticalBaixoCima(){
-        char [][] x = {{'A','A','A','A'},{'A','A','A','L'},{'A','A','A','O'},{'A','A','A','B'}};
-        String bola = "BOLA";
-        boolean exp = true;
-        boolean res = Ex21.verificarDireccao(x,bola);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraDiagonalSecundariaBaixoCima(){
-        char [][] x = {{'A','A','A','A'},{'A','A','L','A'},{'A','O','A','A'},{'B','A','A','A'}};
-        String bola = "BOLA";
-        boolean exp = true;
-        boolean res = Ex21.verificarDireccao(x,bola);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraDiagonalSecundariaCimaBaixo(){
-        char [][] x = {{'A','A','A','B'},{'A','A','O','A'},{'A','L','A','O'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        boolean exp = true;
-        boolean res = Ex21.verificarDireccao(x,bola);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraDiagonalSecundariaBaixoCima2(){
-        char [][] x = {{'A','A','A','A'},{'A','A','A','B'},{'A','A','O','A'},{'A','L','A','A'}};
-        String bola = "BOL";
-        boolean exp = true;
-        boolean res = Ex21.verificarDireccao(x,bola);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraDiagonalPrincipalCimaBaixo(){
-        char [][] x = {{'A','B','A','A'},{'A','A','O','A'},{'A','A','A','L'},{'A','A','A','A'}};
-        String bola = "BOL";
-        boolean exp = true;
-        boolean res = Ex21.verificarDireccao(x,bola);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraDiagonalPrincipalBaixoCima(){
-        char [][] x = {{'A','A','A','A'},{'A','L','A','A'},{'A','A','O','A'},{'A','A','A','B'}};
-        String bola = "BOLA";
-        boolean exp = true;
-        boolean res = Ex21.verificarDireccao(x,bola);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraDiagonalPrincipalCimaBaixo2(){
-        char [][] x = {{'A','A','A','A'},{'B','A','A','A'},{'A','O','A','A'},{'A','A','L','A'}};
-        String bola = "BOL";
-        boolean exp = true;
-        boolean res = Ex21.verificarDireccao(x,bola);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraPresenteMasDesorganizada(){
-        char [][] x = {{'B','A','A','A'},{'A','A','O','A'},{'A','L','A','O'},{'A','A','A','B'}};
-        String bola = "BOLA";
-        boolean exp = false;
-        boolean res = Ex21.verificarDireccao(x,bola);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraemSequenciaValidoVerticalDescendente(){
-        char [][] x = {{'B','A','A','A'},{'O','A','A','A'},{'L','A','A','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        int[] pontoA = {0,0};
-        int[] pontoB = {3,0};
-        boolean exp = true;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavrasemSequenciaValidoVerticalAscendente(){
-        char [][] x = {{'A','A','A','A'},{'A','A','A','L'},{'A','A','A','O'},{'A','A','A','B'}};
-        String bola = "BOLA";
-        int[] pontoA = {3,3};
-        int[] pontoB = {0,3};
-        boolean exp = true;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraemSequenciaValidoHorizontalEsqDir(){
-        char [][] x = {{'B','O','L','A'},{'A','A','A','A'},{'A','A','A','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        int[] pontoA = {0,0};
-        int[] pontoB = {0,3};
-        boolean exp = true;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);
-    }
-    @Test
-    void encontrarPalavraemSequenciaValidoHorizontalDirEsq(){
-        char [][] x = {{'A','L','O','B'},{'A','A','A','A'},{'A','A','A','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        int[] pontoA = {0,3};
-        int[] pontoB = {0,0};
-        boolean exp = true;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);
-    }
-    @Test
-    void encontrarPalavraemSequenciaValidoDiagonalPrincDescendente(){
-        char [][] x = {{'B','A','A','A'},{'A','O','A','A'},{'A','A','L','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        int[] pontoA ={0,0};
-        int[] pontoB = {3,3};
-        boolean exp = true;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavrasemSequenciaValidoDiagonalPrincAsc(){
-        char [][] x = {{'A','A','A','A'},{'A','L','A','A'},{'A','A','O','A'},{'A','A','A','B'}};
-        String bola = "BOLA";
-        int[] pontoA ={3,3};
-        int[] pontoB = {0,0};
-        boolean exp = true;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraemSequenciaValidoDiagonalSecundariaDesc(){
-        char [][] x = {{'A','A','A','B'},{'A','A','O','A'},{'A','L','O','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        int[] pontoA ={0,3};
-        int[] pontoB = {3,0};
-        boolean exp = true;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraemSequenciaValidoDiagonalSecundariaAsc(){
-        char [][] x = {{'A','A','A','A'},{'A','A','L','A'},{'A','O','A','A'},{'B','A','A','A'}};
-        String bola = "BOLA";
-        int[] pontoA ={3,0};
-        int[] pontoB = {0,3};
-        boolean exp = true;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraemSequenciaInvalido(){
-        char [][] x = {{'A','A','A','A'},{'A','A','A','A'},{'A','A','A','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        int[] pontoA ={0,0};
-        int[] pontoB = {3,3};
-        boolean exp = false;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraemSequenciaValidoMaisLongaQuePalavra(){
-        char [][] x = {{'B','A','A','A'},{'A','O','A','A'},{'A','A','L','A'},{'A','A','A','A'}};
-        String bola = "BOL";
-        int[] pontoA ={0,0}, pontoB = {3,3};
-        boolean exp = true, res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarPalavraemSequenciaInvalidaLetraNova(){
-        char [][] x = {{'B','A','L','A'},{'A','A','A','A'},{'A','A','A','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        int[] pontoA ={0,0}, pontoB = {0,3};
-        boolean exp = false, res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);
-    }
-    @Test
-    void encontrarPalavraemSequenciaPalavraIncompleta(){
-        char [][] x = {{'B','O','L','X'},{'A','A','A','A'},{'A','A','A','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        int[] pontoA ={0,0};
-        int[] pontoB = {3,2};
-        boolean exp = false;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);
-    }
-    @Test
-    void encontrarPalavraemDdiagonalInvalida(){
-        char [][] x = {{'B','A','A','A'},{'A','A','O','A'},{'A','A','A','L'},{'A','A','A','A'}};
-        String bola = "BOL";
-        int[] pontoA ={0,0};
-        int[]pontoB = {2,3};
-        boolean exp = false;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);
-    }
-    @Test
-    void encontrarPalavraemArrayVazio(){
-        char [][] x = {};
-        String bola = "BOLA";
-        int[] pontoA ={0,0};
-        int[] pontoB = {3,3};
-        boolean exp = false;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);
-    }
-    @Test
-    void encontrarPalavraemArrayNaoQuadrado(){
-        char [][] x = {{'B','A','A'},{'A','O','A','A'},{'A','A','L','A'},{'A','A','A','A'}};
-        String bola = "BOL";
-        int[] pontoA ={0,0};
-        int[] pontoB = {2,2};
-        boolean exp = false;
-        boolean res = Ex21.verificarPalavraNumSegmento(x,bola,pontoA,pontoB);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarCruzamentoPalavrasArrayVazio(){
-        char [][] x = {};
-        String bola = "BOLA";
-        String bela = "BELA";
-        boolean exp = false;
-        boolean result = Ex21.verificarCruzamentos(x,bola,bela);
-        assertEquals(exp,result);}
-    @Test
-    void encontrarCruzamentoPalavrasUmaDelasNaoExiste(){
-        char [][] x = {{'B','A','A','A'},{'A','O','A','A'},{'A','A','L','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        String bala = "BALA";
-        boolean exp = false;
-        boolean res = Ex21.verificarCruzamentos(x,bola,bala);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarCruzamentoPalavrasNaoQuadrado(){
-        char [][] x = {{'B','O','L','A'},{'A','A','A'},{'L','A','A','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        String bala = "BALA";
-        boolean exp = false;
-        boolean res = Ex21.verificarCruzamentos(x,bola,bala);
-        assertEquals(exp,res);
-    }
-    @Test
-    void encontrarCruzmentoPalavrasValido(){
-        char [][] x = {{'B','O','L','A'},{'A','A','A','A'},{'L','A','A','A'},{'A','A','A','A'}};
-        String bola = "BOLA";
-        String bala = "BALA";
-        boolean exp = true;
-        boolean res = Ex21.verificarCruzamentos(x,bola,bala);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarCruzamentoPalavrasValido2(){
-        char [][] x = {{'A','B','O','L'},{'A','E','A','A'},{'A','L','A','A'},{'A','A','A','A'}};
-        String bol = "BOL";
-        String bela = "BELA";
-        boolean exp = true;
-        boolean res = Ex21.verificarCruzamentos(x,bol,bela);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarCruzamentoPalavrasValido3(){
-        char [][] x = {{'A','B','B','A'},{'A','A','E','A'},{'A','A','A','L'},{'A','A','A','A'}};
-        String bola = "ABBA";
-        String bel = "BEL";
-        boolean exp = true;
-        boolean res = Ex21.verificarCruzamentos(x,bola,bel);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarCruzamentoPalavrasValido4(){
-        char [][] x = {{'A','B','A','A'},{'A','O','A','A'},{'A','L','A','A'},{'A','A','A','A'}};
-        String bola = "ABA";
-        String bala = "BOL";
-        boolean exp = true;
-        boolean res = Ex21.verificarCruzamentos(x,bola,bala);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarCruzamentoPalavrasValido5(){
-        char [][] x = {{'A','A','A','A'},{'A','L','A','L'},{'A','A','E','O'},{'A','A','A','B'}};
-        String bola = "BOLA", bala = "BELA";
-        boolean exp = true;
-        boolean res = Ex21.verificarCruzamentos(x,bola,bala);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarCruzamentoPalavrasInvalido(){
-        char [][] x = {{'B','O','L','A'},{'A','A','A','A'},{'B','E','L','A'},{'A','A','A','A'}};
-        String bola = "BOLA", bala = "BELA";
-        boolean exp = false;
-        boolean res = Ex21.verificarCruzamentos(x,bola,bala);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarCruzamentoPalavrasValido6(){
-        char [][] x = {{'T','E','T','O'},{'A','A','A','A'},{'A','A','L','A'},{'A','A','A','A'}};
-        String bola = "TETO";
-        String bala = "TALA";
-        boolean exp = true;
-        boolean res = Ex21.verificarCruzamentos(x,bola,bala);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarCruzamentoPalavraValido7(){
-        char [][] x = {{'O','T','E','T'},{'A','O','R','A'},{'A','L','V','A'},{'A','A','A','A'}};
-        String bola = "TETO";
-        String bala = "ERVA";
-        boolean exp = true;
-        boolean res = Ex21.verificarCruzamentos(x,bola,bala);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarCruzamentoPalavraDiagonalSecundaria(){
-        char [][] x = {{'A','O','A','T'},{'A','A','E','A'},{'A','T','A','A'},{'O','A','A','A'}};
-        String teto = "TETO";
-        String tao = "TAO";
-        boolean exp = true;
-        boolean res = Ex21.verificarCruzamentos(x,teto,tao);
-        assertEquals(exp,res);}
-    @Test
-    void encontrarCruzamentoPalavraDiagonalPrimaria(){
-        char [][] x = {{'T','A','A','A'},{'A','E','A','A'},{'A','N','T','A'},{'A','A','A','O'}};
-        String teto = "TETO";
-        String tao = "ENA";
-        boolean exp = true;
-        boolean res = Ex21.verificarCruzamentos(x,teto,tao);
-        assertEquals(exp,res);}
 
+    @Test
+    void matrizMascaraNaoQuadrada() {
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C'}, {'D', 'E', 'F'}};
+        char letra = 'A';
+        //Act
+        int[][] matrizMascara = {{1, 0, 0}, {0, 0, 0}};
+        //Assert
+        assertArrayEquals(matrizMascara, Ex21.matrizMascara(sopa, letra));
+    }
+
+    @Test
+    void matrizMascaratodasLetrasIguais() {
+        //Arrange
+        char[][] sopa = {{'A', 'A', 'A'}, {'A', 'A', 'A'}, {'A', 'A', 'A'}};
+        char letra = 'A';
+        //Act
+        int[][] matrizMascara = {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
+        //Assert
+        assertArrayEquals(matrizMascara, Ex21.matrizMascara(sopa, letra));
+    }
+
+    @Test
+    void matrizMascaraLetraInexistente() {
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C'}, {'D', 'E', 'F'}, {'G', 'H', 'I'}};
+        char letra = 'J';
+        //Act
+        int[][] matrizMascara = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+        //Assert
+        assertArrayEquals(matrizMascara, Ex21.matrizMascara(sopa, letra));
+    }
+
+    @Test
+    void matrizMascaraLetraMinuscula() {
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C'}, {'D', 'E', 'F'}, {'G', 'H', 'I'}};
+        char letra = 'a';
+        //Act
+        int[][] matrizMascara = {{1, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+        //Assert
+        assertArrayEquals(matrizMascara, Ex21.matrizMascara(sopa, letra));
+    }
+
+    @Test
+    void matrizMascaraLetraMinusculaInexistente() {
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C'}, {'D', 'E', 'F'}, {'G', 'H', 'I'}};
+        char letra = 'j';
+        //Act
+        int[][] matrizMascara = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+        //Assert
+        assertArrayEquals(matrizMascara, Ex21.matrizMascara(sopa, letra));
+    }
+
+    @Test
+    void verificarseQuadradoCharacterValido() {
+        //Arrange
+        char[][] arraydeArrays = {{'A', 'B', 'C'}, {'D', 'E', 'F'}, {'G', 'H', 'I'}};
+        //Act
+        boolean resultado = Ex21.verificarSeQuadradoCharacters(arraydeArrays);
+        //Assert
+        assertTrue(resultado);
+    }
+
+    @Test
+    void verificarseQuadradoMatrizVazia() {
+        //Arrange
+        char[][] arraydeArrays = {};
+        //Act
+        boolean resultado = Ex21.verificarSeQuadradoCharacters(arraydeArrays);
+        //Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void verificarseQuadradoMatrizNaoQuadrada() {
+        //Arrange
+        char[][] arraydeArrays = {{'A', 'B', 'C'}, {'D', 'E', 'F'}};
+        //Act
+        boolean resultado = Ex21.verificarSeQuadradoCharacters(arraydeArrays);
+        //Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void verificarseQuadradoMatrizRetangular2x3() {
+        //Arrange
+        char[][] arraydeArrays = {{'A', 'B', 'C'}, {'D', 'E', 'F'}};
+        //Act
+        boolean resultado = Ex21.verificarSeQuadradoCharacters(arraydeArrays);
+        //Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void verificarseQuadradoMatrizRetangular3x2() {
+        //Arrange
+        char[][] arraydeArrays = {{'A', 'B'}, {'D', 'E'}, {'G', 'H'}};
+        //Act
+        boolean resultado = Ex21.verificarSeQuadradoCharacters(arraydeArrays);
+        //Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void verificarseQuadradoUmaLinhaDiferente() {
+        //Arrange
+        char[][] arraydeArrays = {{'A', 'B', 'C', 'L'}, {'D', 'E', 'F'}, {'G', 'H', 'I'}};
+        //Act
+        boolean resultado = Ex21.verificarSeQuadradoCharacters(arraydeArrays);
+        //Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void verificarSeLinhaseColunasDeUmaMatrizCharValido() {
+        //Arrange
+        char[][] arraydeArrays = {{'A', 'B', 'C'}, {'D', 'E', 'F'}, {'G', 'H', 'I'}};
+        //Act
+        int resultado = Ex21.verificarSeLinhasEColunasDeUmaMatrizChar(arraydeArrays);
+        //Assert
+        assertEquals(3, resultado);
+    }
+
+    @Test
+    void verificarSeLinhaseColunasDeUmaMatrizCharVazio() {
+        //Arrange
+        char[][] arraydeArrays = {};
+        //Act
+        int resultado = Ex21.verificarSeLinhasEColunasDeUmaMatrizChar(arraydeArrays);
+        //Assert
+        assertEquals(-1, resultado);
+    }
+
+    @Test
+    void verificarSeLinhaseColunasDeUmaMatrizCharInvalido() {
+        //Arrange
+        char[][] arraydeArrays = {{'A', 'B'}, {'D', 'E', 'F'}};
+        //Act
+        int resultado = Ex21.verificarSeLinhasEColunasDeUmaMatrizChar(arraydeArrays);
+        //Assert
+        assertEquals(-1, resultado);
+    }
+
+    @Test
+    void palavraemArrayValido() {
+        //Arrange
+        String palavra = "ABCD";
+        //Act
+        char[] resultado = Ex21.palavraParaArray(palavra);
+        //Assert
+        char[] esperado = {'A', 'B', 'C', 'D'};
+        assertArrayEquals(esperado, resultado);
+    }
+
+    @Test
+    void palavraemArrayPalavraAusente() {
+        //Arrange
+        String palavra = "";
+        //Act
+        char[] resultado = Ex21.palavraParaArray(palavra);
+        //Assert
+        char[] esperado = {};
+        assertArrayEquals(esperado, resultado);
+    }
+
+    @Test
+    void palavraemArrayPalavraEspacos() {
+        //Arrange
+        String palavra = "   ";
+        //Act
+        char[] resultado = Ex21.palavraParaArray(palavra);
+        //Assert
+        char[] esperado = {};
+        assertArrayEquals(esperado, resultado);
+    }
+
+    @Test
+    void verificarPalavraValida() {
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C', 'D'}, {'D', 'E', 'F', 'G'}, {'G', 'H', 'I', 'J'}, {'K', 'L', 'M', 'N'}};
+        String palavra = "ABCD";
+        //Act
+        boolean resultado = Ex21.verificarPalavra(sopa, palavra);
+        //Assert
+        assertTrue(resultado);
+    }
+
+    @Test
+    void verificarPalavraValidaVertical() {
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C'}, {'D', 'B', 'F'}, {'G', 'B', 'I'}};
+        String palavra = "BBB";
+        //Act
+        boolean resultado = Ex21.verificarPalavra(sopa, palavra);
+        //Assert
+        assertTrue(resultado);
+    }
+
+    @Test
+    void verificarPalavraValidaDiagonal() {
+        //Arrange
+        char[][] sopa = {{'B', 'A', 'C'}, {'D', 'B', 'F'}, {'G', 'H', 'B'}};
+        String palavra = "BBB";
+        //Act
+        boolean resultado = Ex21.verificarPalavra(sopa, palavra);
+        //Assert
+        assertTrue(resultado);
+    }
+
+    @Test
+    void verificarPalavraValidaDiagonalSecundaria() {
+        //Arrange
+        char[][] sopa = {{'B', 'A', 'B'}, {'D', 'B', 'F'}, {'B', 'H', 'C'}};
+        String palavra = "BBB";
+        //Act
+        boolean resultado = Ex21.verificarPalavra(sopa, palavra);
+        //Assert
+        assertTrue(resultado);
+    }
+
+    @Test
+    void verificarPalavraInvalida() {
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C', 'D'}, {'D', 'E', 'F', 'G'}, {'G', 'H', 'I', 'J'}, {'K', 'L', 'M', 'N'}};
+        String palavra = "ABCE";
+        //Act
+        boolean resultado = Ex21.verificarPalavra(sopa, palavra);
+        //Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void verificarPalavraSopaVazia() {
+        //Arrange
+        char[][] sopa = {{}};
+        String palavra = "ABCD";
+        //Act
+        boolean resultado = Ex21.verificarPalavra(sopa, palavra);
+        //Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void verificarPalavraSopaNaoQuadrada() {
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C'}, {'D', 'E', 'F'}};
+        String palavra = "ABCD";
+        //Act
+        boolean resultado = Ex21.verificarPalavra(sopa, palavra);
+        //Assert
+        assertFalse(resultado);
+    }
+    @Test
+    void verificarPalavraSopaLetrasTodasPresentesMasDeslocadas(){
+        //Arrange
+        char[][] sopa = {{'B', 'D', 'C'}, {'A', 'E', 'F'}, {'G', 'H', 'I'}};
+        String palavra = "CBA";
+        //Act
+        boolean resultado = Ex21.verificarPalavra(sopa, palavra);
+        //Assert
+        assertFalse(resultado);
+    }
+    @Test
+    void verificadorValido(){
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C', 'D'}, {'D', 'E', 'F', 'G'}, {'G', 'H', 'I', 'J'}, {'K', 'L', 'M', 'N'}};
+        char[] palavra = {'A','B','C','D'};
+        int[] posicaoInicial = {0,0};
+        int[] direccao = {0,1};
+        //Act
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        //Assert
+        assertTrue(resultado);}
+    @Test
+    void verificadorValidoVertical(){
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C', 'D'}, {'D', 'E', 'F', 'G'}, {'G', 'H', 'I', 'J'}, {'K', 'L', 'M', 'N'}};
+        char[] palavra = {'A','D','G','K'};
+        int[] posicaoInicial = {0,0};
+        int[] direccao = {1,0};
+        //Act
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        //Assert
+        assertTrue(resultado);}
+    @Test
+    void verificadorValidoDiagonal(){
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C', 'D'}, {'D', 'E', 'F', 'G'}, {'G', 'H', 'I', 'J'}, {'K', 'L', 'M', 'N'}};
+        char[] palavra = {'A','E','I','N'};
+        int[] posicaoInicial = {0,0};
+        int[] direccao = {1,1};
+        //Act
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        //Assert
+        assertTrue(resultado);}
+    @Test
+    void verificadorDireccaoInvalido(){
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C', 'D'}, {'D', 'E', 'F', 'G'}, {'G', 'H', 'I', 'J'}, {'K', 'L', 'M', 'N'}};
+        char[] palavra = {'A','B','C','D'};
+        int[] posicaoInicial = {0,0};
+        int[] direccao = {1,0};
+        //Act
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificadorPosicaoInicialInvalida(){
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C', 'D'}, {'D', 'E', 'F', 'G'}, {'G', 'H', 'I', 'J'}, {'K', 'L', 'M', 'N'}};
+        char[] palavra = {'A','B','C','D'};
+        int[] posicaoInicial = {0,1};
+        int[] direccao = {0,1};
+        //Act
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificadorInvalidoSaiForadaCaixa(){
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C', 'D'}, {'D', 'E', 'F', 'G'}, {'G', 'H', 'I', 'J'}, {'K', 'L', 'M', 'N'}};
+        char[] palavra = {'B','A','B'};
+        int[] posicaoInicial = {0,1};
+        int[] direccao = {0,-1};
+        //Act
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificadorValidoMasAcabaemZero(){
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'B', 'D'}, {'D', 'E', 'F', 'G'}, {'G', 'H', 'I', 'J'}, {'K', 'L', 'M', 'N'}};
+        char[] palavra = {'B','B','A'};
+        int[] posicaoInicial = {0,1};
+        int[] direccao = {0,-1};
+        //Act
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificadorInvalidoSaiForadaCaixaTurnsAround(){
+        //Arrange
+        char[][] sopa = {{'A', 'B', 'C', 'B'}, {'D', 'E', 'F', 'G'}, {'G', 'H', 'I', 'J'}, {'K', 'L', 'M', 'N'}};
+        char[] palavra = {'B','A','B'};
+        int[] posicaoInicial = {0,1};
+        int[] direccao = {0,-1};
+        //Act
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificadorValidoBatenoZero(){
+        //Arrange
+        char[][] sopa = {{'B', 'D', 'C', 'G'}, {'A', 'E', 'F', 'G'}, {'B', 'H', 'I', 'J'}, {'K', 'L', 'M', 'N'}};
+        char[] palavra = {'B','A','B'};
+        int[] posicaoInicial = {3,0};
+        int[] direccao = {-1,0};
+        //Act
+        boolean resultado = Ex21.verificador(sopa,palavra,posicaoInicial,direccao);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificarCruzamentosValidoLinha0Colunao(){
+        //Arrange
+        char[][] sopa = {{'B', 'A', 'D', 'G'}, {'A', 'E', 'F', 'G'}, {'C', 'H', 'I', 'J'}, {'K', 'L', 'M', 'N'}};
+        String palavra1 = "BAD";
+        String palavra2 = "BAC";
+        //Act
+        boolean resultado = Ex21.verificarCruzamentos(sopa,palavra1,palavra2);
+        //Assert
+        assertTrue(resultado);}
+    @Test
+    void verificarCruzamentosValidoLinha4Coluna4(){
+        //Arrange
+        char[][] sopa = {{'B', 'F', 'D', 'G'}, {'A', 'E', 'F', 'C'}, {'C', 'H', 'I', 'A'}, {'K', 'D', 'A', 'B'}};
+        String palavra1 = "BAD";
+        String palavra2 = "BAC";
+        //Act
+        boolean resultado = Ex21.verificarCruzamentos(sopa,palavra1,palavra2);
+        //Assert
+        assertTrue(resultado);}
+    @Test
+    void verificarCruzamentosPalavra1Ausente(){
+        //Arrange
+        char[][] sopa = {{'B', 'E', 'D', 'B'}, {'G', 'G', 'G', 'A'}, {'G', 'G', 'G', 'C'}, {'G', 'G', 'G', 'B'}};
+        String palavra1 = "BAD";
+        String palavra2 = "BAC";
+        //Act
+        boolean resultado = Ex21.verificarCruzamentos(sopa,palavra1,palavra2);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificarCruzamentoPalavra2Ausente(){
+        //Arrange
+        char[][] sopa = {{'B', 'A', 'C', 'B'}, {'G', 'G', 'G', 'A'}, {'G', 'G', 'G', 'C'}, {'G', 'G', 'G', 'B'}};
+        String palavra1 = "BAC";
+        String palavra2 = "BAD";
+        //Act
+        boolean resultado = Ex21.verificarCruzamentos(sopa,palavra1,palavra2);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificarCruzamentoPalavra1e2Ausente(){
+        //Arrange
+        char[][] sopa = {{'B', 'A', 'G', 'B'}, {'G', 'G', 'G', 'A'}, {'G', 'G', 'G', 'C'}, {'G', 'G', 'G', 'B'}};
+        String palavra1 = "BAD";
+        String palavra2 = "BAC";
+        //Act
+        boolean resultado = Ex21.verificarCruzamentos(sopa,palavra1,palavra2);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificarCruzamentoPalavra1e2PresentesMasNaoCruzam(){
+        //Arrange
+        char[][] sopa = {{'B', 'A', 'D', 'B'}, {'G', 'G', 'G', 'A'}, {'G', 'G', 'G', 'C'}, {'G', 'G', 'G', 'B'}};
+        String palavra1 = "BAD";
+        String palavra2 = "BAC";
+        //Act
+        boolean resultado = Ex21.verificarCruzamentos(sopa,palavra1,palavra2);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificarCruzamentopalavrasParalelasMasNaoIntersetam(){
+        //Arrange
+        char[][] sopa = {{'B', 'A', 'D', 'C'}, {'G', 'G', 'G', 'C'}, {'D', 'O', 'D', 'C'}, {'T', 'T', 'T', 'T'}};
+        String palavra1 = "BAD";
+        String palavra2 = "GGG";
+        //Act
+        boolean resultado = Ex21.verificarCruzamentos(sopa,palavra1,palavra2);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void posicoesPalavraValido(){
+        //Arrange
+        char[][] sopa = {{'B', 'A', 'D', 'C'}, {'G', 'G', 'G', 'C'}, {'D', 'O', 'D', 'C'}, {'T', 'T', 'T', 'T'}};
+        char[] palavra = {'B','A','D'};
+        //Act
+        int[][] resultado = Ex21.posicoesPalavra(sopa,palavra);
+        //Assert
+        int[][] esperado = {{0,0},{0,1},{0,2}};
+        assertArrayEquals(esperado,resultado);}
+    @Test
+    void posicoesPalavraValidoincluilinha0coluna0(){
+        //Arrange
+        char[][] sopa = {{'B', 'A', 'D', 'C'}, {'G', 'G', 'G', 'C'}, {'D', 'O', 'D', 'C'}, {'T', 'T', 'T', 'T'}};
+        char[] palavra = {'D','A','B'};
+        //Act
+        int[][] resultado = Ex21.posicoesPalavra(sopa,palavra);
+        //Assert
+        int[][] esperado = {{0,2},{0,1},{0,0}};
+        assertArrayEquals(esperado,resultado);}
+    @Test
+    void posicoesPalavraValidoincluilinha0coluna0VerticalAscendente(){
+        //Arrange
+        char[][] sopa = {{'B', 'G', 'G', 'G'}, {'A', 'G', 'G', 'G'}, {'D', 'G', 'G', 'G'}, {'T', 'T', 'T', 'T'}};
+        char[] palavra = {'D','A','B'};
+        //Act
+        int[][] resultado = Ex21.posicoesPalavra(sopa,palavra);
+        //Assert
+        int[][] esperado = {{2,0},{1,0},{0,0}};
+        assertArrayEquals(esperado,resultado);}
+
+    @Test
+    void verificarPalavraNumSegmentoValidoincluiLinha0Coluna0(){
+        //Arrange
+        char[][] sopa = {{'B', 'A', 'D', 'C'}, {'G', 'G', 'G', 'C'}, {'D', 'O', 'D', 'C'}, {'T', 'T', 'T', 'T'}};
+        String palavra = "DAB";
+        int[] posicaoInicial = {0,2};
+        int[] posicaoFinal = {0,0};
+        //Act
+        boolean resultado = Ex21.verificarPalavraNumSegmento(sopa,palavra,posicaoInicial,posicaoFinal);
+        //Assert
+        assertTrue(resultado);}
+    @Test
+    void verificarPalavraNumSegmentoValidoIncluiLinha0Coluna3(){
+        //Arrange
+        char[][] sopa = {{'B', 'C', 'D', 'O'}, {'G', 'G', 'G', 'C'}, {'D', 'O', 'D', 'C'}, {'T', 'T', 'T', 'T'}};
+        String palavra = "CDA";
+        int[] posicaoInicial = {0,3};
+        int[] posicaoFinal = {0,4};
+        //Act
+        boolean resultado = Ex21.verificarPalavraNumSegmento(sopa,palavra,posicaoInicial,posicaoFinal);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificarPalaveaNumSegmentoInvalido(){
+        //Arrange
+        char[][] sopa = {{'B', 'C', 'D', 'O'}, {'G', 'G', 'G', 'C'}, {'D', 'O', 'D', 'C'}, {'T', 'T', 'T', 'T'}};
+        String palavra = "CDA";
+        int[] posicaoInicial = {0,3};
+        int[] posicaoFinal = {0,4};
+        //Act
+        boolean resultado = Ex21.verificarPalavraNumSegmento(sopa,palavra,posicaoInicial,posicaoFinal);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificarPalavraNumaDiagonalInvalida(){
+        //Arrange
+        char[][] sopa = {{'G', 'F', 'D', 'C'}, {'A', 'A', 'D', 'O'}, {'H', 'O', 'D', 'C'}, {'T', 'T', 'T', 'T'}};
+        String palavra = "CDA";
+        int[] posicaoInicial = {0,3};
+        int[] posicaoFinal = {1,1};
+        //Act
+        boolean resultado = Ex21.verificarPalavraNumSegmento(sopa,palavra,posicaoInicial,posicaoFinal);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificarPalavraNumSegmentoSopaInvalida(){
+        //Arrange
+        char[][] sopa = {{'G', 'F', 'D'}, {'A', 'A', 'D', 'O'}, {'H', 'O', 'D', 'C'}, {'T', 'T', 'T', 'T'}};
+        String palavra = "CDA";
+        int[] posicaoInicial = {0,3};
+        int[] posicaoFinal = {1,1};
+        //Act
+        boolean resultado = Ex21.verificarPalavraNumSegmento(sopa,palavra,posicaoInicial,posicaoFinal);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificarPalavraNumSegmentoSopaVazia(){
+        //Arrange
+        char[][] sopa = {{}};
+        String palavra = "CDA";
+        int[] posicaoInicial = {0,3};
+        int[] posicaoFinal = {1,1};
+        //Act
+        boolean resultado = Ex21.verificarPalavraNumSegmento(sopa,palavra,posicaoInicial,posicaoFinal);
+        //Assert
+        assertFalse(resultado);}
+
+    @Test
+    void direccaoValidoHorizontalEsquerdaDireita(){
+        //Arrange
+        int[]pontoA = {0,0};
+        int[]pontoB = {0,3};
+        int[]expectedDireccao = {0,1};
+        //Act
+        int[]resultado = Ex21.direccao(pontoA,pontoB);
+        //Assert
+        assertArrayEquals(expectedDireccao,resultado);}
+    @Test
+    void direccaoValidoHorizontalDireitaEsquerda(){
+        //Arrange
+        int[]pontoA = {0,3};
+        int[]pontoB = {0,0};
+        int[]expectedDireccao = {0,-1};
+        //Act
+        int[]resultado = Ex21.direccao(pontoA,pontoB);
+        //Assert
+        assertArrayEquals(expectedDireccao,resultado);}
+    @Test
+    void direccaoValidoVerticalDescendente(){
+        //Arrange
+        int[]pontoA = {0,3};
+        int[]pontoB = {3,3};
+        int[]expectedDireccao = {1,0};
+        //Act
+        int[]resultado = Ex21.direccao(pontoA,pontoB);
+        //Assert
+        assertArrayEquals(expectedDireccao,resultado);}
+    @Test
+    void direccaoValidaVerticalAscendente(){
+        //Arrange
+        int[]pontoA = {3,3};
+        int[]pontoB = {0,3};
+        int[]expectedDireccao = {-1,0};
+        //Act
+        int[]resultado = Ex21.direccao(pontoA,pontoB);
+        //Assert
+        assertArrayEquals(expectedDireccao,resultado);}
+    @Test
+    void direccaoValidaDiagonalEsqDirDescentende(){
+        //Arrange
+        int[]pontoA = {0,0};
+        int[]pontoB = {3,3};
+        int[]expectedDireccao = {1,1};
+        //Act
+        int[]resultado = Ex21.direccao(pontoA,pontoB);
+        //Assert
+        assertArrayEquals(expectedDireccao,resultado);}
+    @Test
+    void direccaoValidaDiagonalDirEsqAscendente(){
+        //Arrange
+        int[]pontoA = {3,3};
+        int[]pontoB = {0,0};
+        int[]expectedDireccao = {-1,-1};
+        //Act
+        int[]resultado = Ex21.direccao(pontoA,pontoB);
+        //Assert
+        assertArrayEquals(expectedDireccao,resultado);
+    }
+    @Test
+    void direccaoValidaDiagonalSecundariaEsqDir(){
+        //Arrange
+        int[]pontoA = {3,0};
+        int[]pontoB = {0,3};
+        int[]expectedDireccao = {-1,1};
+        //Act
+        int[]resultado = Ex21.direccao(pontoA,pontoB);
+        //Assert
+        assertArrayEquals(expectedDireccao,resultado);}
+    @Test
+    void direccaoValidaDiagonalSecundiarADirEsq(){
+        //Arrange
+        int[]pontoA = {0,3};
+        int[]pontoB = {3,0};
+        int[]expectedDireccao = {1,-1};
+        //Act
+        int[]resultado = Ex21.direccao(pontoA,pontoB);
+        //Assert
+        assertArrayEquals(expectedDireccao,resultado);}
+    @Test
+    void direccaoValidaComecaeTerminanoMesmoLocal(){
+        //Arrange
+        int[] pontoA = {0,3};
+        int[] pontoB = {0,3};
+        int[] expectedDireccao = {0,0};
+        //Act
+        int[] resultado = Ex21.direccao(pontoA,pontoB);
+        //Assert
+        assertArrayEquals(expectedDireccao,resultado);}
+    @Test
+    void verificarValidadeDireccaoValido(){
+        //Arrange
+        int difX = 1;
+        int difY = 1;
+        //Act
+        boolean resultado = Ex21.verificarValidade(difX,difY);
+        //Assert
+        assertTrue(resultado);}
+    @Test
+    void verificarValidadeDireccaoNulo(){
+        //Arrange
+        int difX = 0;
+        int difY = 0;
+        //Act
+        boolean resultado = Ex21.verificarValidade(difX,difY);
+        //Assert
+        assertFalse(resultado);}
+    @Test
+    void verificarValidadedifXNulodifYNaoNulo(){
+        //Arrange
+        int difX = 0;
+        int difY = 1;
+        //Act
+        boolean resultado = Ex21.verificarValidade(difX,difY);
+        //Assert
+        assertTrue(resultado);}
+    @Test
+    void verificarValidadedifXdiferentededifY(){
+        //Arrange
+        int difX = 1;
+        int difY = 0;
+        //Act
+        boolean resultado = Ex21.verificarValidade(difX,difY);
+        //Assert
+        assertTrue(resultado);}
     }
