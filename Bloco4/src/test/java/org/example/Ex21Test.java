@@ -653,9 +653,8 @@ class Ex21Test {
     void verificarValidadeDireccaoValido(){
         //Arrange
         int difX = 1;
-        int difY = 1;
         //Act
-        boolean resultado = Ex21.verificarValidade(difX,difY);
+        boolean resultado = Ex21.verificarValidade(difX,difX);
         //Assert
         assertTrue(resultado);}
     @Test
