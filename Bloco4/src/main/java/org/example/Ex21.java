@@ -119,5 +119,4 @@ public class Ex21 {
         if(difX!=0 && difY==0)
             return true;
         return (difX==difY && difX!=0 && difY!=0);}
-    //Verifica se o segmento é válido(só pode ser vertical, horizontal ou diagonais (principal/2ária)
 }

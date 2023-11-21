@@ -582,5 +582,14 @@ class Ex18Test {
         // Assert
         assertArrayEquals(exp, res);
     }
+    @Test
+    public void testDevolverMatrizaDividirporDeterminante_DivisionAccuracy() {
+        double[][] inputMatrix = {{1, 2, 3, 4}, {0, 1, 4, 4}, {5, 6, 4, 3}, {0, 3, 4, 5}};
+        double determinant = 10;
+        double[][] expected = {{0.1, 0.2, 0.3, 0.4}, {0, 0.1, 0.4, 0.4}, {0.5, 0.6, 0.4, 0.3}, {0, 0.3, 0.4, 0.5}};
+
+        double[][] result = Ex18.devolverMatrizaDividirporDeterminante(inputMatrix, determinant);
+        assertArrayEquals(expected, result);}
+
 }
 

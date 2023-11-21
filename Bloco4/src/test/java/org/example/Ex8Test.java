@@ -23,7 +23,7 @@ class Ex8Test {
         int[] array = {1, 2, 3, 4, 5};
         int num = 10;
         //Act
-        int[] exp = {1, 2, 3, 4, 5};
+        int[] exp = {};
         int[] res = Ex8.devolverVetorComXElementos(array, num);
         //Assert
         assertArrayEquals(exp, res);
@@ -76,4 +76,36 @@ class Ex8Test {
         //Assert
         assertArrayEquals(exp, res);
     }
+    @Test
+    void devolverVetorcomNumNegativo(){
+        //Arrange
+        int[]array= {1,2,3,4,5};
+        int num = 0;
+        //Act
+        int[]exp = {};
+        int[]res = Ex8.devolverVetorComXElementos(array,num);
+        //Assert
+        assertArrayEquals(exp,res);}
+    @Test
+    void devolverVetorcomNumIgualATamanhoVetor(){
+        //Arrange
+        int[]array = {1,2,3};
+        int num = 3;
+        //Act
+        int[] exp = array;
+        int[] res = Ex8.devolverVetorComXElementos(array,num);
+        //Assert
+        assertArrayEquals(exp,res);}
+    @Test
+    void devolverVetorcomNumIguala1(){
+        //Arrange
+        int[]array = {2,3,4,5};
+        int num = 1;
+        //Act
+        int[]exp = {2};
+        int[]res= Ex8.devolverVetorComXElementos(array,num);
+        //Assert
+        assertArrayEquals(exp,res);
+    }
+
 }
