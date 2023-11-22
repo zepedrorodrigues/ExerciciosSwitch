@@ -1,10 +1,4 @@
 
-{	java:S135Ú"YReduce the total number of break and continue statements in this loop to use at most one.(È–ÏŸûÿÿÿÿ8®í±«¹1
-e
-java:S2184Ó"BCast one of the operands of this addition operation to a "double".(è®•Áûÿÿÿÿ8°í±«¹1
+{	java:S135Ñ"YReduce the total number of break and continue statements in this loop to use at most one.(È–ÏŸûÿÿÿÿ8ñ¡õ’¿1
 `
-java:S2184Õ"BCast one of the operands of this addition operation to a "double".(´Ï‰î8°í±«¹1
-`
-java:S2184Ö"BCast one of the operands of this addition operation to a "double".(Ú²Í8°í±«¹1
-a
-java:S1994±">Move the update of "subColuna" into this loop's update clause.(ˆ‘£óüÿÿÿÿ8½ð±«¹1
+java:S2184Ê"BCast one of the operands of this addition operation to a "double".(²‰¬„8õ¡õ’¿1

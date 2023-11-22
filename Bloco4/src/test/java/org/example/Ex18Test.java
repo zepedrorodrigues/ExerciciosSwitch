@@ -218,6 +218,15 @@ class Ex18Test {
     }
 
     @Test
+    void diagonalPrincipalMatrizLinha0IgualComprimentoqueMatriz(){
+        //Arrange
+        int[][]matriz = {{1,2,3,4},{1,2,3,4},{1,2,3,4},{1,2,3,4}};
+        int[] exp = {1,2,3,4};;
+        //Act
+        int[] res = Ex18.diagonalPrincipalMatriz(matriz);
+        //Assert
+        assertArrayEquals(exp,res);}
+    @Test
     void diagonalPrincipalMatrizRetangularHorizontal() {
         // Arrange
         int[][] matriz = {{1, 2, 3}, {0, 11, 3}};
@@ -372,7 +381,7 @@ class Ex18Test {
         //Arrange
         double[][] matriz = {{1, 2, 3, 4}, {0, -1, 4, 4}, {5, 6, 0, 4}, {4, 3, 5, 6}};
         // Act
-        double[][] exp = {{-2 / 3d, 4 / 33d, 1 / 11d, 10 / 33d}, {2 / 3d, -19 / 33d, -2 / 11d, 2 / 33d}, {1 / 3d, -20 / 33d, -5 / 11d, 16 / 33d}, {-1 / 6d, 47 / 66d, 9 / 22d, -31 / 66d}};
+        double[][] exp = {{-2/3d, 4 / 33d, 1 / 11d, 10 / 33d}, {2 / 3d, -19 / 33d, -2 / 11d, 2 / 33d}, {1 / 3d, -20 / 33d, -5 / 11d, 16 / 33d}, {-1 / 6d, 47 / 66d, 9 / 22d, -31 / 66d}};
         double[][] res = Ex18.matrizInvertida(matriz);
         // Assert
         assertArrayEquals(exp, res);
@@ -451,7 +460,7 @@ class Ex18Test {
         int[] pos = {1, 1};
         double[][] exp = {{1, 3}, {5, 0}};
         // Act
-        double[][] res = Ex18.verificarSubMatriz(matriz, pos);
+        double[][] res = Ex18.verificarSubMatriz(matriz, pos[0],pos[1]);
         // Assert
         assertArrayEquals(exp, res);
     }
@@ -463,7 +472,7 @@ class Ex18Test {
         int[] pos = {2, 1};
         double[][] exp = {{1, 3, 4}, {0, 4, 4}, {4, 5, 6}};
         // Act
-        double[][] res = Ex18.verificarSubMatriz(matriz, pos);
+        double[][] res = Ex18.verificarSubMatriz(matriz, pos[0],pos[1]);
         // Assert
         assertArrayEquals(exp, res);
     }
@@ -475,7 +484,7 @@ class Ex18Test {
         int[] pos = {2, 1};
         double[][] exp = {};
         // Act
-        double[][] res = Ex18.verificarSubMatriz(matriz, pos);
+        double[][] res = Ex18.verificarSubMatriz(matriz, pos[0],pos[1]);
         // Assert
         assertArrayEquals(exp, res);
     }
@@ -487,7 +496,7 @@ class Ex18Test {
         int[] pos = {10, 10};
         double[][] exp = {};
         // Act
-        double[][] res = Ex18.verificarSubMatriz(matriz, pos);
+        double[][] res = Ex18.verificarSubMatriz(matriz, pos[0],pos[1]);
         // Assert
         assertArrayEquals(exp, res);
     }
@@ -551,12 +560,19 @@ class Ex18Test {
     void coFatordeXValido() {
         //Arrange
         double[][] matriz = {{1, 2, 3, 4}, {0, -1, 4, 4}, {5, 6, 0, 4}, {4, 3, 5, 6}};
-        int[] pos = {0, 0};
+        int posA = 0;
+        int posB = 0;
         //Act
         double exp = 44;
-        double res = Ex18.coFatordeX(matriz, pos);
+        double res = Ex18.coFatordeX(matriz, posA,posB);
         //Assert
-        assertEquals(exp, res);
+        assertEquals(exp, res);}
+    @Test
+    void coFatordeXinvalido(){
+        //Arrange
+        double[][] matriz = {{1,2,3},{1,2,3},{1,2,3}};
+        int posA = 0;
+        int posB= -1;
     }
 
     @Test
@@ -566,7 +582,7 @@ class Ex18Test {
         int[] pos = {2, 2};
         // Act
         double[][] exp = {{1, 2, 4, 5}, {0, 1, 4, 5}, {0, 3, 5, 6}, {9, 6, 7, 8}};
-        double[][] res = Ex18.verificarSubMatriz(matriz, pos);
+        double[][] res = Ex18.verificarSubMatriz(matriz, pos[0],pos[1]);
         // Assert
         assertArrayEquals(exp, res);
     }
@@ -578,18 +594,148 @@ class Ex18Test {
         int[] pos = {2, 2};
         // Act
         double[][] exp = {{1, 2, 4}, {0, 1, 4}, {0, 3, 5}};
-        double[][] res = Ex18.verificarSubMatriz(matriz, pos);
+        double[][] res = Ex18.verificarSubMatriz(matriz, pos[0],pos[1]);
         // Assert
         assertArrayEquals(exp, res);
     }
     @Test
     public void testDevolverMatrizaDividirporDeterminante_DivisionAccuracy() {
+        //Arrange
         double[][] inputMatrix = {{1, 2, 3, 4}, {0, 1, 4, 4}, {5, 6, 4, 3}, {0, 3, 4, 5}};
         double determinant = 10;
+        //Act
         double[][] expected = {{0.1, 0.2, 0.3, 0.4}, {0, 0.1, 0.4, 0.4}, {0.5, 0.6, 0.4, 0.3}, {0, 0.3, 0.4, 0.5}};
-
         double[][] result = Ex18.devolverMatrizaDividirporDeterminante(inputMatrix, determinant);
+        //Assert
         assertArrayEquals(expected, result);}
+    @Test
+    public void testaarMatrizIdentidadeLinha3coluna2diferentedeZero(){
+        //Arrange
+        int[][] matriz = {{1, 0, 0, 0}, {0, 1, 2, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}};
+        //Act & Assert
+        assertFalse(Ex18.testarMatrizIdentidade(matriz));}
+    @Test
+    void verificarSubMatriz3x3i1igualamatrizlength(){
+        //Arrange
+        double[][]matriz = {{1,2,3},{1,2,3},{1,2,3}};
+        int[]i={0,2};
+        //Act
+        double[][]exp = {{1,2},{1,2}};
+        double[][]res = Ex18.verificarSubMatriz(matriz,i[0],i[1]);
+        //Assert
+        assertArrayEquals(exp,res);}
 
-}
+    @Test
+    void coFatorXdelinha0coluna3(){
+        //Arrange
+        double[][]matriz = {{1,2,3},{1,2,3},{1,2,3}};
+        int posA = 2;
+        int posB = 1;
+        //Act
+        double expected = -0d;
+        double result = Ex18.coFatordeX(matriz,posA,posB);
+        //Assert
+        assertEquals(expected,result);
+    }
+    @Test
+    void verificarSubmatrizJNegativo(){
+        //Arrange
+        double[][]matriz = {{1,2,3},{1,2,3},{1,2,3}};
+        int i = 2;
+        int j = -3;
+        //Act
+        double[][] expected = {};
+        double[][] result = Ex18.verificarSubMatriz(matriz,i,j);
+        //Assert
+        assertArrayEquals(expected,result);}
+    @Test
+    void verificarsubmatrizINegativo(){
+        //Arrange
+        double[][]matriz = {{1,2,3},{1,2,3},{1,2,3}};
+        int i = -2;
+        int j = 2;
+        //Act
+        double[][] expected = {};
+        double[][] result = Ex18.verificarSubMatriz(matriz,i,j);
+        //Assert
+        assertArrayEquals(expected,result);}
+    @Test
+    void verificarSubmatrizIigualaZero(){
+        //Arrange
+        double[][]matriz = {{1,2,3},{1,2,3},{1,2,3}};
+        int i = 0;
+        int j = 2;
+        //Act
+        double[][] expected = {{1,2},{1,2}};
+        double[][] result = Ex18.verificarSubMatriz(matriz,i,j);
+        //Assert
+        assertArrayEquals(expected,result);}
+    @Test
+    void verificarSubmatrizJigualaZero(){
+        //Arrange
+        double[][]matriz = {{1,2,3},{1,2,3},{1,2,3}};
+        int i = 2;
+        int j = 0;
+        //Act
+        double[][] expected = {{2,3},{2,3}};
+        double[][] result = Ex18.verificarSubMatriz(matriz,i,j);
+        //Assert
+        assertArrayEquals(expected,result);}
+    @Test
+    void verificarSubMatrizInoLimiteSuperior(){
+        //Arrange
+        double[][]matriz = {{1,2,3},{1,2,3},{1,2,3}};
+        int i = 3;
+        int j = 0;
+        //Act
+        double[][] expected = {};
+        double[][] result = Ex18.verificarSubMatriz(matriz,i,j);
+        //Assert
+        assertArrayEquals(expected,result);}
+    @Test
+    void verificarSubMatrizJnoLimiteSuperior(){
+        //Arrange
+        double[][]matriz = {{1,2,3},{1,2,3},{1,2,3}};
+        int i = 0;
+        int j = 3;
+        //Act
+        double[][] expected = {};
+        double[][] result = Ex18.verificarSubMatriz(matriz,i,j);
+        //Assert
+        assertArrayEquals(expected,result);}
+
+    @Test
+    void veirifcarCofatordeXPosicaoForadoRange(){
+        //Arrange
+        double[][]matriz = {{1,2,3},{1,2,3},{1,2,3}};
+        int posA = 0;
+        int posB = 3;
+        //Act
+        double expected = -0.0;
+        double result = Ex18.coFatordeX(matriz,posA,posB);
+        //Assert
+        assertEquals(expected,result);}
+    @Test
+    void verificarCofatordeXcomINegativo(){
+        //Arrange
+        double[][]matriz = {{1,2,3},{1,2,3},{1,2,3}};
+        int posA = -1;
+        int posB = 2;
+        //Act
+        double expected = -0.0;
+        double result = Ex18.coFatordeX(matriz,posA,posB);
+        //Assert
+        assertEquals(expected,result);}
+    @Test
+    void verificarCofatordeXcomJNegativo(){
+        //Arrange
+        double[][]matriz = {{1,2,3},{1,2,3},{1,2,3}};
+        int posA = 1;
+        int posB = -2;
+        //Act
+        double expected = Integer.MIN_VALUE;
+        double result = Ex18.coFatordeX(matriz,posA,posB);
+        //Assert
+        assertEquals(expected,result);}
+    }
 

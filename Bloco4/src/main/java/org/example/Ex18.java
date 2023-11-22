@@ -9,8 +9,7 @@ public class Ex18 {
         int x = Integer.MAX_VALUE;
         for (int i = 0; i < arraydeArrays.length; i++)
             for (int y = 0; y < arraydeArrays[i].length; y++)
-                if (arraydeArrays[i][y] < x)
-                    x = arraydeArrays[i][y];
+                x = Math.min(x,arraydeArrays[i][y]);
         return x;
     }
     public static int maiorNumerodeArraydeArrays(int[][] arraydeArrays) {
@@ -19,8 +18,7 @@ public class Ex18 {
         int x = Integer.MIN_VALUE;
         for (int i = 0; i < arraydeArrays.length; i++)
             for (int y = 0; y < arraydeArrays[i].length; y++)
-                if (arraydeArrays[i][y] > x)
-                    x = arraydeArrays[i][y];
+                x=Math.max(x,arraydeArrays[i][y]);
         return x;}
     public static double mediavaloresArraydeArrays(int[][] arraydeArrays) {
         double x = 0;
@@ -69,9 +67,7 @@ public class Ex18 {
     public static int[] diagonalPrincipalMatriz(int[][] matriz) {
         if (matriz.length == 0 || Ex15.verificarSeLinhasTemMesmoNumeroDeColunas(matriz) == -1)
             return new int[0];
-        int size = matriz.length;
-        if (matriz.length > matriz[0].length)
-            size = matriz[0].length;
+        int size = Math.min(matriz.length,matriz[0].length);
         int[] diagonal = new int[size];
         for (int i = 0; i < size; i++) {
             diagonal[i] = matriz[i][i];
@@ -80,9 +76,7 @@ public class Ex18 {
     public static int[] diagonalSecundariaMatriz(int[][] matriz) {
         if (matriz.length == 0 || Ex15.verificarSeLinhasTemMesmoNumeroDeColunas(matriz) == -1)
             return new int[0];
-        int size = matriz.length;
-        if (matriz.length > matriz[0].length)
-            size = matriz[0].length;
+        int size = Math.min(matriz.length,matriz[0].length);
         int endIndex = matriz[0].length - 1;
         int[] diagonalSecundaria = new int[size];
         for (int i = 0; i < size; i++) {
@@ -115,9 +109,8 @@ public class Ex18 {
         double[][] newMatrix = new double[matriz.length][matriz.length];
         for (int i = 0; i < matriz.length; i++)
             for (int j = 0; j < matriz.length; j++){
-                int[] pos = {i, j};
-                double[][] submatriz = verificarSubMatriz(matriz, pos);
-                newMatrix[i][j] = coFatordeX(submatriz, pos);}
+                double[][] submatriz = verificarSubMatriz(matriz,i,j);
+                newMatrix[i][j] = coFatordeX(submatriz,i,j);}
         double[][] matrizInversa = new double[matriz.length][matriz.length];
         for (int i = 0; i < matriz.length; i++)
             for (int j = 0; j < matriz[i].length; j++)
@@ -156,26 +149,27 @@ public class Ex18 {
         if(matriz.length ==3)
             return determinanteRegraSarrus(matriz);
         double determinante = 0;
+        return verificadordeDeterminante(matriz, determinante);}
+    public static double verificadordeDeterminante(double[][]matriz, double determinante){
         for (int i = 0; i < matriz.length; i++) {
             if (matriz[0][i] == 0)
                 continue;
-            int[] pos = {0, i};
-            double[][] subMatriz = verificarSubMatriz(matriz, pos);
-            determinante += Math.pow(-1, i + 2d) * matriz[0][i] * verificarDeterminanteLaplace(subMatriz);
-        }
+            double[][] subMatriz = verificarSubMatriz(matriz,0,i);
+            determinante += Math.pow(-1, i) * matriz[0][i] * verificarDeterminanteLaplace(subMatriz);}
         return determinante;}
-    public static double[][] verificarSubMatriz(double[][] matriz, int[] i) {
-        if (i[0]<0 || i[0] > matriz.length - 1 || i[1] < 0 || i[1] > matriz.length || matriz.length == 0)
+
+    public static double[][] verificarSubMatriz(double[][] matriz, int i, int j) {
+        if (j > matriz.length-1 || j<0 || i<0 || i>matriz.length-1)
             return new double[0][0];
         int subLinha = 0;
         int subColuna = 0;
         double[][]subMatriz = new double[matriz.length - 1][matriz.length - 1];
-        for(int linha=0;linha<matriz.length;linha++){
-            if(linha==i[0])
+        for(int linha=0;linha<=matriz.length-1;linha++){
+            if(linha==i)
                 continue;
             subColuna=0;
-            for(int coluna=0;coluna<matriz.length&& subLinha<subMatriz.length && subColuna<subMatriz.length;coluna++){
-                if(coluna==i[1])
+            for(int coluna=0;coluna<matriz.length;coluna++){
+                if(coluna==j)
                     continue;
                 subMatriz[subLinha][subColuna]=matriz[linha][coluna];
                 subColuna++;}
@@ -196,22 +190,19 @@ public class Ex18 {
         return copiaMatriz;
     }
     public static double[][] diagonalPrincipalAlterarPosicoesdiagonalSecundariaSimetrico(double[][] matriz, double[][] copiaMatriz) {
-        for (int i = 0; i < matriz.length; i++)
-            for (int y = 0; y < matriz.length; y++) {
-                if (i == y) {
-                    matriz[i][y] = copiaMatriz[matriz.length - 1 - i][matriz.length - 1 - y];
-                }
-                if (i + y == matriz.length - 1)
-                    matriz[i][y] = matriz[i][y] * (-1);
-            }
-        return matriz;
-    }
-    public static double coFatordeX(double[][] matriz, int[] pos) {
-        if (matriz.length == 2)
-            return Math.pow(-1, pos[0] + pos[1]) * ((matriz[0][0] * matriz[1][1]) - (matriz[0][1] * matriz[1][0]));
-        if(matriz.length==3)
-            return Math.pow(-1, pos[0]+pos[1])*determinanteRegraSarrus(matriz);
-        return Math.pow(-1,pos[0]+pos[1])*verificarDeterminanteLaplace(verificarSubMatriz(matriz,pos));}
+        for (int i = 0; i < matriz.length; i++){
+            matriz[i][i] = copiaMatriz[matriz.length - 1 - i][matriz.length - 1 - i];}
+        for(int i=0;i<matriz.length; i++){
+            int j = matriz.length-1-i;
+            matriz[i][j] = (-1)*copiaMatriz[i][j];}
+        return matriz;}
+    public static double coFatordeX(double[][] matriz, int i, int j) {
+        if(i+j<0)
+            return Integer.MIN_VALUE;
+        double potenciaBase = Math.pow(-1,i+j);
+        if (matriz.length == 2 || matriz.length==3)
+            return potenciaBase * verificarDeterminanteLaplace(matriz);
+        return potenciaBase*verificarDeterminanteLaplace(verificarSubMatriz(matriz,i,j));}
     public static double determinanteRegraSarrus(double[][]matriz){
         double[][]newMatriz = new double[matriz.length][matriz.length+2];
         for(int i=0;i<matriz.length;i++)
@@ -227,25 +218,23 @@ public class Ex18 {
         double diagonaisSecundarias = somaDiagonaisSecundarias(newMatriz);
         return diagonaisSecundarias+diagonaisPrincipais;}
     public static double somaDiagonaisPrincipais(double[][]matriz){
-        double diagonal1 = 1;
-        double diagonal2 = 1;
-        double diagonal3 = 1;
-        for(int i =0;i<matriz.length;i++)
-            diagonal1=diagonal1*matriz[i][i];
-        for(int i=0,j=1;i<matriz.length && j<matriz.length+1;j++,i++)
-            diagonal2=diagonal2*matriz[i][j];
-        for(int i=0,j=2;i<matriz.length && j<matriz.length+2;j++,i++)
-            diagonal3=diagonal3*matriz[i][j];
+        double diagonal1 = produtoDiagonaisPrincipais(matriz,1,0);
+        double diagonal2 = produtoDiagonaisPrincipais(matriz,1,1);
+        double diagonal3 = produtoDiagonaisPrincipais(matriz,1,2);
         return  diagonal2+diagonal1+diagonal3;}
     public static double somaDiagonaisSecundarias(double[][]matriz){
-        double diagonal1 = 1;
-        double diagonal2 = 1;
-        double diagonal3 = 1;
-        for(int i=0,j=4;i<matriz.length && j>=0;j--,i++)
-            diagonal1=diagonal1*matriz[i][j];
-        for(int i=0,j=3;i<matriz.length && j>=0;j--,i++)
-            diagonal2=diagonal2*matriz[i][j];
-        for(int i=0,j=2;i<matriz.length && j>=0;j--,i++)
-            diagonal3=diagonal3*matriz[i][j];
-        return (-1)*(diagonal1+diagonal2+diagonal3);
-    }}
+        double diagonal1 = produtoDiagonaisSecundarias(matriz,1,4);
+        double diagonal2 = produtoDiagonaisSecundarias(matriz,1,3);
+        double diagonal3 = produtoDiagonaisSecundarias(matriz,1,2);
+        return (-1)*(diagonal1+diagonal2+diagonal3);}
+    public static double produtoDiagonaisSecundarias (double[][]matriz, double diagonal, int j){
+        for(int i=0;i<matriz.length;i++){
+            diagonal*=matriz[i][j];
+            j--;}
+        return diagonal;}
+    public static double produtoDiagonaisPrincipais (double[][]matriz, double diagonal, int j){
+        for(int i=0;i<matriz.length;i++){
+            diagonal*=matriz[i][j];
+            j++;}
+        return diagonal;}
+    }
