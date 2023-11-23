@@ -5,6 +5,7 @@ public class Array {
     private int[] array1;
     private int size;
     private static final String error = "Invalid Argument";
+    private static final String arrayVazio = "Array Vazio";
     public Array() {
         array1 = new int[0];}
 
@@ -17,22 +18,21 @@ public class Array {
     private boolean validConstructorArgument(int[] array1) {
         return array1 != null;}
 
-    public int[] addElement(int x) {
+    public void addElement(int element) {
         array1 = Arrays.copyOf(array1, array1.length + 1);
-        array1[array1.length - 1] = x;
-        return array1;}
+        array1[array1.length - 1] = element;}
 
-    public int[] removeElement(int x) {
+    public void removeElement(int x) throws IllegalArgumentException{
         if (detectElementwithValue(x) == -1)
-            return array1;
+            throw new IllegalArgumentException(error);
         int[] newArray = new int[array1.length - 1];
+        int contador=0;
         for (int i = 0; i < array1.length; i++) {
             if (array1[i] == x)
                 continue;
-            newArray[i] = array1[i];
-        }
-        array1 = newArray;
-        return array1;}
+            newArray[contador] = array1[i];
+            contador++;}
+        array1 = newArray;}
 
     private int detectElementwithValue(int x) {
         int contador = 0;
@@ -42,17 +42,17 @@ public class Array {
             contador++;}
         return -1;}
 
-    public int getMenorElemento() throws InstantiationException {
+    public int getMenorElemento() throws IllegalArgumentException {
         if (array1.length == 0)
-            throw new InstantiationException(error);
+            throw new IllegalArgumentException(arrayVazio);
         int menor = array1[0];
         for (int value : array1)
             menor = Math.min(value, menor);
         return menor;}
 
-    public int getMaiorElemento() throws InstantiationException {
+    public int getMaiorElemento() throws IllegalArgumentException {
         if (array1.length == 0)
-            throw (new InstantiationException(error));
+            throw (new IllegalArgumentException(arrayVazio));
         int maior = array1[0];
         for (int value : array1)
             maior = Math.max(value, maior);
@@ -66,9 +66,7 @@ public class Array {
             return -1;
         return array1[index];}
 
-    public int counterMultiplesofNumber(int mult, boolean yesorNo) throws InstantiationException{
-        if(mult == 0)
-            throw new InstantiationException(error);
+    private int counterMultiplesofNumber(int mult, boolean yesorNo){
         int counter = 0;
         if(yesorNo)
             for (int value : array1) {
@@ -80,9 +78,9 @@ public class Array {
                     counter++;}
         return counter;}
 
-    public int averageArray(int[] array) throws InstantiationException{
+    public int averageArray(int[] array) throws IllegalArgumentException{
         if(array.length == 0)
-            throw new InstantiationException(error);
+            throw new IllegalArgumentException(arrayVazio);
         return sumOfArray(array) / array.length;}
     public int sumOfArray(int[] array) {
         int sum = 0;
@@ -109,16 +107,13 @@ public class Array {
         return multiplesArray;}
 
     public int[] getSortedArray(boolean ascending){
-        if(ascending){
-            Arrays.sort(array1);
-            return array1;}
-        Integer[] array2 = new Integer[array1.length];
-        for(int i = 0; i < array1.length; i++)
-            array2[i] = array1[i];
-        Arrays.sort(array2, Collections.reverseOrder());
-        for(int i = 0; i < array1.length; i++)
-            array1[i] = array2[i];
-        return array1;}
+        int[] sortedArray = Arrays.copyOf(array1,array1.length);
+        if(!ascending){
+            for (int i = 0; i < sortedArray.length / 2; i++) {
+                int temp = sortedArray[i];
+                sortedArray[i] = sortedArray[sortedArray.length - 1 - i];
+                sortedArray[sortedArray.length - 1 - i] = temp;}}
+        return sortedArray;}
     public boolean hasXElements(int x)throws InstantiationException{
         if(x<0)
             throw new InstantiationException(error);
@@ -137,7 +132,7 @@ public class Array {
                 if(array1[i] == array1[j])
                     return true;}}
         return false;}
-    public int howManyDigits(int testNumber){
+    private int howManyDigits(int testNumber){
         if(testNumber == 0)
             return 1;
         int contador=0;
@@ -145,19 +140,19 @@ public class Array {
             testNumber /= 10;
             contador++;}
         return contador;}
-    public int[] arrayofNumberstoArrayofDigits(){
+    private int[] arrayofNumberstoArrayofDigits(){
         int[] array2 = new int[array1.length];
         for(int i = 0; i < array1.length; i++){
             array2[i] = howManyDigits(array1[i]);}
         return array2;}
-    public double averageDigits()throws InstantiationException{
+    private double averageDigits()throws IllegalArgumentException{
         if (array1.length == 0)
-            throw new InstantiationException(error);
+            throw new IllegalArgumentException(arrayVazio);
         int[] arrayofDigits = arrayofNumberstoArrayofDigits();
         return (double)sumOfArray(arrayofDigits) / arrayofDigits.length;}
-    public int counterElementsMoreDigitsThanAverage()throws InstantiationException{
+    private int counterElementsMoreDigitsThanAverage(){
         if(array1.length == 0)
-            throw new InstantiationException(error);
+            return 0;
         int counter = 0;
         double averageDigit = averageDigits();
         for(int value: array1){
@@ -176,7 +171,7 @@ public class Array {
                 array2[counter] = value;
                 counter++;}}
         return array2;}
-    public double percentageofEvenAlgarisms(int numberTest){
+    private double percentageofEvenAlgarisms(int numberTest){
         int counter = 0;
         int numberofDigits = howManyDigits(numberTest);
         while(numberTest != 0){
@@ -185,12 +180,12 @@ public class Array {
             numberTest /= 10;}
         return counter * 100 / (double)numberofDigits;}
 
-    public double averagePercentageofEvenAlgarisms(){
+    private double averagePercentageofEvenAlgarisms(){
         double sum = 0;
         for(int value: array1){
             sum += percentageofEvenAlgarisms(value);}
         return sum / array1.length;}
-    public int counterElementsMoreEvenAlgarismsThanTheAverage()throws InstantiationException{
+    private int counterElementsMoreEvenAlgarismsThanTheAverage()throws InstantiationException{
         if(array1.length == 0)
             throw new InstantiationException(error);
         int counter = 0;
@@ -209,5 +204,53 @@ public class Array {
                 array2[counter] = value;
                 counter++;}}
         return array2;}
-
+    private int counterElements100percentEven(){
+        int counter = 0;
+        for(int value: array1){
+            if(percentageofEvenAlgarisms(value) == 100)
+                counter++;}
+        return counter;}
+    private int[] numbertoArray(int numberTest){
+        int[] array2 = new int[howManyDigits(numberTest)];
+        int counter = 0;
+        while(numberTest != 0){
+            array2[array2.length-1-counter] = numberTest % 10;
+            numberTest /= 10;
+            counter++;}
+        array1=array2;
+        return array1;}
+    public int[] getElementsAllEvenAlgarisms()throws InstantiationException{
+        if(array1.length == 0)
+            throw new InstantiationException(error);
+        int[] array2 = new int[counterElements100percentEven()];
+        int counter = 0;
+        for(int value: array1){
+            if(percentageofEvenAlgarisms(value) == 100){
+                array2[counter] = value;
+                counter++;}}
+        return array2;}
+    private boolean isItCrescentforAtLeastminAlgarisms(int number, int min)throws InstantiationException{
+        int[]numb2 = numbertoArray(number);
+        if(numb2.length==0||min==1)
+            throw new InstantiationException(error);
+        int counter=0;
+        for(int i = 0; i < numb2.length-1; i++){
+            if(numb2[i] >= numb2[i+1])
+                counter=0;
+            counter++;
+            if(counter == min)
+                return true;}
+        return false;}
+    private boolean isItCapicua(int number){
+        int[]numb2 = numbertoArray(number);
+        int[]array2= new int[numb2.length];
+        for(int i = 0; i < numb2.length; i++){
+            array2[i] = numb2[numb2.length-1-i];}
+        return Arrays.equals(numb2,array2);}
+    private boolean isItAlltheSameAlgarism(int number){
+        int[]numb2 = numbertoArray(number);
+        for(int i = 0; i < numb2.length-1; i++){
+            if(numb2[i] != numb2[0])
+                return false;}
+        return true;}
     }
