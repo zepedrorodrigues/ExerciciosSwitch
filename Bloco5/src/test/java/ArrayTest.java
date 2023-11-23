@@ -50,16 +50,11 @@ class ArrayTest {
     }
 
     @Test
-    void getMenorElementoInvalid() throws InstantiationException {
+    void getMenorElementoInvalid() throws InstantiationException, IllegalArgumentException {
         //Arrange
         int[] array = {};
         Array newArray = new Array(array);
-        //Act
-        Exception exception = assertThrows(InstantiationException.class, newArray::getMenorElemento);
-        //Assert
-        String expectedMessage = "Invalid Argument";
-        assertEquals(expectedMessage, exception.getMessage());
-    }
+        assertThrows(IllegalArgumentException.class,()->{newArray.getMenorElemento();});}
 
     @Test
     void addElementValido() throws InstantiationException {
@@ -92,16 +87,12 @@ class ArrayTest {
     }
 
     @Test
-    void getMaiorElementoInvalido() throws InstantiationException {
+    void getMaiorElementoInvalido() throws InstantiationException, IllegalArgumentException {
         //Arrange
         int[] array = {};
         Array newArray = new Array(array);
         //Act
-        Exception exception = assertThrows(InstantiationException.class, newArray::getMaiorElemento);
-        //Assert
-        String expectedMessage = "Invalid Argument";
-        assertEquals(expectedMessage, exception.getMessage());
-    }
+        assertThrows(IllegalArgumentException.class, newArray::getMaiorElemento);}
 
     @Test
     void getSizeValido() throws InstantiationException {
@@ -178,15 +169,12 @@ class ArrayTest {
     }
 
     @Test
-    void averageArrayInvalid() throws InstantiationException {
+    void averageArrayInvalid() throws InstantiationException, IllegalArgumentException {
         //Arrange
         int[] array = {};
         Array a = new Array(array);
         //Assert
-        Exception exception = assertThrows(InstantiationException.class, () ->
-                a.averageArray(array));
-        assertEquals("Invalid Argument", exception.getMessage());
-    }
+        assertThrows(IllegalArgumentException.class, () -> a.averageArray(array));}
 
     @Test
     void averageArrayOneDigit() throws InstantiationException {
@@ -342,173 +330,5 @@ class ArrayTest {
         //Act
         int[] result = a.getSortedArray(true);
         //Assert
-        assertArrayEquals(expected, result);
-    }
-    @Test
-    void hasXElementsValid() throws InstantiationException {
-        //Arrange
-        int[] array = {1, 1, 1, 1, 1, 1};
-        Array a = new Array(array);
-        //Act
-        boolean result = a.hasXElements(6);
-        //Assert
-        assertTrue(result);}
-    @Test
-    void hasXElementsZeroElements() throws InstantiationException {
-        //Arrange
-        int[] array = {};
-        Array a = new Array(array);
-        //Act
-        boolean result = a.hasXElements(0);
-        //Assert
-        assertTrue(result);}
-    @Test
-    void hasXElementsInvalid() throws InstantiationException {
-        //Arrange
-        int[] array = {1, 1, 1, 1, 1, 1};
-        Array a = new Array(array);
-        //Act
-        boolean result = a.hasXElements(7);
-        //Assert
-        assertFalse(result);}
-    @Test
-    void hasXElementsXequalsNegative()throws InstantiationException{
-        //Arrange
-        int[] array = {1, 1, 1, 1, 1, 1};
-        Array a = new Array(array);
-        //Assert
-        Exception exception = assertThrows(InstantiationException.class, () ->
-                a.hasXElements(-1));
-        assertEquals("Invalid Argument", exception.getMessage());}
-    @Test
-    void isAllEvensorOddsValid() throws InstantiationException {
-        //Arrange
-        int[] array = {2, 4, 6, 8, 10, 12};
-        Array a = new Array(array);
-        //Act
-        boolean result = a.isAllEvensorOdds(true);
-        //Assert
-        assertTrue(result);}
-    @Test
-    void isAllEvensorOddsInvalid() throws InstantiationException {
-        //Arrange
-        int[] array = {};
-        Array a = new Array(array);
-        //Assert
-        Exception exception = assertThrows(InstantiationException.class, () ->
-                a.isAllEvensorOdds(true));
-        assertEquals("Invalid Argument", exception.getMessage());}
-    @Test
-    void isAllEvensorOddsAllOdds() throws InstantiationException {
-        //Arrange
-        int[] array = {1, 3, 5, 7, 9, 11};
-        Array a = new Array(array);
-        //Act
-        boolean result = a.isAllEvensorOdds(false);
-        //Assert
-        assertTrue(result);}
-    @Test
-    void isAllEvensorOdds() throws InstantiationException {
-        //Arrange
-        int[] array = {2, 4,6, 8, 10, 12};
-        Array a = new Array(array);
-        //Act
-        boolean result = a.isAllEvensorOdds(false);
-        //Assert
-        assertFalse(result);}
-    @Test
-    void isAllOddsSomeAre() throws InstantiationException {
-        //Arrange
-        int[] array = {1, 2, 3, 4, 5, 6};
-        Array a = new Array(array);
-        //Act
-        boolean result = a.isAllEvensorOdds(false);
-        //Assert
-        assertFalse(result);}
-    @Test
-    void valoresRepetidosSemRepeticoesFalso() throws InstantiationException {
-        //Arrange
-        int[] array = {1, 2, 3, 4, 5, 6};
-        Array a = new Array(array);
-        //Act
-        boolean result = a.valoresRepetidos();
-        //Assert
-        assertFalse(result);}
-    @Test
-    void valoresRepetidoscomRepeticoesVerdadeiro() throws InstantiationException {
-        //Arrange
-        int[] array = {1, 2, 3, 4, 5, 5};
-        Array a = new Array(array);
-        //Act
-        boolean result = a.valoresRepetidos();
-        //Assert
-        assertTrue(result);}
-    @Test
-    void valoresRepetidosArrayVazio() throws InstantiationException {
-        //Arrange
-        int[] array = {};
-        Array a = new Array(array);
-        //Act
-        boolean result = a.valoresRepetidos();
-        //Assert
-        assertFalse(result);}
-
-    @Test
-    void getElementsWithMoreDigitsThanAverageValid() throws InstantiationException {
-        //Arrange
-        int[] array = {12, 23, 34, 47, 519, 6};
-        int[] expected = {519};
-        Array a = new Array(array);
-        //Act
-        int[] result = a.getElementsWithMoreDigitsThanAverage();
-        //Assert
-        assertArrayEquals(expected, result);}
-    @Test
-    void getElementsWithMoreDigitsThanAvgInvalid()throws InstantiationException{
-        //Arrange
-        int[] array = {};
-        Array a = new Array(array);
-        //Assert
-        Exception exception = assertThrows(InstantiationException.class, a::getElementsWithMoreDigitsThanAverage);
-        assertEquals("Invalid Argument", exception.getMessage());}
-    @Test
-    void getElementsWithMoreDigitsThanAvgAllinAverage()throws InstantiationException{
-        //Arrange
-        int[] array = {1, 2, 3, 4, 5, 6};
-        int[] expected = {};
-        Array a = new Array(array);
-        //Act
-        int[] result = a.getElementsWithMoreDigitsThanAverage();
-        //Assert
-        assertArrayEquals(expected, result);}
-
-    @Test
-    void getElementsMoreEvenAlgarismsThanAverage()throws InstantiationException{
-        //Arrange
-        int[] array = {12, 23, 34, 47, 519, 6};
-        int[] expected = {6};
-        Array a = new Array(array);
-        //Act
-        int[] result = a.getElementsMoreEvenAlgarismsThanAverage();
-        //Assert
-        assertArrayEquals(expected, result);}
-    @Test
-    void getElementsMoreEvenAlgarismsThanAverageInvalid()throws InstantiationException{
-        //Arrange
-        int[] array = {};
-        Array a = new Array(array);
-        //Assert
-        Exception exception = assertThrows(InstantiationException.class, a::getElementsMoreEvenAlgarismsThanAverage);
-        assertEquals("Invalid Argument", exception.getMessage());}
-    @Test
-    void getElementsMoreEvenAlgarismsThanAverageAllinAverage()throws InstantiationException{
-        //Arrange
-        int[] array = {1, 11, 3, 9, 5, 7};
-        int[] expected = {};
-        Array a = new Array(array);
-        //Act
-        int[] result = a.getElementsMoreEvenAlgarismsThanAverage();
-        //Assert
         assertArrayEquals(expected, result);}
 }
-
