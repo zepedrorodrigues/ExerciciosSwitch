@@ -15,9 +15,7 @@ class ArrayTest {
         //Arrange and Act
         int[] array = null;
         //Assert
-        assertThrows(InstantiationException.class, () -> {
-            new Array(array);
-        });
+        assertThrows(InstantiationException.class, () -> new Array(null));
     }
 
     @Test
@@ -37,9 +35,7 @@ class ArrayTest {
         //Arrange
         int[] array = null;
         //Assert
-        assertThrows(InstantiationException.class, () -> {
-            new Array(array);
-        });
+        assertThrows(InstantiationException.class, () -> new Array(null));
     }
 
     @Test
@@ -59,9 +55,7 @@ class ArrayTest {
         int[] array = {};
         Array newArray = new Array(array);
         //Act
-        Exception exception = assertThrows(InstantiationException.class, () -> {
-            newArray.getMenorElemento();
-        });
+        Exception exception = assertThrows(InstantiationException.class, newArray::getMenorElemento);
         //Assert
         String expectedMessage = "Invalid Argument";
         assertEquals(expectedMessage, exception.getMessage());
@@ -85,9 +79,7 @@ class ArrayTest {
         int[] array = null;
         //Assert
         Exception exception = assertThrows(InstantiationException.class, () ->
-        {
-            new Array(array);
-        });
+                new Array(null));
         assertEquals("Invalid Argument", exception.getMessage());
     }
 
@@ -108,9 +100,7 @@ class ArrayTest {
         int[] array = {};
         Array newArray = new Array(array);
         //Act
-        Exception exception = assertThrows(InstantiationException.class, () -> {
-            newArray.getMaiorElemento();
-        });
+        Exception exception = assertThrows(InstantiationException.class, newArray::getMaiorElemento);
         //Assert
         String expectedMessage = "Invalid Argument";
         assertEquals(expectedMessage, exception.getMessage());
@@ -213,9 +203,7 @@ class ArrayTest {
         Array a = new Array(array);
         //Assert
         Exception exception = assertThrows(InstantiationException.class, () ->
-        {
-            a.counterMultiplesofNumber(0, true);
-        });
+                a.counterMultiplesofNumber(0, true));
         assertEquals("Invalid Argument", exception.getMessage());
     }
 
@@ -259,9 +247,7 @@ class ArrayTest {
         Array a = new Array(array);
         //Assert
         Exception exception = assertThrows(InstantiationException.class, () ->
-        {
-            a.counterMultiplesofNumber(0, false);
-        });
+                a.counterMultiplesofNumber(0, false));
         assertEquals("Invalid Argument", exception.getMessage());
     }
 
@@ -294,9 +280,7 @@ class ArrayTest {
         Array a = new Array(array);
         //Assert
         Exception exception = assertThrows(InstantiationException.class, () ->
-        {
-            a.averageArray(array);
-        });
+                a.averageArray(array));
         assertEquals("Invalid Argument", exception.getMessage());
     }
 
@@ -352,9 +336,7 @@ class ArrayTest {
         Array a = new Array(array);
         //Assert
         Exception exception = assertThrows(InstantiationException.class, () ->
-        {
-            a.getmultiplesofNumber(0, true);
-        });
+                a.getmultiplesofNumber(0, true));
         assertEquals("Invalid Argument", exception.getMessage());
     }
 
@@ -400,9 +382,7 @@ class ArrayTest {
         Array a = new Array(array);
         //Assert
         Exception exception = assertThrows(InstantiationException.class, () ->
-        {
-            a.getmultiplesofNumber(0, false);
-        });
+                a.getmultiplesofNumber(0, false));
         assertEquals("Invalid Argument", exception.getMessage());
     }
     @Test
@@ -494,9 +474,7 @@ class ArrayTest {
         Array a = new Array(array);
         //Assert
         Exception exception = assertThrows(InstantiationException.class, () ->
-        {
-            a.hasXElements(-1);
-        });
+                a.hasXElements(-1));
         assertEquals("Invalid Argument", exception.getMessage());}
     @Test
     void isAllEvensorOddsValid() throws InstantiationException {
@@ -514,9 +492,7 @@ class ArrayTest {
         Array a = new Array(array);
         //Assert
         Exception exception = assertThrows(InstantiationException.class, () ->
-        {
-            a.isAllEvensorOdds(true);
-        });
+                a.isAllEvensorOdds(true));
         assertEquals("Invalid Argument", exception.getMessage());}
     @Test
     void isAllEvensorOddsAllOdds() throws InstantiationException {
@@ -545,6 +521,227 @@ class ArrayTest {
         boolean result = a.isAllEvensorOdds(false);
         //Assert
         assertFalse(result);}
-
-
+    @Test
+    void valoresRepetidosSemRepeticoesFalso() throws InstantiationException {
+        //Arrange
+        int[] array = {1, 2, 3, 4, 5, 6};
+        Array a = new Array(array);
+        //Act
+        boolean result = a.valoresRepetidos();
+        //Assert
+        assertFalse(result);}
+    @Test
+    void valoresRepetidoscomRepeticoesVerdadeiro() throws InstantiationException {
+        //Arrange
+        int[] array = {1, 2, 3, 4, 5, 5};
+        Array a = new Array(array);
+        //Act
+        boolean result = a.valoresRepetidos();
+        //Assert
+        assertTrue(result);}
+    @Test
+    void valoresRepetidosArrayVazio() throws InstantiationException {
+        //Arrange
+        int[] array = {};
+        Array a = new Array(array);
+        //Act
+        boolean result = a.valoresRepetidos();
+        //Assert
+        assertFalse(result);}
+    @Test
+    void howManyDigitsValid() throws InstantiationException {
+        //Arrange
+        int testNumber = 123456;
+        Array a = new Array();
+        //Act
+        int result = a.howManyDigits(testNumber);
+        //Assert
+        assertEquals(6, result);}
+    @Test
+    void howManyDigitsZero() throws InstantiationException {
+        //Arrange
+        int testNumber = 0;
+        Array a = new Array();
+        //Act
+        int result = a.howManyDigits(testNumber);
+        //Assert
+        assertEquals(1, result);}
+    @Test
+    void howManyDigitsNegativeNumber()throws InstantiationException{
+        //Arrange
+        int testNumber = -123456;
+        Array a = new Array();
+        //Act
+        int expected = 6;
+        int result = a.howManyDigits(testNumber);
+        //Assert
+        assertEquals(expected, result);}
+    @Test
+    void arrayofNumberstoArrayofDigits()throws InstantiationException{
+        //Arrange
+        int[] array = {1, 2, 3, 4, 5, 6};
+        int[] expected = {1, 1, 1, 1, 1, 1};
+        Array a = new Array(array);
+        //Act
+        int[] result = a.arrayofNumberstoArrayofDigits();
+        //Assert
+        assertArrayEquals(expected, result);}
+    @Test
+    void averageDigitsValid() throws InstantiationException {
+        //Arrange
+        int[] array = {12, 23, 34, 47, 519, 6};
+        Array a = new Array(array);
+        //Act
+        double result = a.averageDigits();
+        //Assert
+        assertEquals(2, result);}
+    @Test
+    void averageDigitsInvalidLengthZero()throws InstantiationException{
+        //Arrange
+        int[] array = {};
+        Array a = new Array(array);
+        //Assert
+        Exception exception = assertThrows(InstantiationException.class, a::averageDigits);
+        assertEquals("Invalid Argument", exception.getMessage());}
+    @Test
+    void counterElementsMoreDigitsThanAverageValid() throws InstantiationException {
+        //Arrange
+        int[] array = {12, 23, 34, 47, 519, 6};
+        Array a = new Array(array);
+        //Act
+        int result = a.counterElementsMoreDigitsThanAverage();
+        //Assert
+        assertEquals(1, result);}
+    @Test
+    void counterElementsMoreDigitsThanAvgInvalid() throws InstantiationException {
+        //Arrange
+        int[] array = {};
+        Array a = new Array(array);
+        //Assert
+        Exception exception = assertThrows(InstantiationException.class, a::counterElementsMoreDigitsThanAverage);
+        assertEquals("Invalid Argument", exception.getMessage());}
+    @Test
+    void counterElementsMoreDigitsAllinAverage()throws InstantiationException{
+        //Arrange
+        int[] array = {1, 2, 3, 4, 5, 6};
+        Array a = new Array(array);
+        //Act
+        int result = a.counterElementsMoreDigitsThanAverage();
+        //Assert
+        assertEquals(0, result);}
+    @Test
+    void getElementsWithMoreDigitsThanAverageValid() throws InstantiationException {
+        //Arrange
+        int[] array = {12, 23, 34, 47, 519, 6};
+        int[] expected = {519};
+        Array a = new Array(array);
+        //Act
+        int[] result = a.getElementsWithMoreDigitsThanAverage();
+        //Assert
+        assertArrayEquals(expected, result);}
+    @Test
+    void getElementsWithMoreDigitsThanAvgInvalid()throws InstantiationException{
+        //Arrange
+        int[] array = {};
+        Array a = new Array(array);
+        //Assert
+        Exception exception = assertThrows(InstantiationException.class, a::getElementsWithMoreDigitsThanAverage);
+        assertEquals("Invalid Argument", exception.getMessage());}
+    @Test
+    void getElementsWithMoreDigitsThanAvgAllinAverage()throws InstantiationException{
+        //Arrange
+        int[] array = {1, 2, 3, 4, 5, 6};
+        int[] expected = {};
+        Array a = new Array(array);
+        //Act
+        int[] result = a.getElementsWithMoreDigitsThanAverage();
+        //Assert
+        assertArrayEquals(expected, result);}
+    @Test
+    void percentageofEvenAAlgarismsValid() throws InstantiationException {
+        //Arrange
+        int testNumber = 123456;
+        Array a = new Array();
+        //Act
+        double result = a.percentageofEvenAlgarisms(testNumber);
+        //Assert
+        assertEquals(50, result);}
+    @Test
+    void percentageofEvenAlgarismsZero() throws InstantiationException {
+        //Arrange
+        int testNumber = 0;
+        Array a = new Array();
+        //Act
+        double result = a.percentageofEvenAlgarisms(testNumber);
+        //Assert
+        assertEquals(0, result);}
+    @Test
+    void percentageofEvenAlgarismsNoEven() throws InstantiationException{
+        //Arrange
+        int testNumber = 13579;
+        Array a = new Array();
+        //Act
+        double result = a.percentageofEvenAlgarisms(testNumber);
+        //Assert
+        assertEquals(0, result);
     }
+    @Test
+    void percentageofEvenAlgarismsNegativeNumber()throws InstantiationException{
+        //Arrange
+        int testNumber = -123456;
+        Array a = new Array();
+        //Act
+        double expected = 50;
+        double result = a.percentageofEvenAlgarisms(testNumber);
+        //Assert
+        assertEquals(expected, result);}
+    @Test
+    void averagePercentageofEvenAlgarismsValid() throws InstantiationException {
+        //Arrange
+        int[] array = {12, 23, 34, 47, 519, 6};
+        Array a = new Array(array);
+        //Act
+        double result = a.averagePercentageofEvenAlgarisms();
+        //Assert
+        assertEquals(50, result);}
+    @Test
+    void getElementsMoreEvenAlgarismsThanAverage()throws InstantiationException{
+        //Arrange
+        int[] array = {12, 23, 34, 47, 519, 6};
+        int[] expected = {6};
+        Array a = new Array(array);
+        //Act
+        int[] result = a.getElementsMoreEvenAlgarismsThanAverage();
+        //Assert
+        assertArrayEquals(expected, result);}
+    @Test
+    void getElementsMoreEvenAlgarismsThanAverageInvalid()throws InstantiationException{
+        //Arrange
+        int[] array = {};
+        Array a = new Array(array);
+        //Assert
+        Exception exception = assertThrows(InstantiationException.class, a::getElementsMoreEvenAlgarismsThanAverage);
+        assertEquals("Invalid Argument", exception.getMessage());}
+    @Test
+    void counterElementsmoreEvenAlgarismsThanAverageEmptyArray()throws InstantiationException{
+        //Arrange
+        int[] array = {};
+        Array a = new Array(array);
+        //Assert
+        Exception exception = assertThrows(InstantiationException.class, a::counterElementsMoreEvenAlgarismsThanTheAverage);
+        assertEquals("Invalid Argument", exception.getMessage());}
+    @Test
+    void getElementsMoreEvenAlgarismsThanAverageAllinAverage()throws InstantiationException{
+        //Arrange
+        int[] array = {1, 11, 3, 9, 5, 7};
+        int[] expected = {};
+        Array a = new Array(array);
+        //Act
+        int[] result = a.getElementsMoreEvenAlgarismsThanAverage();
+        //Assert
+        assertArrayEquals(expected, result);}
+
+
+
+}
+

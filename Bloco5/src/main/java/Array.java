@@ -112,13 +112,12 @@ public class Array {
         if(ascending){
             Arrays.sort(array1);
             return array1;}
-        if (!ascending){
-            Integer[] array2 = new Integer[array1.length];
-            for(int i = 0; i < array1.length; i++)
-                array2[i] = array1[i];
-            Arrays.sort(array2, Collections.reverseOrder());
-            for(int i = 0; i < array1.length; i++)
-                array1[i] = array2[i];}
+        Integer[] array2 = new Integer[array1.length];
+        for(int i = 0; i < array1.length; i++)
+            array2[i] = array1[i];
+        Arrays.sort(array2, Collections.reverseOrder());
+        for(int i = 0; i < array1.length; i++)
+            array1[i] = array2[i];
         return array1;}
     public boolean hasXElements(int x)throws InstantiationException{
         if(x<0)
@@ -130,13 +129,17 @@ public class Array {
         if(!evens)
             return (getmultiplesofNumber(2,false).length==array1.length);
         return (getmultiplesofNumber(2,true).length==array1.length);}
-    public boolean allUniqueValues(){
+    public boolean valoresRepetidos(){
+        if(array1.length == 0)
+            return false;
         for(int i = 0; i < array1.length; i++){
             for(int j = i + 1; j < array1.length; j++){
                 if(array1[i] == array1[j])
                     return true;}}
         return false;}
     public int howManyDigits(int testNumber){
+        if(testNumber == 0)
+            return 1;
         int contador=0;
         while(testNumber != 0){
             testNumber /= 10;
@@ -147,13 +150,18 @@ public class Array {
         for(int i = 0; i < array1.length; i++){
             array2[i] = howManyDigits(array1[i]);}
         return array2;}
-    public double averageDigits(){
+    public double averageDigits()throws InstantiationException{
+        if (array1.length == 0)
+            throw new InstantiationException(error);
         int[] arrayofDigits = arrayofNumberstoArrayofDigits();
         return (double)sumOfArray(arrayofDigits) / arrayofDigits.length;}
-    public int counterElementsMoreDigitsThanAverage(){
+    public int counterElementsMoreDigitsThanAverage()throws InstantiationException{
+        if(array1.length == 0)
+            throw new InstantiationException(error);
         int counter = 0;
+        double averageDigit = averageDigits();
         for(int value: array1){
-            if(howManyDigits(value) > averageDigits())
+            if(howManyDigits(value) > averageDigit)
                 counter++;}
         return counter;}
 
@@ -182,7 +190,9 @@ public class Array {
         for(int value: array1){
             sum += percentageofEvenAlgarisms(value);}
         return sum / array1.length;}
-    public int counterElementsMoreEvenAlgarismsThanTheAverage(){
+    public int counterElementsMoreEvenAlgarismsThanTheAverage()throws InstantiationException{
+        if(array1.length == 0)
+            throw new InstantiationException(error);
         int counter = 0;
         for(int value: array1){
             if(percentageofEvenAlgarisms(value) > averagePercentageofEvenAlgarisms())
