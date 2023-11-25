@@ -109,6 +109,12 @@ public class CustomArray {
         return sum;
     }
 
+    private double getSumWithArgumentsDouble(double[] arr) {
+        double sum = 0;
+        for (double j : arr) sum += j;
+        return sum;
+    }
+
     public double getAveragenoArguments() {
         if (array.length == 0)
             throw new IllegalArgumentException(emptyArray); //throw exception
@@ -118,6 +124,31 @@ public class CustomArray {
     private double getAveragewithArguments(int[] arr) {
         return (double) getSumWithArguments(arr) / arr.length;
     }
+
+    private double getAveragewithArgumentsDouble(double[] arr) {
+        return getSumWithArgumentsDouble(arr) / arr.length;
+    }
+
+    private int[] extendArraytoTheRight(int[] array) { //aumenta o tamanho do array
+        int[] newArray = array.clone(); //copia o array
+        newArray = Arrays.copyOf(newArray, newArray.length + 1); //aumenta o tamanho do array
+        return newArray;
+    } //retorna o array novo
+
+    private double[] extendArraytoTheRightDouble(double[] array) {
+        double[] newArray = array.clone(); //copia o array
+        newArray = Arrays.copyOf(newArray, newArray.length + 1); //aumenta o tamanho do array
+        return newArray;
+    } //retorna o array novo
+
+    private int[] extendArraytoTheLeft(int[] array) { //aumenta o tamanho do array RESPEITANDO A ORDEM
+        int[] newArray = new int[array.length];
+        newArray = Arrays.copyOf(newArray, newArray.length + 1); //aumenta o tamanho do array
+        //percorre o array
+        //copia o array, MOVENDO OS DÍGITOS PARA A ESQUERDA
+        if (newArray.length - 1 >= 0) System.arraycopy(array, 0, newArray, 1, newArray.length - 1);
+        return newArray;
+    } //retorna o array novo
 
     private int[] getMultiplesNonMultiples(int mult, boolean yesOrNo) {
         if (mult == 0 || array.length == 0)
@@ -145,7 +176,8 @@ public class CustomArray {
     public double averagemultiplesNonMultiples(int numberTested, boolean multiples) throws IllegalArgumentException {
         if (array.length == 0)
             throw new IllegalArgumentException(emptyArray); //throw exception
-        return getAveragewithArguments(getMultiplesNonMultiples(numberTested, multiples));}
+        return getAveragewithArguments(getMultiplesNonMultiples(numberTested, multiples));
+    }
 
     public void sortAscendingDescending(boolean ascending) throws IllegalArgumentException {
         if (this.array.length == 0) {
@@ -156,16 +188,127 @@ public class CustomArray {
         if (!ascending) {
             int[] newArray2 = new int[newArray.length];
             for (int i = 0; i < newArray.length; i++) {
-                newArray2[i] = newArray[newArray.length - 1 - i];}
-            newArray = newArray2;}
-        array = newArray;}//ordena o array
-    public boolean duplicatesCheck()throws IllegalArgumentException{
+                newArray2[i] = newArray[newArray.length - 1 - i];
+            }
+            newArray = newArray2;
+        }
+        array = newArray;
+    }//ordena o array
+
+    public boolean isSize(int x) {
+        return array.length == x;
+    }
+
+    public boolean isOnlyEvenNumbers(boolean evensTrueoddsFalse) throws IllegalArgumentException {
+        if (array.length == 0)
+            throw new IllegalArgumentException(emptyArray); //throw exception
+        if (evensTrueoddsFalse) {
+            for (int j : array) {
+                if (j % 2 != 0)
+                    return false;
+            }
+            return true;
+        }
+        for (int j : array) {
+            if (j % 2 == 0)
+                return false;
+        }
+        return true;
+    }
+
+    public boolean duplicatesCheck() throws IllegalArgumentException {
         if (array.length == 0)
             throw new IllegalArgumentException(emptyArray); //throw exception
         int[] newArray = array.clone();
         Arrays.sort(newArray);
         for (int i = 1; i < newArray.length; i++) {
-            if (newArray[i] == newArray[i-1])
-                return true;}
-        return false;}
+            if (newArray[i] == newArray[i - 1])
+                return true;
+        }
+        return false;
     }
+
+    private int[] numberToArray(int value) { //converte um número num array
+        int[] newArray = new int[0];
+        while (value > 0) {
+            newArray = extendArraytoTheLeft(newArray);
+            newArray[0] = value % 10;
+            value /= 10;
+        }
+        return newArray;
+    }
+
+    private int[] arrayofNumberstoArrayofDigits() { //converte um array de números num array de dígitos
+        int[] newArray = new int[0];
+        for (int value : array) {
+            int numberArray = numberToArray(value).length;
+            newArray = extendArraytoTheRight(newArray);
+            newArray[newArray.length - 1] = numberArray;
+        }
+        return newArray;
+    }
+
+    private double[] arrayofNumberstoArrayofPercentageofPairs() { //converte um array de números num array de pares
+        double[] newArray = new double[0];
+        for (int value : array) {
+            double percentageOfPairs = pecentageOfPairs(value);
+            newArray = extendArraytoTheRightDouble(newArray);
+            newArray[newArray.length - 1] = percentageOfPairs;
+        }
+        return newArray;
+    }
+
+    private double pecentageOfPairs(int value) { //converte um número na percentagem de pares
+        int[] numberArray = numberToArray(value);
+        int contador = 0;
+        for (int j : numberArray) {
+            if (j % 2 == 0)
+                contador++;
+        }
+        return ((double) contador / numberArray.length) * 100;
+    }
+
+    public int[] overAverageAlgarisms() throws IllegalArgumentException {
+        if (array.length == 0)
+            throw new IllegalArgumentException(emptyArray); //excepção
+        int[] newArray = new int[0];
+        int[] algarismsArray = arrayofNumberstoArrayofDigits(); //array de algarismos
+        double averageAlgarisms = getAveragewithArguments(algarismsArray); //média de algarismos
+        for (int i = 0; i < array.length; i++) {
+            if (algarismsArray[i] > averageAlgarisms) { //se o número de algarismos for maior que a média
+                newArray = extendArraytoTheRight(newArray);
+                newArray[newArray.length - 1] = array[i];
+            }
+        } //adiciona o valor ao array
+        return newArray;
+    }
+
+    public int[] overAveragePairs() throws IllegalArgumentException {
+        if (array.length == 0)
+            throw new IllegalArgumentException(emptyArray); //excepção
+        int[] newArray = new int[0];
+        double[] pairsArray = arrayofNumberstoArrayofPercentageofPairs(); //array de percentagens de pares
+        double averagePairs = getAveragewithArgumentsDouble(pairsArray);
+        for (int i = 0; i < array.length; i++) { //percorre o array
+            if (pairsArray[i] > averagePairs) { //se a percentagem de pares for maior que a média
+                newArray = extendArraytoTheRight(newArray);
+                newArray[newArray.length - 1] = array[i];
+            }
+        } //adiciona o valor ao array
+        return newArray;
+    }
+
+    public int[] numbersPerfectPairs() throws IllegalArgumentException {
+        if (array.length == 0)
+            throw new IllegalArgumentException(emptyArray); //excepção
+        int[] newArray = new int[0];
+        double[] percentageofPairs = arrayofNumberstoArrayofPercentageofPairs(); //array de percentagens de pares
+        for (int i = 0; i < array.length; i++) { //percorre o array
+            if (percentageofPairs[i] == 100) {
+                newArray = extendArraytoTheRight(newArray);
+                newArray[newArray.length - 1] = array[i];
+            }
+        } //adiciona o valor ao array
+        return newArray;
+    }
+}

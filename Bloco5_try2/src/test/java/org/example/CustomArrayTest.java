@@ -430,6 +430,230 @@ class CustomArrayTest {
         CustomArray array = new CustomArray(arr1);
         //Assert
         assertTrue(array.duplicatesCheck());}
+    @Test
+    void isSizeTrue(){
+        //Arrange
+        int[] arr1 = {1,2,3,4,5,6,7,8,9};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertTrue(array.isSize(9));}
+    @Test
+    void isSizeFalse(){
+        //Arrange
+        int[] arr1 = {1,2,3,4,5,6,7,8,9};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertFalse(array.isSize(10));}
+    @Test
+    void isOnlyEvenNumbersTrue(){
+        //Arrange
+        int[] arr1 = {2,4,6,8,10};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertTrue(array.isOnlyEvenNumbers(true));}
+    @Test
+    void isOnlyEvenNumbersFalse(){
+        //Arrange
+        int[] arr1 = {2,4,6,8,10,11};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertFalse(array.isOnlyEvenNumbers(true));}
+    @Test
+    void isOnlyEvenNumbersEmpty(){
+        //Arrange
+        int[] arr1 = {};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertThrows(IllegalArgumentException.class,()->{array.isOnlyEvenNumbers(true);});} //throw exception
+    @Test
+    void isOnlyOddsNumbersTrue(){
+        //Arrange
+        int[] arr1 = {1,3,5,7,9};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertTrue(array.isOnlyEvenNumbers(false));}
+    @Test
+    void isOnlyOddsNumbersFalse(){
+        //Arrange
+        int[] arr1 = {1,3,5,7,9,10};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertFalse(array.isOnlyEvenNumbers(false));}
+    @Test
+    void isOnlyOddsNumbersEmpty(){
+        //Arrange
+        int[] arr1 = {};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertThrows(IllegalArgumentException.class,()->{array.isOnlyEvenNumbers(false);});} //throw exception
+    @Test
+    void isOnlyEvenNumbersAllSame(){
+        //Arrange
+        int[] arr1 = {2,2,2,2,2,2,2,2,2};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertTrue(array.isOnlyEvenNumbers(true));}
+    @Test
+    void isOnlyOddsNumbersAllSame(){
+        //Arrange
+        int[] arr1 = {1,1,1,1,1,1,1,1,1};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertTrue(array.isOnlyEvenNumbers(false));}
+    @Test
+    void overAverageAlgarisms() {
+        //Arrange
+        int[] array = {1, 24, 32, 4, 5, 63};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        int[] expected = {24, 32, 63};
+        int[] result = myArray.overAverageAlgarisms();
+        //Act
+        assertArrayEquals(expected, result);
+    }
 
+    @Test
+    void overAverageAlgarismsSome4DigitAlgarisms() {
+        //Arrange
+        int[] array = {1, 2, 342, 4, 5, 63, 1000};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        int[] expected = {342, 63, 1000};
+        int[] result = myArray.overAverageAlgarisms();
+        //Act
+        assertArrayEquals(expected, result);
+    }
 
+    @Test
+    void overAverageAlgarismsEmptyArray() throws IllegalArgumentException {
+        //Arrange
+        int[] array = {};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        //Act
+        assertThrows(IllegalArgumentException.class, () -> myArray.overAverageAlgarisms());
+    }
+
+    @Test
+    void overAverageAlgarismsAllEqual() {
+        //Arrange
+        int[] array = {1, 1, 1};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        int[] expected = {};
+        int[] result = myArray.overAverageAlgarisms();
+        //Act
+        assertArrayEquals(expected, result);
+    }
+
+    @Test
+    void overAveragePairAlgarisms() {
+        //Arrange
+        int[] array = {1, 2, 342, 4, 5, 63, 1000};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        int[] expected = {2, 342, 4, 1000};
+        int[] result = myArray.overAveragePairs();
+        //Act
+        assertArrayEquals(expected, result);
+    }
+
+    @Test
+    void overAveragePairAlgarismsEmptyArray() throws IllegalArgumentException {
+        //Arrange
+        int[] array = {};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        //Act
+        assertThrows(IllegalArgumentException.class, () -> myArray.overAveragePairs());
+    }
+
+    @Test
+    void overAveragePAirAlgarismsAllEqual100Pair() {
+        //Arrange
+        int[] array = {2, 2, 2};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        int[] expected = {};
+        int[] result = myArray.overAveragePairs();
+        //Act
+        assertArrayEquals(expected, result);}
+    @Test
+    void overAveragePairAlgarismsAllEqual0PercentPair(){
+        //Arrange
+        int[] array = {1, 1, 1};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        int[] expected = {};
+        int[] result = myArray.overAveragePairs();
+        //Act
+        assertArrayEquals(expected, result);}
+    @Test
+    void overAveragePairAlgarismsAllEqual50PercentPair(){
+        //Arrange
+        int[] array = {1, 2, 3};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        int[] expected = {2};
+        int[] result = myArray.overAveragePairs();
+        //Act
+        assertArrayEquals(expected, result);}
+    @Test
+    void numbersPerfectPairsEmpty()throws IllegalArgumentException{
+        //Arrange
+        int[] array = {};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        //Act
+        assertThrows(IllegalArgumentException.class, () -> myArray.numbersPerfectPairs());}
+    @Test
+    void numbersPerfectPairsAllNonPairs(){
+        //Arrange
+        int[] array = {1,1,1};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        int[] expected = {};
+        int[] result = myArray.numbersPerfectPairs();
+        //Act
+        assertArrayEquals(expected, result);}
+    @Test
+    void numbersPerfectPairsAllPairs(){
+        //Arrange
+        int[] array = {2,2,2};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        int[] expected = {2,2,2};
+        int[] result = myArray.numbersPerfectPairs();
+        //Act
+        assertArrayEquals(expected, result);}
+    @Test
+    void numbersPerfectPairsSomePairs(){
+        //Arrange
+        int[] array = {1,2,3,4,5,6,7,8,9,10};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        int[] expected = {2,4,6,8};
+        int[] result = myArray.numbersPerfectPairs();
+        //Act
+        assertArrayEquals(expected, result);}
+    @Test
+    void numbersPerfectPairsSomeAreAnd4Digits(){
+        //Arrange
+        int[] array = {1,2,3,4,5,6,7,8,9,10,4246};
+        //Act
+        CustomArray myArray = new CustomArray(array);
+        int[] expected = {2,4,6,8,4246};
+        int[] result = myArray.numbersPerfectPairs();
+        //Act
+        assertArrayEquals(expected, result);}
     }
