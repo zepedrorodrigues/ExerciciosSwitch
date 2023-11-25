@@ -398,5 +398,38 @@ class CustomArrayTest {
         array.sortAscendingDescending(true);
         //Assert
         assertArrayEquals(arr2,array.getArray());}
+    @Test
+    void duplicatesCheckTrue(){
+        //Arrange
+        int[] arr1 = {1,2,3,4,5,6,7,8,9,9};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertTrue(array.duplicatesCheck());}
+    @Test
+    void duplicatesCheckFalse(){
+        //Arrange
+        int[] arr1 = {1,2,3,4,5,6,7,8,9};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertFalse(array.duplicatesCheck());}
+    @Test
+    void duplicatesCheckEmpty(){
+        //Arrange
+        int[] arr1 = {};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertThrows(IllegalArgumentException.class, array::duplicatesCheck);} //throw exception
+    @Test
+    void duplicatesCheckAllSame(){
+        //Arrange
+        int[] arr1 = {1,1,1,1,1,1,1,1,1};
+        //Act
+        CustomArray array = new CustomArray(arr1);
+        //Assert
+        assertTrue(array.duplicatesCheck());}
+
 
     }

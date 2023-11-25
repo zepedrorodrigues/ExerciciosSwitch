@@ -159,4 +159,13 @@ public class CustomArray {
                 newArray2[i] = newArray[newArray.length - 1 - i];}
             newArray = newArray2;}
         array = newArray;}//ordena o array
-}
+    public boolean duplicatesCheck()throws IllegalArgumentException{
+        if (array.length == 0)
+            throw new IllegalArgumentException(emptyArray); //throw exception
+        int[] newArray = array.clone();
+        Arrays.sort(newArray);
+        for (int i = 1; i < newArray.length; i++) {
+            if (newArray[i] == newArray[i-1])
+                return true;}
+        return false;}
+    }
