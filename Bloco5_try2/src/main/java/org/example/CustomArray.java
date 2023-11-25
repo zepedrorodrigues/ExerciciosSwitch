@@ -9,7 +9,7 @@ public class CustomArray {
     @Override
     public boolean equals(Object o) { //equals method replaced
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false; //if o is null or not the same class
+        if (o == null || this.getClass() != o.getClass()) return false; //if o is null or not the same class
         CustomArray that = (CustomArray) o;
         return Arrays.equals(array, that.array);
     } //return true if the arrays are equal
@@ -196,8 +196,7 @@ public class CustomArray {
     }//ordena o array
 
     public boolean isSize(int x) {
-        return array.length == x;
-    }
+        return array.length == x;}
 
     public boolean isOnlyEvenNumbers(boolean evensTrueoddsFalse) throws IllegalArgumentException {
         if (array.length == 0)
@@ -306,9 +305,94 @@ public class CustomArray {
         for (int i = 0; i < array.length; i++) { //percorre o array
             if (percentageofPairs[i] == 100) {
                 newArray = extendArraytoTheRight(newArray);
-                newArray[newArray.length - 1] = array[i];
-            }
+                newArray[newArray.length - 1] = array[i];}
         } //adiciona o valor ao array
-        return newArray;
+        return newArray;}
+
+    public int[] crescentNumbers() throws IllegalArgumentException {
+        int[] newArray = new int[0];
+        if (array.length == 0)
+            throw new IllegalArgumentException(emptyArray); //excepção
+        for(int i: array){
+            int[] numberArray = numberToArray(i);
+            if(isCrescent(numberArray)){
+                newArray = extendArraytoTheRight(newArray);
+                newArray[newArray.length - 1] = i;}}
+        return newArray;}
+    public int[] getCapicuas()throws IllegalArgumentException{
+        int[] newArray = new int[0];
+        if (array.length == 0)
+            throw new IllegalArgumentException(emptyArray); //excepção
+        for(int i: array){
+            int[] numberArray = numberToArray(i);
+            if(isCapicua(numberArray)){
+                newArray = extendArraytoTheRight(newArray);
+                newArray[newArray.length - 1] = i;}}
+        return newArray;}
+
+    public int[] getNumbersSameAlgarism()throws IllegalArgumentException{
+        int[] newArray = new int[0];
+        if (array.length == 0)
+            throw new IllegalArgumentException(emptyArray); //excepção
+        for(int i: array){
+            int[] numberArray = numberToArray(i);
+            for(int j=0;j<numberArray.length;j++){
+                if(numberArray[j]!=numberArray[0]){
+                    break;}
+                if(j==numberArray.length-1){ //se o número for igual tendo percorrido o array
+                    newArray = extendArraytoTheRight(newArray);
+                    newArray[newArray.length - 1] = i;}}}
+        return newArray;}
+    public int[] getNonArmstrongs()throws IllegalArgumentException{
+        int[] newArray = new int[0];
+        if (array.length == 0)
+            throw new IllegalArgumentException(emptyArray); //excepção
+        for(int i: array){
+            if(!isArmstrong(i)){
+                newArray = extendArraytoTheRight(newArray);
+                newArray[newArray.length - 1] = i;}}
+        return newArray;}
+    public int[] getNumbersCrescentatLeastXSequence(int x)throws IllegalArgumentException{
+        int[] newArray = new int[0];
+        if(x<2)
+            throw new IllegalArgumentException(InvalidValue); //excepção
+        if (array.length == 0)
+            throw new IllegalArgumentException(emptyArray); //excepção
+        for(int i: array){
+            if(isCrescentatLeastXSequence(i,x)){
+                newArray = extendArraytoTheRight(newArray);
+                newArray[newArray.length - 1] = i;}}
+        return newArray;}
+    private boolean isCrescent(int[] array) {
+        if(array.length == 1)
+            return false; //excepção
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] <= array[i - 1])
+                return false;}
+        return true;}
+    private boolean isCapicua(int[] array) {
+        if(array.length == 1)
+            return true; //excepção
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != array[array.length - i - 1])
+                return false;}
+        return true;}
+    private boolean isArmstrong(int number) {
+        int[] numberArray = numberToArray(number);
+        int sum = 0;
+        for (int j : numberArray) {
+            sum += Math.pow(j, numberArray.length);}
+        return sum == number;}
+
+    private boolean isCrescentatLeastXSequence(int number, int x){
+        int[] numbertoArray = numberToArray(number);
+        int counter = 1;
+        for(int i=1;i<numbertoArray.length;i++){
+            if(numbertoArray[i]>numbertoArray[i-1]){
+                counter++;
+                if(counter==x)
+                    return true;}
+            else
+                counter=1;}
+        return false;}
     }
-}
