@@ -75,7 +75,7 @@ public class CustomArray {
         array = newArray;
     } //replace the array
 
-    private int detectIndexFirstNumberX(int x) { //detectIndexFirstNumberX method
+    public int detectIndexFirstNumberX(int x) { //detectIndexFirstNumberX method
         for (int i = 0; i < array.length; i++) //for each element in the array
             if (array[i] == x)  //if the element is equal to x
                 return i;//return the index
@@ -96,7 +96,7 @@ public class CustomArray {
         return smallest;
     } //Else return the smallest
 
-    private int getSum() {
+    public int getSum() {
         int sum = 0;
         for (int value : array)
             sum += value;
