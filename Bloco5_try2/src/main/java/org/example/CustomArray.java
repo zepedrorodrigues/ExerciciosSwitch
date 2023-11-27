@@ -129,6 +129,8 @@ public class CustomArray {
         return getSumWithArgumentsDouble(arr) / arr.length;
     }
 
+    public int[] extendArraytoTheRightNoArguments(){
+        return extendArraytoTheRight(array);}
     private int[] extendArraytoTheRight(int[] array) { //aumenta o tamanho do array
         int[] newArray = array.clone(); //copia o array
         newArray = Arrays.copyOf(newArray, newArray.length + 1); //aumenta o tamanho do array
@@ -141,7 +143,7 @@ public class CustomArray {
         return newArray;
     } //retorna o array novo
 
-    private int[] extendArraytoTheLeft(int[] array) { //aumenta o tamanho do array RESPEITANDO A ORDEM
+    public int[] extendArraytoTheLeft(int[] array) { //aumenta o tamanho do array RESPEITANDO A ORDEM
         int[] newArray = new int[array.length];
         newArray = Arrays.copyOf(newArray, newArray.length + 1); //aumenta o tamanho do array
         //percorre o array
@@ -232,12 +234,10 @@ public class CustomArray {
         while (value > 0) {
             newArray = extendArraytoTheLeft(newArray);
             newArray[0] = value % 10;
-            value /= 10;
-        }
-        return newArray;
-    }
+            value /= 10;}
+        return newArray;}
 
-    private int[] arrayofNumberstoArrayofDigits() { //converte um array de números num array de dígitos
+    public int[] arrayofNumberstoArrayofDigits() { //converte um array de números num array de dígitos
         int[] newArray = new int[0];
         for (int value : array) {
             int numberArray = numberToArray(value).length;
@@ -247,7 +247,7 @@ public class CustomArray {
         return newArray;
     }
 
-    private double[] arrayofNumberstoArrayofPercentageofPairs() { //converte um array de números num array de pares
+    public double[] arrayofNumberstoArrayofPercentageofPairs() { //converte um array de números num array de pares
         double[] newArray = new double[0];
         for (int value : array) {
             double percentageOfPairs = pecentageOfPairs(value);
@@ -395,4 +395,10 @@ public class CustomArray {
             else
                 counter=1;}
         return false;}
+
+    public void reverse(){
+        int[] newArray = new int[array.length];
+        for(int i=0;i<array.length;i++){
+            newArray[i] = array[array.length-i-1];}
+        array=newArray;}
     }
