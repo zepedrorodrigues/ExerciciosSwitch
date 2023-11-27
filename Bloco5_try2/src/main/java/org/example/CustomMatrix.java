@@ -50,9 +50,7 @@ public class CustomMatrix {
         int[] columnArray = new int[matrix.length];
         for (int i = 0; i < matrix.length && column < matrix[i].length; i++) {
             columnArray[i] = matrix[i][column];}
-        CustomArray column1 = new CustomArray(columnArray);
-        return column1;
-    }
+        return new CustomArray(columnArray);}
 
     public int getSize() { // retorna o tamanho da matrix
         return matrix.length;
@@ -111,9 +109,7 @@ public class CustomMatrix {
         for (int i = 0; i < matrix.length; i++) {
             CustomArray arr = new CustomArray(matrix[i]);
             sumLines[i] = arr.getSum();}
-        CustomArray sum = new CustomArray(sumLines);
-        return sum;
-    }
+        return new CustomArray(sumLines);}
 
     public double average() { // retorna a média das linhas, se vazio dá erro
         int contador = 0;
@@ -381,7 +377,7 @@ public class CustomMatrix {
                 newCustomMatrix1.reverseAllColumns();
                 matrix= newCustomMatrix1.getMatrix();
                 break;
-            case 3: // 270 degrees
+            default: // 270 degrees
                 newCustomMatrix1.transposeMatrix();
                 newCustomMatrix1.reverseAlllines();
                 matrix = newCustomMatrix1.getMatrix();

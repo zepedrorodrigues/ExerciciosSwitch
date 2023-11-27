@@ -205,18 +205,18 @@ class CustomMatrixTest {
         int[] exp = {6,15,24};
         CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
         //Act
-        int[] result = customMatrix1.linesSum();
+        CustomArray result = customMatrix1.linesSum();
         //Assert
-        assertArrayEquals(exp,result);}
+        assertArrayEquals(exp,result.getArray());}
     @Test
     void linesSumEmpty(){
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
         int[] exp = {};
         //Act
-        int[] result = customMatrix1.linesSum();
+        CustomArray result = customMatrix1.linesSum();
         //Assert
-        assertArrayEquals(exp,result);}
+        assertArrayEquals(exp,result.getArray());}
 
     @Test
     void average(){
@@ -543,7 +543,7 @@ class CustomMatrixTest {
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
         //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,() -> customMatrix1.digitsOverAverage());
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, customMatrix1::digitsOverAverage);
         assertTrue(exception.getMessage().contains("Empty Array"));}
     @Test
     void digitsOverAverageSome4DigitNumbers(){
@@ -570,7 +570,7 @@ class CustomMatrixTest {
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
         //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,() -> customMatrix1.pairsOverAverage());
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, customMatrix1::pairsOverAverage);
         assertTrue(exception.getMessage().contains("Empty Array"));}
     @Test
     void pairsOverAverageAll100percentPairs(){
