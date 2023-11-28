@@ -9,8 +9,9 @@ class CustomArrayTest {
         int[] arr1 = {1, 2, 3};
         //Act
         CustomArray customArray1 = new CustomArray(arr1);
+        CustomArray customArray2 = new CustomArray(arr1);
         //Assert
-        assertTrue(customArray1.equals(customArray1));
+        assertTrue(customArray2.equals(customArray1));
     }
 
     @Test
