@@ -49,8 +49,12 @@ public class CustomArray {
         if (index < 0 || index >= array.length) { //if index is out of bounds
             throw new IndexOutOfBoundsException(InvalidValue);
         } //throw exception
-        array[index] = value;
-    }
+        array[index] = value;}
+    public int[][] addArray(int[]addingArray){
+        int[][] newArray = new int[2][];
+        newArray[0] = array;
+        newArray[1] = addingArray;
+        return newArray;}
 
     public void addElement(int value) { //addElement method
         int[] newArray = array.clone();  //clone the array

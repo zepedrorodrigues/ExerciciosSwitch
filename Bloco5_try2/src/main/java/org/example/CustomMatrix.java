@@ -64,8 +64,7 @@ public class CustomMatrix {
         int[] newLine = matrix[line];
         CustomArray array = new CustomArray(newLine);
         array.addElement(element);
-        matrix[line] = array.getArray();
-    }
+        matrix[line] = array.getArray();}
 
     public void remove(int element) { //
         int[][] copy = deepCopy(matrix);
@@ -76,11 +75,9 @@ public class CustomMatrix {
             int index = array.detectIndexFirstNumberX(element);
             if (index == -1) continue;
             array.removeFirstElement(element);
-            matrix[i] = array.getArray();
-        }
+            matrix[i] = array.getArray();}
         if (Arrays.deepEquals(copy, matrix))
-            throw new IllegalArgumentException(invalid);
-    }
+            throw new IllegalArgumentException(invalid);}
 
     public boolean isEmpty() { // verifica se a matrix está vazia
         return matrix.length == 0;
@@ -173,7 +170,7 @@ public class CustomMatrix {
     public boolean simetricSquare() throws IllegalArgumentException {
         if (matrix.length == 0)
             throw new IllegalArgumentException(emptyArray);
-        if (!isRectangle())
+        if (!isSquare())
             throw new IllegalArgumentException(invalid);
         int[][] transposedMAtrix = deepCopy(matrix);
         CustomMatrix transposed = new CustomMatrix(transposedMAtrix);
@@ -339,9 +336,6 @@ public class CustomMatrix {
     private void reverseAlllines(){
         for (int i = 0; i < matrix.length; i++) {
             reverseLine(i);}}
-    private void reverseAllColumns(){
-        for (int i = 0; i < matrix[0].length; i++) {
-            reverseColumn(i);}}
 
     public void reverseColumn(int column) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
         if (matrix.length == 0)
@@ -353,6 +347,10 @@ public class CustomMatrix {
         int[] column1 = columnArray.getArray();
         for (int i = 0; i < matrix.length && column < matrix[i].length; i++) {
             matrix[i][column] = column1[i];}}
+
+    private void reverseAllColumns(){
+        for (int i = 0; i < matrix[0].length; i++) {
+            reverseColumn(i);}}
 
     public void rotateMatrix(int angle) throws IllegalArgumentException {
         if (matrix.length == 0 || matrix[0].length == 0)
