@@ -10,35 +10,25 @@ public class Array {
 
     private static final String noMultiples = "Sem múltiplos."; //mensagem de erro
 
-    /**
-     * alínea a.
-     */
+    /**alínea a.*/
     public Array() { //construtor vazio
         array = new int[0];
     }
 
-    /**
-     * alínea b.
-     */
+    /**alínea b.*/
     public Array(int[] arr) { //construtor com argumento
         if (arr == null) //se o array for nulo
             throw new NullPointerException(arrayNulo); //lança uma exceção
-        this.array = arr.clone();
-    }//clona o array
+        this.array = arr.clone();}//clona o array
 
-    /**
-     * alínea c.
-     */
+    /** alínea c.*/
     public void add(int element) { //adiciona um elemento ao array
         int[] newArray = array.clone(); //copia o array de forma segura
         newArray = Arrays.copyOf(newArray, newArray.length + 1);
         newArray[newArray.length - 1] = element;
-        array = newArray;
-    } //array torna-se em novo array, não devolve
+        array = newArray;} //array torna-se em novo array, não devolve
 
-    /**
-     * alínea d.
-     */
+    /**alínea d.*/
     public void removeFirstValue(int value) throws IllegalArgumentException {
         int detectedValue = detectFirstValue(value); //deteta o primeiro valor igual a "value"
         if (detectedValue == -1) { //se o valor não existir ou Array Vazio
@@ -64,9 +54,7 @@ public class Array {
         return -1;
     }
 
-    /**
-     * alínea e.
-     */
+    /**alínea e.*/
     public int returnElement(int position) throws IllegalArgumentException { //retorna o elemento na posição "position"
         if (position < 0 || position >= this.array.length) { //se a posição for inválida
             throw new IllegalArgumentException(argumentoInvalido);
@@ -74,16 +62,12 @@ public class Array {
         return this.array[position];
     } //retorna o elemento na posição "position"
 
-    /**
-     * alínea f.
-     */
+    /**alínea f.*/
     public int getSize() {
         return array.length;
     } //retorna o tamanho do array
 
-    /**
-     * alínea g.
-     */
+    /**alínea g.*/
     public int largest() {
         if (this.array.length == 0)  //se o array estiver vazio
             throw new IllegalArgumentException(arrayVazio);
@@ -93,9 +77,7 @@ public class Array {
         return maior;
     }
 
-    /**
-     * alínea h.
-     */
+    /**alínea h.*/
     public int smallest() {
         if (this.array.length == 0)  //se o array estiver vazio
             throw new IllegalArgumentException(arrayVazio);
@@ -105,9 +87,7 @@ public class Array {
         return menor;
     }
 
-    /**
-     * alínea i.
-     */
+    /**alínea i.*/
     public double average() {
         if (this.array.length == 0)  //se o array estiver vazio
             throw new IllegalArgumentException(arrayVazio);
@@ -118,9 +98,7 @@ public class Array {
         return (double) sum / array.length;
     }
 
-    /**
-     * alínea j.
-     */
+    /**alínea j.*/
     public double averageEvens() {
         if (this.array.length == 0)  //se o array estiver vazio
             throw new IllegalArgumentException(arrayVazio);
@@ -136,9 +114,7 @@ public class Array {
         return (double) sum / counter;
     }
 
-    /**
-     * alínea k.
-     */
+    /**alínea k.*/
     public double averageOdds() {
         if (this.array.length == 0)  //se o array estiver vazio
             throw new IllegalArgumentException(arrayVazio);
@@ -154,9 +130,7 @@ public class Array {
         return (double) sum / counter;
     }
 
-    /**
-     * alínea l.
-     */
+    /**alínea l.*/
     public double averageMultiples(int multiple) {
         if (this.array.length == 0)  //se o array estiver vazio
             throw new IllegalArgumentException(arrayVazio);
@@ -174,53 +148,27 @@ public class Array {
         return (double) sum / counter;
     }
 
-    /**
-     * alínea m.
-     */
+    /**alínea m.*/
     public int[] returnArrayOrder(boolean ascending) throws IllegalArgumentException {
-        if (this.array == null || this.array.length == 0) {
+        if (this.array == null || this.array.length == 0)
             throw new IllegalArgumentException(arrayVazio);
-        } //excepção
         int[] newArray = array.clone(); //copia o array
-        for (int i = 0; i < newArray.length; i++) {
-            for (int j = i + 1; j < newArray.length; j++) {
-                if (ascending) { //se for para ordenar de forma ascendente
-                    if (newArray[i] > newArray[j]) { //se o elemento da esquerda for maior que o da direita
-                        swapElements(newArray, i, j);
-                    } //troca os elementos
-                } else { //se for para ordenar de forma descendente
-                    if (newArray[i] < newArray[j]) { //se o elemento da esquerda for menor que o da direita
-                        swapElements(newArray, i, j);
-                    }
-                }
-            }
-        } //troca os elementos
-        return newArray;
-    } //retorna o array ordenado
+        Arrays.sort(newArray); //ordena o array
+        if(!ascending){
+            int[] newArray2 = newArray.clone();
+            for(int i = 0; i < newArray.length; i++){
+                newArray[i] = newArray2[newArray.length - 1 - i];}}
+        return newArray;}
 
-    private void swapElements(int[] array, int i, int j) { //troca os elementos de posição
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-
-    /**
-     * alínea n.
-     */
+    /**alínea n.*/
     public boolean isEmpty() {
-        return array.length == 0;
-    }
+        return array.length == 0;}
 
-    /**
-     * alínea o.
-     */
+    /**alínea o.*/
     public boolean onlyOneElement() {
-        return array.length == 1;
-    }
+        return array.length == 1;}
 
-    /**
-     * alínea p.
-     */
+    /**alínea p.*/
     public boolean isAllEven() throws IllegalArgumentException {//tudo par ou impar ??
         if (this.array.length == 0)
             throw new IllegalArgumentException(arrayVazio); //excepção
@@ -235,9 +183,7 @@ public class Array {
         return value % 2 == 0;
     }
 
-    /**
-     * alínea q.
-     */
+    /** alínea q.*/
     public boolean isAllOdds() throws IllegalArgumentException {//tudo par ou impar ??
         if (this.array.length == 0)
             throw new IllegalArgumentException(arrayVazio); //excepção
@@ -248,9 +194,7 @@ public class Array {
         return true; //retorna verdadeiro
     }
 
-    /**
-     * alínea r.
-     */
+    /**alínea r.*/
     public boolean hasDuplicates() {
         for (int i = 0; i < array.length - 1; i++) {
             for (int j = i + 1; j < array.length; j++) {
@@ -263,9 +207,7 @@ public class Array {
         return false; // Vetor não tem elementos duplicados.
     }
 
-    /**
-     * alínea s.
-     */
+    /**alínea s.*/
     public int[] overAverageAlgarisms() throws IllegalArgumentException {
         if (this.array.length == 0)
             throw new IllegalArgumentException(arrayVazio); //excepção
@@ -311,9 +253,7 @@ public class Array {
         return newArray;
     } //retorna o array novo
 
-    /**
-     * alínea t.
-     */
+    /**alínea t.*/
     public int[] overAveragePairs() throws IllegalArgumentException {
         if (this.array.length == 0)
             throw new IllegalArgumentException(arrayVazio); //excepção
@@ -349,9 +289,7 @@ public class Array {
         return ((double) contador / numberArray.length) * 100;
     }
 
-    /**
-     * alínea u.
-     */
+    /**alínea u.*/
     public int[] elementsWithOnlyEvenDigits() throws IllegalArgumentException {
         if (this.array.length == 0)
             throw new IllegalArgumentException(arrayVazio); // exceção
@@ -375,9 +313,7 @@ public class Array {
         return true;
     }
 
-    /**
-     * alínea v.
-     */
+    /**alínea v.*/
     public int[] crescents() throws IllegalArgumentException {
         if (this.array.length == 0)
             throw new IllegalArgumentException(arrayVazio); //excepção
@@ -403,9 +339,7 @@ public class Array {
         return true;
     }
 
-    /**
-     * alínea w.
-     */
+    /**alínea w.*/
     public int[] findCapicuas() throws IllegalArgumentException { //devolve as capicuas de um array
         if (this.array.length == 0)
             throw new IllegalArgumentException(arrayVazio); //exceção
@@ -435,9 +369,7 @@ public class Array {
         return array;
     } //retorna o array
 
-    /**
-     * alínea x.
-     */
+    /**alínea x.*/
     public int[] sameDigits() throws IllegalArgumentException {
         if (this.array.length == 0)
             throw new IllegalArgumentException(arrayVazio); //excepção
@@ -482,9 +414,7 @@ public class Array {
         return newArray;
     } //retorna o array novo
 
-    /**
-     * alínea y.
-     */
+    /**alínea y.*/
     public int[] noArmstrongNumbers() throws IllegalArgumentException {   //retorna os números que não são armstrong
         if (this.array.length == 0) {                                                //se o array estiver vazio
             throw new IllegalArgumentException(arrayVazio);             //lança uma exceção
@@ -510,9 +440,7 @@ public class Array {
         return sum == value;                                   //retorna se a soma é igual ao valor
     }
 
-    /**
-     * alínea z.
-     */
+    /**alínea z.*/
     public int[] crescentforMin(int min) {
         if (array.length == 0)
             throw new IllegalArgumentException(arrayVazio); //excepção
@@ -546,9 +474,7 @@ public class Array {
         return false;
     }
 
-    /**
-     * alínea aa.
-     */
+    /**alínea aa.*/
     public boolean equalsArray(int[] arr) throws NullPointerException {
         if (arr == null) //se o array for nulo
             throw new NullPointerException(arrayNulo); //lança uma exceção

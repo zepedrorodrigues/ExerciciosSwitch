@@ -6,15 +6,18 @@
     <inspection_tool class="BooleanMethodIsAlwaysInverted" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="ConstantValue" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="DONT_REPORT_TRUE_ASSERT_STATEMENTS" value="true" />
+      <option name="REPORT_CONSTANT_REFERENCE_VALUES" value="false" />
     </inspection_tool>
     <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <Languages>
-        <language minSize="48" name="Java" />
+        <language minSize="50" name="Java" />
       </Languages>
     </inspection_tool>
     <inspection_tool class="EqualsWithItself" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="FieldMayBeFinal" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="LossyConversionCompoundAssignment" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="ManualArrayCopy" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="MismatchedArrayReadWrite" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SimplifiableAssertion" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="unused" enabled="false" level="WARNING" enabled_by_default="false" checkParameterExcludingHierarchy="false">
       <option name="LOCAL_VARIABLE" value="true" />

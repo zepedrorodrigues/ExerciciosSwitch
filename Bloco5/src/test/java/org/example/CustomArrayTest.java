@@ -677,7 +677,7 @@ class ArrayTest {
         //Act
         Array myArray = new Array(array);
         //Act
-        assertThrows(IllegalArgumentException.class, () -> myArray.isAllEven());
+        assertThrows(IllegalArgumentException.class, myArray::isAllEven);
     }
 
     @Test
@@ -717,7 +717,7 @@ class ArrayTest {
         //Act
         Array myArray = new Array(array);
         //Act
-        assertThrows(IllegalArgumentException.class, () -> myArray.isAllOdds());
+        assertThrows(IllegalArgumentException.class, myArray::isAllOdds);
     }
 
     @Test

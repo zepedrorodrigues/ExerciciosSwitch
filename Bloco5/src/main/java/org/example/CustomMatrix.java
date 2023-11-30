@@ -14,8 +14,7 @@ public class CustomMatrix {
      * alínea a
      */
     public CustomMatrix() {
-        this.matrix = new int[0][0];
-    }
+        this.matrix = new int[0][0];}
 
     /**
      * alínea b
