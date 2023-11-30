@@ -1,757 +1,734 @@
 package org.example;
-
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 
 class CustomMatrixTest {
 
     @Test
-    void testEquals(){
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        CustomMatrix customMatrix2 = new CustomMatrix();
-        //Act and Assert
-        assertTrue(customMatrix1.equals(customMatrix2));}
-    @Test
-    void testEqualsValidExternalized(){
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        int[][] exp = {};
-        int[][] result = customMatrix1.getMatrix();
-        //Act and Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void testEqualsNull(){
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        //Act and Assert
-        assertFalse(customMatrix1.equals(null));}
-    @Test
-    void testConstructorNoParameter(){
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        int[][] exp = {};
-        int[][] result = customMatrix1.getMatrix();
-        //Act and Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void testConstructorwithParameters(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        int[][] exp = {{1,2,3},{4,5,6},{7,8,9}};
-        int[][] result = customMatrix1.getMatrix();
-        //Act and Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void testconstructorwithParametersNull()throws NullPointerException{
-        // Arrange Act and Assert
-        Exception exception = new Exception(assertThrows(NullPointerException.class,
-                ()->new CustomMatrix(null)));
-        assertTrue(exception.getMessage().contains("Matrix is null"));}
-    @Test
-    void getMatrix() {
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        int[][] exp = {{1,2,3},{4,5,6},{7,8,9}};
-        int[][] result = customMatrix1.getMatrix();
-        //Act and Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void getMatrixEmpty(){
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        int[][] exp = {};
-        int[][] result = customMatrix1.getMatrix();
-        //Act and Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void testgetSize() {
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        int exp = 3;
-        int result = customMatrix1.getSize();
-        //Act and Assert
-        assertEquals(exp,result);}
-    @Test
-    void testgetSizeEmpty(){
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        int exp = 0;
-        int result = customMatrix1.getSize();
-        //Act and Assert
-        assertEquals(exp,result);}
+    void testConstructorWithNullMatrix() throws NullPointerException {
+        //Arrange, Act and Assert
+        assertThrows(NullPointerException.class, () -> new CustomMatrix(null));
+    }
 
     @Test
-    void addElementtoLineValid() {
+    void addElementValid() {
         //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
+        int[][] mtrx = {{1, 2, 3}, {4, 5, 6}};
         CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
         //Act
-        customMatrix1.add(10,0);
-        int[][] exp = {{1,2,3,10},{4,5,6},{7,8,9}};
-        int[][] result = customMatrix1.getMatrix();
+        customMatrix1.add(10, 1);
+        int[] expectedColunas = {5, 7, 9, 10};
+        int[] expectedLinhas = {6, 25};
         //Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void addElementtoLineOverLimits()throws ArrayIndexOutOfBoundsException{
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act and Assert
-       ArrayIndexOutOfBoundsException exception = assertThrows(ArrayIndexOutOfBoundsException.class,
-                ()->customMatrix1.add(10,3));
-       assertTrue(exception.getMessage().contains("Out of Bounds"));}
+        assertArrayEquals(customMatrix1.arraySumOfLines(), expectedLinhas);
+        assertArrayEquals(customMatrix1.arraySomaColunas(), expectedColunas);
+    }
 
     @Test
-    void addElementtoNegativeLine(){
+    void addElementtoLineOverLimits() throws ArrayIndexOutOfBoundsException {
         //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
+        int[][] mtrx = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
         //Act and Assert
-        Exception exception = new Exception(assertThrows(IllegalArgumentException.class,
-                ()->customMatrix1.add(10,-1)));
-        assertTrue(exception.getMessage().contains("Invalid Argument"));}
+        ArrayIndexOutOfBoundsException exception = assertThrows(ArrayIndexOutOfBoundsException.class,
+                () -> customMatrix1.add(10, 3));
+        assertTrue(exception.getMessage().contains("Index out of bounds"));
+    }
 
     @Test
-    void removeFirstInstanceof() {
+    void addElementtoNegativeLine() {
         //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
+        int[][] mtrx = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        //Act and Assert
+        Exception exception = new Exception(assertThrows(ArrayIndexOutOfBoundsException.class,
+                () -> customMatrix1.add(10, -1)));
+        assertTrue(exception.getMessage().contains("Index out of bounds"));
+    }
+
+    @Test
+    void removeFirstInstanceofValid() {
+        //Arrange
+        int[][] mtrx = {{1, 2, 3}, {4, 5, 6}};
         CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
         //Act
         customMatrix1.remove(5);
-        int[][] exp = {{1,2,3},{4,6},{7,8,9}};
-        int[][] result = customMatrix1.getMatrix();
+        int[] expectedColunas = {5, 8, 3};
+        int[] expectedLinhas = {6, 10};
         //Assert
-        assertArrayEquals(exp,result);}
+        assertArrayEquals(customMatrix1.arraySumOfLines(), expectedLinhas);
+        assertArrayEquals(customMatrix1.arraySomaColunas(), expectedColunas);
+    }
+
     @Test
-    void removeFirstInstanceofEmpty()throws IllegalArgumentException{
+    void removeFirstInstanceofValidMatrix4x5() {
+        //Arrange
+        int[][] mtrx = {{1, 2, 3, 4, 5}, {4, 5, 6, 7, 8}, {7, 8, 9, 10, 11}, {12, 13, 14, 15, 16}};
+        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        //Act
+        customMatrix1.remove(5);
+        int[] expectedColunas = {24, 28, 32, 36, 35};
+        int[] expectedLinhas = {10, 30, 45, 70};
+        //Assert
+        assertArrayEquals(customMatrix1.arraySumOfLines(), expectedLinhas);
+        assertArrayEquals(customMatrix1.arraySomaColunas(), expectedColunas);
+    }
+
+    @Test
+    void removeFirstInstanceofEmpty() throws IllegalArgumentException {
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
         //Act and Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                ()->customMatrix1.remove(5));
-        assertTrue(exception.getMessage().contains("Empty Array"));}
+                () -> customMatrix1.remove(5));
+        assertTrue(exception.getMessage().contains("Empty Array"));
+    }
+
     @Test
-    void removeFirstInstanceofInvalid()throws IllegalArgumentException{
+    void removeFirstInstanceofInvalid() throws IllegalArgumentException {
         //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
+        int[][] mtrx = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
         //Act and Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                ()->customMatrix1.remove(10));
-        assertTrue(exception.getMessage().contains("Invalid Argument"));}
+                () -> customMatrix1.remove(10));
+        assertTrue(exception.getMessage().contains("Invalid argument"));
+    }
 
     @Test
-    void testisEmptyTrue(){
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        //Act
-        boolean result = customMatrix1.isEmpty();
-        //Assert
-        assertTrue(result);}
-    @Test
-    void testisEmptyFalse(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        boolean result = customMatrix1.isEmpty();
-        //Assert
-        assertFalse(result);}
-    @Test
-    void testgetLargestSmallestNumberLargest(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        int result = customMatrix1.minMax(true);
-        //Assert
-        assertEquals(9,result);}
-    @Test
-    void testgetLargestSmallestNumberSmallest(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        int result = customMatrix1.minMax(false);
-        //Assert
-        assertEquals(1,result);}
-    @Test
-    void testgetLargestSmallestNumberEmpty()throws IllegalArgumentException{
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                ()->customMatrix1.minMax(true));
-        assertTrue(exception.getMessage().contains("Empty Array"));}
-    @Test
-    void testgetLargestSmallestNumberallEqual(){
-        //Arrange
-        int[][] mtrx = {{1,1,1},{1,1,1},{1,1,1}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        int result = customMatrix1.minMax(true);
-        //Assert
-        assertEquals(1,result);}
+    void testIsEmptyWithEmptyMatrix() {
+        // Arrange
+        CustomMatrix matrix = new CustomMatrix();
+        // Act and Assert
+        assertTrue(matrix.isEmpty());
+    }
 
     @Test
-    void linesSum(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        int[] exp = {6,15,24};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        CustomArray result = customMatrix1.linesSum();
-        //Assert
-        assertArrayEquals(exp,result.getArray());}
-    @Test
-    void linesSumEmpty(){
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        int[] exp = {};
-        //Act
-        CustomArray result = customMatrix1.linesSum();
-        //Assert
-        assertArrayEquals(exp,result.getArray());}
+    void testIsEmptyWithNonEmptyMatrix() {
+        // Arrange
+        int[][] arr = {{1, 2}, {3, 4}};
+        CustomMatrix matrix = new CustomMatrix(arr);
+        // Act and Assert
+        assertFalse(matrix.isEmpty());
+    }
 
     @Test
-    void average(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        double exp = 5;
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        double result = customMatrix1.average();
-        //Assert
-        assertEquals(exp,result);}
-    @Test
-    void averageAllNegatives(){
-        //Arrange
-        int[][] mtrx = {{-1,-2,-3},{-4,-5,-6},{-7,-8,-9}};
-        double exp = -5;
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        double result = customMatrix1.average();
-        //Assert
-        assertEquals(exp,result);}
-    @Test
-    void averageEmpty()throws IllegalArgumentException{
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                customMatrix1::average);
-        assertTrue(exception.getMessage().contains("Empty Array"));}
-    @Test
-    void rowsSum() {
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        int[] exp = {12,15,18};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        CustomArray result = customMatrix1.rowsSum();
-        //Assert
-        assertArrayEquals(exp,result.getArray());}
-    @Test
-    void rowSumMatrix5x5() {
-        //Arrange
-        int[][] mtrx = {{1,2,3,4,5},{4,5,6,7,8},{7,8,9,10,11},{10,11,12,13,14},{13,14,15,16,17}};
-        int[] exp = {35,40,45,50,55};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        CustomArray result = customMatrix1.rowsSum();
-        //Assert
-        assertArrayEquals(exp,result.getArray());}
-    @Test
-    void rowSumNonSquareMatrix(){
-        //Arrange
-        int[][] mtrx = {{1,2,3,4,5},{4,5,6,7,8},{7,8,9,10,11},{10,11,12,13,14},{13,14,15,16,17},{13,14,15,16,17}};
-        int[] exp = {48,54,60,66,72};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        CustomArray result = customMatrix1.rowsSum();
-        //Assert
-        assertArrayEquals(exp,result.getArray());}
-    @Test
-    void rowSumMatrix3x2(){
-        //Arrange
-        int[][] mtrx = {{1,2},{4,5},{7,8}};
-        int[] exp = {12,15};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        CustomArray result = customMatrix1.rowsSum();
-        //Assert
-        assertArrayEquals(exp,result.getArray());}
+    void testGetMaxElement() {
+        // Arrange
+        int[][] arr = {{1, 2}, {3, 4}};
+        CustomMatrix matrix = new CustomMatrix(arr);
+        int exp = 4;
+        // Act
+        int maxElement = matrix.largest();
+        // Assert
+        assertEquals(exp, maxElement);
+    }
 
     @Test
-    void rowSumAssymetricalLinesMatrix4x3(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5},{9},{10,11,12}};
-        int[] exp = {24,18,15};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        CustomArray result = customMatrix1.rowsSum();
-        //Assert
-        assertArrayEquals(exp,result.getArray());}
-
+    void testGetMinElement() {
+        // Arrange
+        int[][] arr = {{1, 2}, {3, 4}};
+        CustomMatrix matrix = new CustomMatrix(arr);
+        int exp = 1;
+        // Act
+        int minElement = matrix.smallest();
+        // Assert
+        assertEquals(exp, minElement);
+    }
 
     @Test
-    void rowsSumEmpty()throws IllegalArgumentException{
+    void testGetMaxElementWithNegativeValues() {
+        // Arrange
+        int[][] arr = {{-1, -2}, {-3, -4}};
+        CustomMatrix matrix = new CustomMatrix(arr);
+        int exp = -1;
+        // Act
+        int maxElement = matrix.largest();
+        // Assert
+        assertEquals(exp, maxElement);
+    }
+
+    @Test
+    void testGetMinElementWithNegativeValues() {
+        // Arrange
+        int[][] arr = {{-1, -2}, {-3, -4}};
+        CustomMatrix matrix = new CustomMatrix(arr);
+        int exp = -4;
+        // Act
+        int minElement = matrix.smallest();
+        // Assert
+        assertEquals(exp, minElement);
+    }
+
+    @Test
+    void testGetMaxOrMinElementWithEmptyMatrix() throws IllegalArgumentException {
+        // Arrange
+        CustomMatrix matrix = new CustomMatrix();
+        // Act and Assert
+        assertThrows(IllegalArgumentException.class, matrix::largest);
+        assertThrows(IllegalArgumentException.class, matrix::smallest);
+    }
+
+    @Test
+    void testArraySumLines() throws IllegalArgumentException {
+        //Arrange
+        int[][] mtrx = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        int[] exp = {6, 15, 24};
+        //Act
+        int[] res = customMatrix1.arraySumOfLines();
+        //Assert
+        assertArrayEquals(exp, res);
+    }
+
+    @Test
+    void testArraySumLinesWithNegativeAndZero() throws IllegalArgumentException {
+        //Arrange
+        int[][] mtrx = {{1, 2, 3}, {-4, 5, 6}, {7, 8, 0}};
+        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        int[] exp = {6, 7, 15};
+        //Act
+        int[] res = customMatrix1.arraySumOfLines();
+        //Assert
+        assertArrayEquals(exp, res);
+    }
+
+    @Test
+    void testArraySumEmptyLines() {
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
         //Act and Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                customMatrix1::rowsSum);
-        assertTrue(exception.getMessage().contains("Empty Array"));}
+                customMatrix1::arraySumOfLines);
+        assertTrue(exception.getMessage().contains("Empty Array"));
+    }
+
+
     @Test
-    void biggestLineSum(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        int exp = 2;
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        int result = customMatrix1.biggestLine();
-        //Assert
-        assertEquals(exp,result);}
-    @Test
-    void biggestLineSumEmpty()throws IllegalArgumentException{
+    void arraySomaColunasArrayVazio() {
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
         //Act and Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                customMatrix1::biggestLine);
-        assertTrue(exception.getMessage().contains("Empty Array"));}
+                customMatrix1::arraySomaColunas);
+        assertTrue(exception.getMessage().contains("Empty Array"));
+    }
+
     @Test
-    void biggestLineSumAllNegatives(){
+    void isSquareValid3x3() {
         //Arrange
-        int[][] mtrx = {{-1,-2,-3},{-4,-5,-6},{-7,-8,-9}};
-        int exp = 0;
+        int[][] mtrx = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        int result = customMatrix1.biggestLine();
-        //Assert
-        assertEquals(exp,result);}
+        //Act and Assert
+        assertTrue(customMatrix1.isSquare());
+    }
+
     @Test
-    void biggestLineSumAllEqual(){
-        //Arrange
-        int[][] mtrx = {{1,1,1},{1,1,1},{1,1,1}};
-        int exp = 0;
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        int result = customMatrix1.biggestLine();
-        //Assert
-        assertEquals(exp,result);}
-    @Test
-    void isSquareValid(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        boolean exp = true;
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        boolean result = customMatrix1.isSquare();
-        //Assert
-        assertEquals(exp,result);}
-    @Test
-    void isSquareEmpty()throws IllegalArgumentException{
+    void isSquareEmpty() {
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
         //Act and Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 customMatrix1::isSquare);
-        assertTrue(exception.getMessage().contains("Empty Array"));}
+        assertTrue(exception.getMessage().contains("Empty Array"));
+    }
+
     @Test
-    void isSquareFalse(){
+    void isSquareEmpty1x1() {
         //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6}};
-        boolean exp = false;
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        boolean result = customMatrix1.isSquare();
-        //Assert
-        assertEquals(exp,result);}
-    @Test
-    void isSquareRectangle5x4(){
-        //Arrange
-        int[][] mtrx = {{1,2,3,4,6},{4,5,6,7,6},{7,8,9,10,6},{10,11,12,6}};
-        boolean exp = false;
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        boolean result = customMatrix1.isSquare();
-        //Assert
-        assertEquals(exp,result);}
-    @Test
-    void isSquareLines2345(){
-        //Arrange
-        int[][] mtrx = {{1,2,5,6,7},{4},{7,8},{10,11,12},{13,14}};
-        boolean exp = false;
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        boolean result = customMatrix1.isSquare();
-        //Assert
-        assertEquals(exp,result);}
-    @Test
-    void simetricSquareValid(){
-        //Arrange
-        int[][] mtrx = {{2,3,6},{3,4,5},{6,5,9}};
+        int[][] mtrx = {{1}};
         CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
         //Act and Assert
-        assertTrue(customMatrix1.simetricSquare());}
+        assertTrue(customMatrix1.isSquare());
+    }
+
     @Test
-    void simetricSquareFalse(){
+    void isSquareRectangle() {
         //Arrange
-        int[][] mtrx = {{2,3,6},{1,1,1},{9,8,2}};
+        int[][] mtrx = {{1, 2, 3}, {4, 5, 6}};
         CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
         //Act and Assert
-        assertFalse(customMatrix1.simetricSquare());}
+        assertFalse(customMatrix1.isSquare());
+    }
+
     @Test
-    void simetricSquareRectangle(){
+    void isSquareLinesdifferentLengths() {
         //Arrange
-        int[][] mtrx = {{2,3,6,7},{1,1,1,1},{9,8,2,3}};
+        int[][] mtrx = {{1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10}};
         CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
         //Act and Assert
-        assertFalse(customMatrix1.simetricSquare());}
-     @Test
-     void simetricSquareLinesDifferentSizes(){
+        assertFalse(customMatrix1.isSquare());
+    }
+
+    @Test
+    void simetricSquareValid() {
         //Arrange
-        int[][] mtrx = {{2,3,6},{1,1,1,1},{9,8,2}};
+        int[][] mtrx = {{2, 3, 6}, {3, 4, 5}, {6, 5, 9}};
+        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        //Act and Assert
+        assertTrue(customMatrix1.simetricSquare());
+    }
+
+    @Test
+    void simetricSquareFalse() {
+        //Arrange
+        int[][] mtrx = {{2, 3, 6}, {1, 1, 1}, {9, 8, 2}};
+        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        //Act and Assert
+        assertFalse(customMatrix1.simetricSquare());
+    }
+
+    @Test
+    void simetricSquareRectangle() {
+        //Arrange
+        int[][] mtrx = {{2, 3, 6, 7}, {1, 1, 1, 1}, {9, 8, 2, 3}};
         CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
         //Act and Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 customMatrix1::simetricSquare);
-        assertTrue(exception.getMessage().contains("Invalid Argument"));}
+        assertTrue(exception.getMessage().contains("Matrix is not square"));
+    }
+
     @Test
-    void simetricSquareEmpty()throws IllegalArgumentException{
+    void simetricSquareLinesDifferentSizes() {
+        //Arrange
+        int[][] mtrx = {{2, 3, 6}, {1, 1, 1, 1}, {9, 8, 2}};
+        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        //Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                customMatrix1::simetricSquare);
+        assertTrue(exception.getMessage().contains("Matrix is not square"));
+    }
+
+    @Test
+    void simetricSquareEmpty() throws IllegalArgumentException {
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
         //Act and Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 customMatrix1::simetricSquare);
-        assertTrue(exception.getMessage().contains("Empty Array"));}
+        assertTrue(exception.getMessage().contains("Empty Array"));
+    }
+
+
     @Test
-    void elementsDiagonalSquare(){
+    void testAverageValid() {
         //Arrange
-        int[][] mtrx = {{2,3,6},{1,1,1},{9,8,2}};
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        double exp = 0.5;
+        //Act
+        double res = customMatrix1.average();
+        //Assert
+        assertEquals(exp, res);
+    }
+
+    @Test
+    void testAveragewithNegatives() {
+        //Arrange
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        double exp = 0.5;
+        //Act
+        double res = customMatrix1.average();
+        //Assert
+        assertEquals(exp, res);
+    }
+
+    @Test
+    void testAverageEmpty() {
+        //Arrange
+        CustomMatrix customMatrix1 = new CustomMatrix();
+        //Act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, customMatrix1::average);
+        //Assert
+        assertTrue(exception.getMessage().contains("Empty Array"));
+    }
+
+    @Test
+    void testNonZeroElementsDiagonalValid() {
+        //Arrange
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}, {0, 0, 4}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
         int exp = 3;
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
         //Act
-        int result = customMatrix1.elementsDiagonal();
+        int res = customMatrix1.nonZeroElementsDiagonal();
         //Assert
-        assertEquals(exp,result);}
+        assertEquals(exp, res);
+    }
+
     @Test
-    void elementsDiagonalEmpty()throws IllegalArgumentException{
+    void testNonZeroElementsDiagonalValidNoElements() {
+        //Arrange
+        int[][] matrix = {{0, 2, 3}, {-1, 0, -2}, {0, 4, 0}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        int exp = 0;
+        //Act
+        int res = customMatrix1.nonZeroElementsDiagonal();
+        //Assert
+        assertEquals(exp, res);
+    }
+
+    @Test
+    void testNonZeroElementsDiagonalEmpty() {
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
-        //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                customMatrix1::elementsDiagonal);
-        assertTrue(exception.getMessage().contains("Empty Array"));}
+        //Act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, customMatrix1::nonZeroElementsDiagonal);
+        //Assert
+        assertTrue(exception.getMessage().contains("Empty Array"));
+    }
+
     @Test
-    void elementsDiagonalRectangle(){
+    void testNonZeroElementsDiagonalNotSquare() {
         //Arrange
-        int[][] mtrx = {{2,3,6,7},{1,1,1,1},{9,8,2,3}};
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
         int exp = -1;
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
         //Act
+        int res = customMatrix1.nonZeroElementsDiagonal();
         //Assert
-        assertEquals(exp,customMatrix1.elementsDiagonal());}
+        assertEquals(exp, res);
+    }
+
     @Test
-    void elementsDiagonalLinesDifferentSizes(){
+    void biggestLineValid() {
         //Arrange
-        int[][] mtrx = {{2,3,6},{1,1,1,1},{9,8,2}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act and Assert
-        assertEquals(-1,customMatrix1.elementsDiagonal());}
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}, {0, 0, 4}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        int exp = 0;
+        //Act
+        int res = customMatrix1.biggestLine();
+        //Assert
+        assertEquals(exp, res);
+    }
+
     @Test
-    void elementsDiagonalNotSquare(){
+    void biggestLineValidLine3Biggest() {
         //Arrange
-        int[][] mtrx = {{2,3,6},{1,1,1},{9,8,2},{1,2,3}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act and Assert
-        assertEquals(-1,customMatrix1.elementsDiagonal());}
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}, {0, 0, 4, 5}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        int exp = 2;
+        //Act
+        int res = customMatrix1.biggestLine();
+        //Assert
+        assertEquals(exp, res);
+    }
+
     @Test
-    void elementsDiagonalEmptyArray()throws IllegalArgumentException{
+    void biggestLineEmptyArray() throws IllegalArgumentException {
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
         //Act and Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                customMatrix1::elementsDiagonal);
-        assertTrue(exception.getMessage().contains("Empty Array"));}
+                customMatrix1::biggestLine);
+        assertTrue(exception.getMessage().contains("Empty Array"));
+    }
+
     @Test
-    void equalDiagonalsDifferent(){
+    void sameDiagonalsValid() {
         //Arrange
-        int[][] mtrx = {{2,3,6},{1,1,1},{9,8,2}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        int[][] matrix = {{1, 2, 1}, {0, -1, -2}, {4, 0, 4}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
         //Act and Assert
-        assertFalse(customMatrix1.equalDiagonals());}
+        assertTrue(customMatrix1.sameDiagonals());
+    }
+
     @Test
-    void equalDiagonalsEqual(){
+    void sameDiagonalsValidRectangle() {
         //Arrange
-        int[][] mtrx = {{2,3,2},{1,1,1},{2,8,2}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Assert
-        assertTrue(customMatrix1.equalDiagonals());}
+        int[][] matrix = {{1, 2, 1}, {0, -1, -2}, {4, 0, 4}, {5, 1, 5}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        //Act and Assert
+        assertTrue(customMatrix1.sameDiagonals());
+    }
+
     @Test
-    void equalDiagonalsEmpty()throws IllegalArgumentException{
+    void sameDiagonalsEmpty() throws IllegalArgumentException {
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
         //Act and Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                customMatrix1::equalDiagonals);
-        assertTrue(exception.getMessage().contains("Empty Array"));}
+                customMatrix1::sameDiagonals);
+        assertTrue(exception.getMessage().contains("Empty Array"));
+    }
+
     @Test
-    void equalDiagonalsNotRectangle(){
+    void sameDiagonalNoRectangle() throws IllegalArgumentException {
         //Arrange
-        int[][] mtrx = {{2,3},{1,1,1},{2,8,2},{2,2,2}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        int[][] matrix = {{1, 2, 1}, {0, -1, -2}, {4, 0, 4, 3}, {5, 1, 5}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
         //Act and Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                customMatrix1::equalDiagonals);
-        assertTrue(exception.getMessage().contains("Matrix is not rectangle"));}
+                customMatrix1::sameDiagonals);
+        assertTrue(exception.getMessage().contains("Not a Rectangle"));
+    }
+
     @Test
-    void equalDiagonalsNotSquare(){
+    void reverseLinesValidMatrix3x3() {
         //Arrange
-        int[][] mtrx = {{2,3,2},{1,1,1},{2,8,2},{2,2,2}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act and Assert
-        assertTrue(customMatrix1.equalDiagonals());}
-    @Test
-    void digitsOverAverage(){
-        //Arrange
-        int[][] mtrx = {{22,3,2},{1,13,1},{2,8,2}};
-        int[][] exp =  {{22},{13},{}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}, {4, 0, 4}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        int[] exp = {5, 1, 5};
         //Act
-        int[][] result = customMatrix1.digitsOverAverage();
+        customMatrix1.reverseLines();
         //Assert
-        assertArrayEquals(exp,result);}
+        assertArrayEquals(exp, customMatrix1.arraySomaColunas());
+    }
+
     @Test
-    void digitsOoverAverageMatrix4x4(){
+    void reverseLinesValidMatrix2x2() {
         //Arrange
-        int[][] mtrx = {{22,3,2,1},{1,13,1,1},{2,8,2,1},{1,1,1,1}};
-        int[][] exp =  {{22},{13},{},{}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        int[][] matrix = {{1, 2}, {0, -1}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        int[] exp = {1, 1};
         //Act
-        int[][] result = customMatrix1.digitsOverAverage();
+        customMatrix1.reverseLines();
         //Assert
-        assertArrayEquals(exp,result);}
+        assertArrayEquals(exp, customMatrix1.arraySomaColunas());
+    }
+
     @Test
-    void digitsOverAverageEmpty()throws IllegalArgumentException{
+    void reverseLinesEmpty() throws IllegalArgumentException {
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
         //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, customMatrix1::digitsOverAverage);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                customMatrix1::reverseLines);
+        assertTrue(exception.getMessage().contains("Empty Array"));
+    }
+
+    @Test
+    void reverseAllColumns() {
+        //Arrange
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}, {4, 0, 4}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        int[] exp = {8, -3, 6};
+        //Act
+        customMatrix1.invertColumnOrder();
+        //Assert
+        assertArrayEquals(exp, customMatrix1.arraySumOfLines());
+    }
+
+    @Test
+    void reverseAllColumnsRectangle3x2() {
+        //Arrange
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        int[] exp = {-3, 6};
+        //Act
+        customMatrix1.invertColumnOrder();
+        //Assert
+        assertArrayEquals(exp, customMatrix1.arraySumOfLines());
+    }
+
+    @Test
+    void reverseAllColumnsEmpty() throws IllegalArgumentException {
+        //Arrange
+        CustomMatrix customMatrix1 = new CustomMatrix();
+        //Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                customMatrix1::invertColumnOrder);
+        assertTrue(exception.getMessage().contains("Empty Array"));
+    }
+
+    @Test
+    void reverseAllColumnsNotRectangle() {
+        //Arrange
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}, {4, 0, 4, 3}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        //Act and Assert
+        int[][] exp = {{4, 0, 4, 3}, {0, -1, -2}, {1, 2, 3}};
+        customMatrix1.invertColumnOrder();
+    }
+
+    @Test
+    void rotate90DegreesSquare() {
+        //Arrange
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}, {4, 0, 4}};
+        int[][] result = {{4, 0, 1}, {0, -1, 2}, {4, 2, 3}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        customMatrix1.rotate90Degrees();
+        int[] sumOfLines = {5, 1, 5};
+        int[] sumOfColumns = {8, -3, 6};
+        //Act
+        assertArrayEquals(sumOfLines, customMatrix1.arraySumOfLines());
+        assertArrayEquals(sumOfColumns, customMatrix1.arraySomaColunas());
+    }
+
+    @Test
+    void rotate90DegreesRectangle() {
+        //Arrange
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        customMatrix1.rotate90Degrees();
+        int[] sumOfLines = {1, 1, 1};
+        int[] sumOfColumns = {-3, 6};
+        //Act
+        assertArrayEquals(sumOfLines, customMatrix1.arraySumOfLines());
+        assertArrayEquals(sumOfColumns, customMatrix1.arraySomaColunas());
+    }
+
+    @Test
+    void rotate90DegreesEmpty() throws IllegalArgumentException {
+        //Arrange
+        CustomMatrix customMatrix1 = new CustomMatrix();
+        //Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                customMatrix1::rotate90Degrees);
+        assertTrue(exception.getMessage().contains("Empty Array"));
+    }
+
+    @Test
+    void rotate90DegreesNotRectangle() {
+        //Arrange
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}, {4, 0, 4, 3}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        //Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                customMatrix1::rotate90Degrees);
+        assertTrue(exception.getMessage().contains("Not a Rectangle"));
+    }
+
+    @Test
+    void rotate180degreesSquare3x3() {
+        //Arrange
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}, {4, 0, 4}};
+        int[][] result = {{4, 0, 4}, {-2, -1, 0}, {3, 2, 1}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        customMatrix1.rotate180Degrees();
+        int[] sumOfLines = {8, -3, 6};
+        int[] sumOfColumns = {5, 1, 5};
+        //Act
+        assertArrayEquals(sumOfLines, customMatrix1.arraySumOfLines());
+        assertArrayEquals(sumOfColumns, customMatrix1.arraySomaColunas());}
+    @Test
+    void rotate180degreesREctangle3x4(){
+        //Arrange
+        int[][] matrix = {{1, 2, 3, 4}, {0, -1, -2, 5}, {4, 0, 4, 6}};
+        int[][] result = {{6, 4, 0, 4}, {5, -2, -1, 0}, {4, 3, 2, 1}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        customMatrix1.rotate180Degrees();
+        int[] sumOfLines = {14, 2, 10};
+        int[] sumOfColumns = {15, 5, 1, 5};
+        //Act
+        assertArrayEquals(sumOfLines, customMatrix1.arraySumOfLines());
+        assertArrayEquals(sumOfColumns, customMatrix1.arraySomaColunas());}
+    @Test
+    void rotate180DegreesnotRectangle2x3()throws IllegalArgumentException{
+        //Arrange
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2,4}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        //Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                customMatrix1::rotate180Degrees);
+        assertTrue(exception.getMessage().contains("Not a Rectangle"));}
+    @Test
+    void rotate180DegreesEmpty()throws IllegalArgumentException{
+        //Arrange
+        CustomMatrix customMatrix1 = new CustomMatrix();
+        //Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                customMatrix1::rotate180Degrees);
         assertTrue(exception.getMessage().contains("Empty Array"));}
     @Test
-    void digitsOverAverageSome4DigitNumbers(){
+    void rotate270DegreesSquare3x3(){
         //Arrange
-        int[][] mtrx = {{22,3,2,1},{1,13,1,1},{2,8,211,1},{1,11111,1,1}};
-        int[][] exp =  {{22},{13},{211},{11111}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}, {4, 0, 4}};
+        int[][] result = {{3, -2, 4}, {2, -1, 0}, {1, 0, 4}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        customMatrix1.rotateMinus90Degrees();
+        int[] sumOfLines = {5, 1, 5};
+        int[] sumOfColumns = {6, -3, 8};
         //Act
-        int[][] result = customMatrix1.digitsOverAverage();
-        //Assert
-        assertArrayEquals(exp,result);}
+        assertArrayEquals(sumOfLines, customMatrix1.arraySumOfLines());
+        assertArrayEquals(sumOfColumns, customMatrix1.arraySomaColunas());}
     @Test
-    void pairsOverAverageValid(){
+    void rotate270DegreesRectangle3x2(){
         //Arrange
-        int[][] mtrx = {{22,3,2,1},{1,13,1,1},{2,8,211,1},{1,11111,1,1}};
-        int[][] exp =  {{22,2},{},{2,8,211},{}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}};
+        int[][] result = {{3, -2}, {2, -1}, {1, 0}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        customMatrix1.rotateMinus90Degrees();
+        int[] sumOfLines = {1, 1, 1};
+        int[] sumOfColumns = {6, -3};
         //Act
-        int[][] result = customMatrix1.pairsOverAverage();
+        assertArrayEquals(sumOfLines, customMatrix1.arraySumOfLines());
+        assertArrayEquals(sumOfColumns, customMatrix1.arraySomaColunas());}
+    @Test
+    void rotate270DegreesEmpty()throws IllegalArgumentException{
+        //Arrange
+        CustomMatrix customMatrix1 = new CustomMatrix();
+        //Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                customMatrix1::rotateMinus90Degrees);
+        assertTrue(exception.getMessage().contains("Empty Array"));}
+    @Test
+    void rotate270DegreesNotRectangle()throws IllegalArgumentException{
+        //Arrange
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2,4}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        //Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                customMatrix1::rotateMinus90Degrees);
+        assertTrue(exception.getMessage().contains("Not a Rectangle"));}
+
+    @Test
+    void algarismsOverAverageAllLength1(){
+        //Arrange
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}, {4, 0, 4}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        int[] exp = {};
+        //Act
+        int[] res = customMatrix1.algarismsOverAverage();
         //Assert
-        assertArrayEquals(exp,result);}
+        assertArrayEquals(exp, res);}
+    @Test
+    void algarismsOverAverageAllLength2(){
+        //Arrange
+        int[][] matrix = {{10, 201, 30}, {0, -109, -20}, {40, 0, 403}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        int[] exp = {201, -109, 403};
+        //Act
+        int[] res = customMatrix1.algarismsOverAverage();
+        //Assert
+        assertArrayEquals(exp, res);}
+    @Test
+    void algarismsOverAverageEmpty(){
+        //Arrange
+        CustomMatrix customMatrix1 = new CustomMatrix();
+        //Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                customMatrix1::algarismsOverAverage);
+        assertTrue(exception.getMessage().contains("Empty Array"));}
     @Test
     void pairsOverAverageEmpty()throws IllegalArgumentException{
         //Arrange
         CustomMatrix customMatrix1 = new CustomMatrix();
         //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, customMatrix1::pairsOverAverage);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                customMatrix1::pairAlgarismsOverAverage);
         assertTrue(exception.getMessage().contains("Empty Array"));}
     @Test
-    void pairsOverAverageAll100percentPairs(){
+    void pairsOverAverageAllLength1(){
         //Arrange
-        int[][] mtrx = {{22,2,2,4},{6,22,44,66},{2,8,246,2},{8,66,88,2}};
-        int[][] exp =  {{},{},{},{}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        int[][] matrix = {{1, 2, 3}, {0, -1, -2}, {4, 0, 4}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        int[] exp = {2,0,-2,4,0,4};
         //Act
-        int[][] result = customMatrix1.pairsOverAverage();
+        int[] res = customMatrix1.pairAlgarismsOverAverage();
         //Assert
-        assertArrayEquals(exp,result);}
+        assertArrayEquals(exp, res);}
     @Test
-    void pairsOVerAverageSome4DigitNumbers(){
+    void pairsOverAverageAllLength2(){
         //Arrange
-        int[][] mtrx = {{22,3,2,1},{1,13,1,1},{2,8,211,1},{1,11111,1,1}};
-        int[][] exp =  {{22,2},{},{2,8,211},{}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
+        int[][] matrix = {{10, 201, 30}, {0, -109, -20}, {40, 0, 403}};
+        CustomMatrix customMatrix1 = new CustomMatrix(matrix);
+        int[] exp = {0,-20,40,0};
         //Act
-        int[][] result = customMatrix1.pairsOverAverage();
+        int[] res = customMatrix1.pairAlgarismsOverAverage();
         //Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void reverseLineValid(){
-        //Arrange
-        int[][] mtrx = {{22,3,2,1},{1,13,1,1},{2,8,211,1},{1,11111,1,1}};
-        int[][] exp =  {{1,2,3,22},{1,13,1,1},{2,8,211,1},{1,11111,1,1}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        customMatrix1.reverseLine(0);
-        int[][] result = customMatrix1.getMatrix();
-        //Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void reverseLineEmpty()throws IllegalArgumentException{
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,() -> customMatrix1.reverseLine(0));
-        assertTrue(exception.getMessage().contains("Empty Array"));}
-    @Test
-    void reverseLineInvalidLine(){
-        //Arrange
-        int[][] mtrx = {{22,3,2,1},{1,13,1,1},{2,8,211,1},{1,11111,1,1}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act and Assert
-        ArrayIndexOutOfBoundsException exception = assertThrows(ArrayIndexOutOfBoundsException.class,() -> customMatrix1.reverseLine(4));
-        assertTrue(exception.getMessage().contains("Out of Bounds"));}
-    @Test
-    void reverseLineInvalidNegativeLine(){
-        //Arrange
-        int[][] mtrx = {{22,3,2,1},{1,13,1,1},{2,8,211,1},{1,11111,1,1}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act and Assert
-        ArrayIndexOutOfBoundsException exception = assertThrows(ArrayIndexOutOfBoundsException.class,() -> customMatrix1.reverseLine(-1));
-        assertTrue(exception.getMessage().contains("Out of Bounds"));}
-
-    @Test
-    void reverseColumnValid(){
-        //Arrange
-        int[][] mtrx = {{22,3,2,1},{1,13,1,1},{2,8,211,1},{1,11111,1,1}};
-        int[][] exp =  {{1,3,2,1},{2,13,1,1},{1,8,211,1},{22,11111,1,1}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        customMatrix1.reverseColumn(0);
-        int[][] result = customMatrix1.getMatrix();
-        //Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void reverseColumnEmpty()throws IllegalArgumentException{
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,() -> customMatrix1.reverseColumn(0));
-        assertTrue(exception.getMessage().contains("Empty Array"));}
-    @Test
-    void reverseColumnInvalidColumn(){
-        //Arrange
-        int[][] mtrx = {{22,3,2,1},{1,13,1,1},{2,8,211,1},{1,11111,1,1}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act and Assert
-        ArrayIndexOutOfBoundsException exception = assertThrows(ArrayIndexOutOfBoundsException.class,() -> customMatrix1.reverseColumn(4));
-        assertTrue(exception.getMessage().contains("Out of Bounds"));}
-    @Test
-    void reverseColumnInvalidNegativeColumn(){
-        //Arrange
-        int[][] mtrx = {{22,3,2,1},{1,13,1,1},{2,8,211,1},{1,11111,1,1}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act and Assert
-        ArrayIndexOutOfBoundsException exception = assertThrows(ArrayIndexOutOfBoundsException.class,() -> customMatrix1.reverseColumn(-1));
-        assertTrue(exception.getMessage().contains("Out of Bounds"));}
-    @Test
-    void rotate90DegreesClockwiseValid(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        int[][] exp =  {{3,6,9},{2,5,8},{1,4,7}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        customMatrix1.rotateMatrix(90);
-        int[][] result = customMatrix1.getMatrix();
-        //Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void rotate180Degrees(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        int[][] exp =  {{9,8,7},{6,5,4},{3,2,1}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        customMatrix1.rotateMatrix(180);
-        int[][] result = customMatrix1.getMatrix();
-        //Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void rotate270Degrees(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        int[][] exp =  {{7,4,1},{8,5,2},{9,6,3}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        customMatrix1.rotateMatrix(270);
-        int[][] result = customMatrix1.getMatrix();
-        //Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void rotate360Degrees(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        int[][] exp =  {{1,2,3},{4,5,6},{7,8,9}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        customMatrix1.rotateMatrix(360);
-        int[][] result = customMatrix1.getMatrix();
-        //Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void rotate450Degrees(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        int[][] exp =  {{3,6,9},{2,5,8},{1,4,7}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        customMatrix1.rotateMatrix(450);
-        int[][] result = customMatrix1.getMatrix();
-        //Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void rotate540Degrees(){
-        //Arrange
-        int[][] mtrx = {{1,2,3},{4,5,6},{7,8,9}};
-        int[][] exp =  {{9,8,7},{6,5,4},{3,2,1}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act
-        customMatrix1.rotateMatrix(540);
-        int[][] result = customMatrix1.getMatrix();
-        //Assert
-        assertArrayEquals(exp,result);}
-    @Test
-    void rotateEmpty()throws IllegalArgumentException{
-        //Arrange
-        CustomMatrix customMatrix1 = new CustomMatrix();
-        //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,() -> customMatrix1.rotateMatrix(90));
-        assertTrue(exception.getMessage().contains("Empty Array"));}
-    @Test
-    void rotateNonSquareMatrix(){
-        //Arrange
-        int[][] mtrx = {{1,2,3,4},{4,5,6,7},{7,8,9,10}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,() -> customMatrix1.rotateMatrix(90));
-        assertTrue(exception.getMessage().contains("Matrix is not square"));}
-    @Test
-    void rotateInvalidAngle(){
-        //Arrange
-        int[][] mtrx = {{1,2,3,4},{4,5,6,7},{7,8,9,10},{11,12,13,14}};
-        CustomMatrix customMatrix1 = new CustomMatrix(mtrx);
-        //Act and Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,() -> customMatrix1.rotateMatrix(95));
-        assertTrue(exception.getMessage().contains("Invalid Argument"));}
+        assertArrayEquals(exp, res);}
     }
-
 
 

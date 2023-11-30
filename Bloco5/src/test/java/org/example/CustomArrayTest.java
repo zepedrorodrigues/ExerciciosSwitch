@@ -1,645 +1,344 @@
 package org.example;
+
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class CustomArrayTest {
+class ArrayTest {
     @Test
-    void testEqualsValid() {
+    void testConstructor() {
         //Arrange
-        int[] arr1 = {1, 2, 3};
+        Array array = new Array();
         //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        CustomArray customArray2 = new CustomArray(arr1);
+        int[] exp = new int[0];
         //Assert
-        assertTrue(customArray2.equals(customArray1));
+        assertEquals(exp.length, array.getSize());
+    }
+
+
+    @Test
+    void testConstructorWithNullArray() throws NullPointerException {
+        //Arrange, Act and Assert
+        assertThrows(NullPointerException.class, () -> new Array(null));
     }
 
     @Test
-    void testEqualsInvalid() {
+    void removeFirstValueValid() {
         //Arrange
-        int[] arr1 = {1, 2, 3};
-        int[] arr2 = {1, 2, 3, 4};
+        int[] array = {1, 2, 3};
+        int value = 2;
         //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        CustomArray customArray2 = new CustomArray(arr2);
+        Array myArray = new Array(array);
+        int[] exp = {1, 3};
+        myArray.removeFirstValue(value);
         //Assert
-        assertNotEquals(customArray1.getArray(), customArray2.getArray());}
-    @Test
-    void testEqualsInvalidDifferentType() {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        String arr2 = "1, 2, 3";
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertNotEquals(customArray1.getArray(), arr2);}
-    @Test
-    void testEqualsValidbutDifferent() {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        int[] arr2 = {1, 2, 3,4};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertFalse(customArray1.equals(arr2));}
+        assertEquals(myArray.getSize(), exp.length);
+        assertEquals(2,myArray.average());}
 
     @Test
-    void testHashValue() {
+    void removeFirstValueInexistant() throws IllegalArgumentException {
         //Arrange
-        int[] arr1 = {1, 2, 3};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertNotEquals(customArray1.hashCode(), arr1.hashCode());
-    }
-
-    @Test
-    void testEqualsNull() throws NullPointerException {
-        assertThrows(NullPointerException.class, () ->
-                new CustomArray(null));
-    } //throw exception
-
-    @Test
-    void testEqualsSame() {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertEquals(customArray1, customArray1);
-    }
-
-    @Test
-    void testEqualsDifferent() {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        int[] arr2 = {1, 2, 3, 4};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        CustomArray customArray2 = new CustomArray(arr2);
-        //Assert
-        assertNotEquals(customArray1, customArray2);
-    }
-
-    @Test
-    void testConstructorNoParameters() {
-        //Arrange
-        int[] arr1 = new int[0];
-        //Act
-        CustomArray customArray1 = new CustomArray();
-        //Assert
-        assertArrayEquals(customArray1.getArray(), arr1);
-    }
-
-    @Test
-    void testConstructorWithParameters() {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertArrayEquals(customArray1.getArray(), arr1);
-    }
-
-    @Test
-    void testConstructorWithParametersNull() throws NullPointerException {
-        assertThrows(NullPointerException.class, () ->
-                new CustomArray(null));
-    } //throw exception
-
-    @Test
-    void testGetArray() {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertArrayEquals(customArray1.getArray(), arr1);
-    }
-
-    @Test
-    void testGetSize() {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertEquals(customArray1.getSize(), arr1.length);
-    }
-
-    @Test
-    void testGetSizeEmpty() {
-        //Arrange
-        int[] arr1 = new int[0];
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertEquals(customArray1.getSize(), arr1.length);
-    }
-
-    @Test
-    void getbyIndexValid() {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertEquals(customArray1.getbyIndex(0), arr1[0]);
-    }
-
-    @Test
-    void getbyIndexInvalid() throws IndexOutOfBoundsException {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertThrows(IndexOutOfBoundsException.class, () ->
-                customArray1.getbyIndex(3));
-    } //throw exception
-
-    @Test
-    void getbyIndexInvalidNegative() throws IndexOutOfBoundsException {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertThrows(IndexOutOfBoundsException.class, () ->
-                customArray1.getbyIndex(-1));
-    } //throw exception
-
-    @Test
-    void setElementValid() {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
+        int[] array = {1, 2, 3};
         int value = 4;
         //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        customArray1.setElement(0, value);
+        Array myArray = new Array(array);
         //Assert
-        assertEquals(customArray1.getbyIndex(0), value);
-    }
+        assertThrows(IllegalArgumentException.class, () -> myArray.removeFirstValue(value));}
 
     @Test
-    void setElementInvalid() throws IndexOutOfBoundsException {
+    void removeFirstValueArrayVazio() throws IllegalArgumentException {
         //Arrange
-        int[] arr1 = {1, 2, 3};
-        int value = 4;
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertThrows(IndexOutOfBoundsException.class, () ->
-                customArray1.setElement(3, value));
-    } //throw exception
-
-    @Test
-    void setElementInvalidNegative() throws IndexOutOfBoundsException {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        int value = 4;
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertThrows(IndexOutOfBoundsException.class, () ->
-                customArray1.setElement(-1, value));
-    } //throw exception
-
-    @Test
-    void addElementValid() {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        int value = 4;
-        int[] arr2 = {1, 2, 3, 4};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        customArray1.addElement(value);
-        //Assert
-        assertArrayEquals(customArray1.getArray(), arr2);
-    }
-
-    @Test
-    void removeFirstElementValid() {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        int value = 1;
-        int[] arr2 = {2, 3};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        customArray1.removeFirstElement(value);
-        //Assert
-        assertArrayEquals(customArray1.getArray(), arr2);
-    }
-
-    @Test
-    void removeFirstElementInvalid() throws IndexOutOfBoundsException {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        int value = 4;
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                customArray1.removeFirstElement(value));
-    } //throw exception
-
-    @Test
-    void removeFirstElementInvalidNegative() throws IllegalArgumentException {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
-        int value = -1;
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                customArray1.removeFirstElement(value));
-    } //throw exception
-
-    @Test
-    void getBiggestSmallestNumberValidBiggest() {
-        //Arrange
-        int[] arr1 = {1, 2, 3};
+        int[] array = {};
         int value = 3;
         //Act
-        CustomArray customArray1 = new CustomArray(arr1);
+        Array myArray = new Array(array);
         //Assert
-        assertEquals(customArray1.getBiggestSmallestNumber(true), value);
+        assertThrows(IllegalArgumentException.class, () -> myArray.removeFirstValue(value));
     }
 
     @Test
-    void getBiggestSmallestNumberValidSmallest() {
+    void returnElement() {
         //Arrange
-        int[] arr1 = {1, 2, 3};
-        int value = 1;
+        int[] Array = {1, 2, 3};
+        Array myArray = new Array(Array);
+        int exp = 2;
         //Act
-        CustomArray customArray1 = new CustomArray(arr1);
+        int res = myArray.returnElement(1);
         //Assert
-        assertEquals(customArray1.getBiggestSmallestNumber(false), value);
+        assertEquals(exp, res);}
+    @Test
+    void returnElementpositionZero(){
+        //Arrange
+        int[] Array = {1, 2, 3};
+        Array myArray = new Array(Array);
+        int exp = 1;
+        //Act
+        int res = myArray.returnElement(0);
+        //Assert
+        assertEquals(exp, res);}
+
+    @Test
+    void returnElementNegativePosition() {
+        //Arrange
+        int[] Array = {1, 2, 3};
+        Array myArray = new Array(Array);
+        String expectedMessage = "Argumento Inválido.";
+        //Act
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> myArray.returnElement(-3));
+        //Assert
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));}
+    @Test
+    void returnElementPositionEqualsLength()throws IllegalArgumentException{
+        //Arrange
+        int[] Array = {1, 2, 3};
+        Array myArray = new Array(Array);
+        String expectedMessage = "Argumento Inválido.";
+        //Act
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> myArray.returnElement(3));
+        //Assert
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));}
+
+    @Test
+    void returnElementOutsideArray() throws IllegalArgumentException {
+        //Arrange
+        int[] array1 = {1, 2, 3};
+        //Act
+        Array myArray = new Array(array1);
+        //Assert
+        assertThrows(IllegalArgumentException.class, () -> myArray.returnElement(4));
     }
 
     @Test
-    void getBiggestSmallestNumberInvalid() throws IllegalArgumentException {
+    void getsizeArrayVazio() {
         //Arrange
-        int[] arr1 = {};
+        int[] array = {};
+        int exp = 0;
         //Act
-        CustomArray customArray1 = new CustomArray(arr1);
+        Array myArray = new Array(array);
         //Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                customArray1.getBiggestSmallestNumber(true));
-    } //throw exception
-
-    @Test
-    void getBiggestSmallestNumberInvalidSmallest() throws IllegalArgumentException {
-        //Arrange
-        int[] arr1 = {};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                customArray1.getBiggestSmallestNumber(false));
-    } //throw exception
-
-    @Test
-    void getBiggestSmallestAllSame() {
-        //Arrange
-        int[] arr1 = {1, 1, 1};
-        int value = 1;
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertEquals(customArray1.getBiggestSmallestNumber(true), value);
-        assertEquals(customArray1.getBiggestSmallestNumber(false), value);
+        assertEquals(exp, myArray.getSize());
     }
 
     @Test
-    void getAverageValid() {
+    void getSizeArrayValido() {
         //Arrange
-        int[] arr1 = {1, 2, 3};
-        double value = 2;
+        int[] array = {1, 2, 3};
+        int exp = 3;
         //Act
-        CustomArray customArray1 = new CustomArray(arr1);
+        Array myArray = new Array(array);
         //Assert
-        assertEquals(customArray1.getAveragenoArguments(), value);
+        assertEquals(exp, myArray.getSize());
     }
 
     @Test
-    void getAverageInvalid() throws IllegalArgumentException {
-        //Arrange
-        int[] arr1 = {};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertThrows(IllegalArgumentException.class, customArray1::getAveragenoArguments);
-    } //throw exception
-
-    @Test
-    void getAverageAllSame() {
-        //Arrange
-        int[] arr1 = {1, 1, 1};
-        double value = 1;
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertEquals(customArray1.getAveragenoArguments(), value);
+    void getSizeArrayNull() throws NullPointerException {
+        assertThrows(NullPointerException.class, () -> new Array(null));
     }
 
     @Test
-    void getAverageNegative() {
+    void testReturnBiggestElement() {
         //Arrange
-        int[] arr1 = {-1, -1, -1};
-        double value = -1;
+        int[] array = {1, 2, 3};
+        int exp = 3;
         //Act
-        CustomArray customArray1 = new CustomArray(arr1);
+        Array myArray = new Array(array);
         //Assert
-        assertEquals(customArray1.getAveragenoArguments(), value);
+        assertEquals(exp, myArray.largest());
     }
 
     @Test
-    void averageMultiplesof3() {
+    void testReturnBiggestElementArrayVazio() throws IllegalArgumentException {
         //Arrange
-        int[] arr1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        double value = 6;
+        int[] array = {};
         //Act
-        CustomArray customArray1 = new CustomArray(arr1);
+        Array myArray = new Array(array);
         //Assert
-        assertEquals(value, customArray1.averagemultiplesNonMultiples(3, true));
+        assertThrows(IllegalArgumentException.class, myArray::largest);
     }
 
     @Test
-    void averageNonMultiplesof5() {
+    void testReturnSmallestElement() {
         //Arrange
-        int[] arr1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        double value = 5;
+        int[] array = {1, 2, 3};
+        int exp = 1;
         //Act
-        CustomArray customArray1 = new CustomArray(arr1);
+        Array myArray = new Array(array);
         //Assert
-        assertEquals(value, customArray1.averagemultiplesNonMultiples(5, false));
+        assertEquals(exp, myArray.smallest());
     }
 
     @Test
-    void averageMultiplesof3Empty() {
+    void testReturnSmallestElementAllEqual() {
         //Arrange
-        int[] arr1 = {};
+        int[] array = {1, 1, 1};
+        int exp = 1;
         //Act
-        CustomArray customArray1 = new CustomArray(arr1);
+        Array myArray = new Array(array);
         //Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                customArray1.averagemultiplesNonMultiples(3, true));
-    } //throw exception
-
-    @Test
-    void averageNonMultiplesof5Empty() {
-        //Arrange
-        int[] arr1 = {};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                customArray1.averagemultiplesNonMultiples(5, false));
-    } //throw exception
-
-    @Test
-    void averageMultiplesof0() {
-        //Arrange
-        int[] arr1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        //Act
-        CustomArray customArray1 = new CustomArray(arr1);
-        //Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                customArray1.averagemultiplesNonMultiples(0, true));
-    } //throw exception
-
-    @Test
-    void sortAscendingDescendingascending() {
-        //Arrange
-        int[] arr1 = {3, 7, 1, 2, 0, 9, 11};
-        int[] arr2 = {0, 1, 2, 3, 7, 9, 11};
-        //Act
-        CustomArray array = new CustomArray(arr1);
-        array.sortAscendingDescending(true);
-        //Assert
-        assertArrayEquals(arr2, array.getArray());
+        assertEquals(exp, myArray.smallest());
     }
 
     @Test
-    void sortAscendingDescendingDescending() {
+    void testReturnAverageValid() {
         //Arrange
-        int[] arr1 = {3, 7, 1, 2, 0, 9, 11};
-        int[] arr2 = {11, 9, 7, 3, 2, 1, 0};
+        int[] array = {-5, 0, 5};
+        int exp = 0;
         //Act
-        CustomArray array = new CustomArray(arr1);
-        array.sortAscendingDescending(false);
+        Array myArray = new Array(array);
         //Assert
-        assertArrayEquals(arr2, array.getArray());
+        assertEquals(exp, myArray.average(), 0.01);
     }
 
     @Test
-    void sortAscendingDescendingEmpty() {
-        //Arrange
-        int[] arr1 = {};
-        //Act
-        CustomArray array = new CustomArray(arr1);
-        //Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                array.sortAscendingDescending(true));
-    } //throw exception
-
-    @Test
-    void sortAscendingDescendingEmptyDescending() {
-        //Arrange
-        int[] arr1 = {};
-        //Act
-        CustomArray array = new CustomArray(arr1);
-        //Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                array.sortAscendingDescending(false));
-    } //throw exception
-
-    @Test
-    void sortAscendingDescendingAllSame() {
-        //Arrange
-        int[] arr1 = {1, 1, 1};
-        int[] arr2 = {1, 1, 1};
-        //Act
-        CustomArray array = new CustomArray(arr1);
-        array.sortAscendingDescending(true);
-        //Assert
-        assertArrayEquals(arr2, array.getArray());
+    void testReturnAverageEmpty() throws IllegalArgumentException {
+        // Arrange
+        int[] array = {};
+        // Act
+        Array myArray = new Array(array);
+        // Assert
+        assertThrows(IllegalArgumentException.class, myArray::average);
     }
 
     @Test
-    void sortAscendingDescendingAllSameDescending() {
+    void returnAverageOfEvenElementsValid() {
         //Arrange
-        int[] arr1 = {1, 1, 1};
-        int[] arr2 = {1, 1, 1};
+        int[] array = {1, 2, 3, 4};
+        int multiplo = 2;
+        int exp = 3;
         //Act
-        CustomArray array = new CustomArray(arr1);
-        array.sortAscendingDescending(false);
+        Array myArray = new Array(array);
         //Assert
-        assertArrayEquals(arr2, array.getArray());
+        assertEquals(exp, myArray.averageEvens());
     }
 
     @Test
-    void sortAscendingDescendingNegative() {
+    void returnAveragedOfEvenElementsEmpty() throws IllegalArgumentException {
         //Arrange
-        int[] arr1 = {-1, -2, -3};
+        int[] array = {};
+        int multiplo = 2;
         //Act
-        CustomArray array = new CustomArray(arr1);
-        array.sortAscendingDescending(false);
+        Array myArray = new Array(array);
         //Assert
-        assertArrayEquals(arr1, array.getArray());
+        assertThrows(IllegalArgumentException.class, myArray::averageOdds);
     }
 
     @Test
-    void sortAscendingDescendingNegativeAscending() {
+    void returnAverageOfOddElements() {
         //Arrange
-        int[] arr1 = {-1, -2, -3};
-        int[] arr2 = {-3, -2, -1};
+        int[] array = {1, 2, 3, 4};
+        int multiplo = 2;
+        int exp = 2;
         //Act
-        CustomArray array = new CustomArray(arr1);
-        array.sortAscendingDescending(true);
+        Array myArray = new Array(array);
         //Assert
-        assertArrayEquals(arr2, array.getArray());
+        assertEquals(exp, myArray.averageOdds());
     }
 
     @Test
-    void duplicatesCheckTrue() {
+    void returnAverageMultiplesof3() {
         //Arrange
-        int[] arr1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 9};
+        int[] array = {1, 2, 3, 4, 5, 6};
+        int multiplo = 3;
+        double exp = 9 / 2d;
         //Act
-        CustomArray array = new CustomArray(arr1);
+        Array myArray = new Array(array);
         //Assert
-        assertTrue(array.duplicatesCheck());
+        assertEquals(exp, myArray.averageMultiples(multiplo));
+    }
+
+
+    @Test
+    void returnAverageofMultiplesof3NoMultiples() throws IllegalArgumentException {
+        //Arrange
+        int[] array = {1, 2, 7, 4, 5, 11};
+        int multiplo = 3;
+        //Act
+        Array myArray = new Array(array);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                myArray.averageMultiples(3));
+        //Assert
+        assertTrue(exception.getMessage().contains("Sem múltiplos"));
     }
 
     @Test
-    void duplicatesCheckFalse() {
+    void returnAverageNoArgumentsInvalid() throws IllegalArgumentException {
         //Arrange
-        int[] arr1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int[] array = {};
         //Act
-        CustomArray array = new CustomArray(arr1);
+        Array myArray = new Array(array);
         //Assert
-        assertFalse(array.duplicatesCheck());
+        assertThrows(IllegalArgumentException.class, myArray::average);
     }
 
     @Test
-    void duplicatesCheckEmpty() {
+    void returnAverageNoArgumentsValid() {
         //Arrange
-        int[] arr1 = {};
+        int[] array = {1, 2, 3};
+        int exp = 2;
         //Act
-        CustomArray array = new CustomArray(arr1);
+        Array myArray = new Array(array);
         //Assert
-        assertThrows(IllegalArgumentException.class, array::duplicatesCheck);
-    } //throw exception
-
-    @Test
-    void duplicatesCheckAllSame() {
-        //Arrange
-        int[] arr1 = {1, 1, 1, 1, 1, 1, 1, 1, 1};
-        //Act
-        CustomArray array = new CustomArray(arr1);
-        //Assert
-        assertTrue(array.duplicatesCheck());
+        assertEquals(exp, myArray.average());
     }
 
     @Test
-    void isSizeTrue() {
+    void testReturnArrayOrder() {
         //Arrange
-        int[] arr1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int[] array = {3, 2, 1};
+        Array myArray = new Array(array);
+        int[] exp = {1, 2, 3};
         //Act
-        CustomArray array = new CustomArray(arr1);
+        int[] res = myArray.returnArrayOrder(true);
         //Assert
-        assertTrue(array.isSize(9));
+        assertArrayEquals(exp, res);
     }
 
     @Test
-    void isSizeFalse() {
+    void returnArrayOrderRepeatedNumbers() {
         //Arrange
-        int[] arr1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int[] array = {3, 2, 1, 1, 2, 3};
+        Array myArray = new Array(array);
+        int[] exp = {1, 1, 2, 2, 3, 3};
         //Act
-        CustomArray array = new CustomArray(arr1);
+        int[] res = myArray.returnArrayOrder(true);
         //Assert
-        assertFalse(array.isSize(10));
+        assertArrayEquals(exp, res);
     }
 
     @Test
-    void isOnlyEvenNumbersTrue() {
+    void returnArrayOrderEmptyArray() throws IllegalArgumentException {
         //Arrange
-        int[] arr1 = {2, 4, 6, 8, 10};
+        int[] array = {};
+        Array myArray = new Array(array);
         //Act
-        CustomArray array = new CustomArray(arr1);
         //Assert
-        assertTrue(array.isOnlyEvenNumbers(true));
+        assertThrows(IllegalArgumentException.class, () -> myArray.returnArrayOrder(true));
     }
 
     @Test
-    void isOnlyEvenNumbersFalse() {
+    void testReturnArrayReverseOrder() {
         //Arrange
-        int[] arr1 = {2, 4, 6, 8, 10, 11};
+        int[] array = {1, 2, 3};
+        Array myArray = new Array(array);
+        int[] exp = {3, 2, 1};
         //Act
-        CustomArray array = new CustomArray(arr1);
+        int[] res = myArray.returnArrayOrder(false);
         //Assert
-        assertFalse(array.isOnlyEvenNumbers(true));
+        assertArrayEquals(exp, res);
     }
 
     @Test
-    void isOnlyEvenNumbersEmpty() {
+    void returnArrayReverseOrderRepeatedNumbers() {
         //Arrange
-        int[] arr1 = {};
+        int[] array = {3, 2, 1, 1, 2, 3};
+        Array myArray = new Array(array);
+        int[] exp = {3, 3, 2, 2, 1, 1};
         //Act
-        CustomArray array = new CustomArray(arr1);
+        int[] res = myArray.returnArrayOrder(false);
         //Assert
-        assertThrows(IllegalArgumentException.class, () -> array.isOnlyEvenNumbers(true));
-    } //throw exception
-
-    @Test
-    void isOnlyOddsNumbersTrue() {
-        //Arrange
-        int[] arr1 = {1, 3, 5, 7, 9};
-        //Act
-        CustomArray array = new CustomArray(arr1);
-        //Assert
-        assertTrue(array.isOnlyEvenNumbers(false));
-    }
-
-    @Test
-    void isOnlyOddsNumbersFalse() {
-        //Arrange
-        int[] arr1 = {1, 3, 5, 7, 9, 10};
-        //Act
-        CustomArray array = new CustomArray(arr1);
-        //Assert
-        assertFalse(array.isOnlyEvenNumbers(false));
-    }
-
-    @Test
-    void isOnlyOddsNumbersEmpty() {
-        //Arrange
-        int[] arr1 = {};
-        //Act
-        CustomArray array = new CustomArray(arr1);
-        //Assert
-        assertThrows(IllegalArgumentException.class, () -> array.isOnlyEvenNumbers(false));
-    } //throw exception
-
-    @Test
-    void isOnlyEvenNumbersAllSame() {
-        //Arrange
-        int[] arr1 = {2, 2, 2, 2, 2, 2, 2, 2, 2};
-        //Act
-        CustomArray array = new CustomArray(arr1);
-        //Assert
-        assertTrue(array.isOnlyEvenNumbers(true));
-    }
-
-    @Test
-    void isOnlyOddsNumbersAllSame() {
-        //Arrange
-        int[] arr1 = {1, 1, 1, 1, 1, 1, 1, 1, 1};
-        //Act
-        CustomArray array = new CustomArray(arr1);
-        //Assert
-        assertTrue(array.isOnlyEvenNumbers(false));
+        assertArrayEquals(exp, res);
     }
 
     @Test
@@ -647,11 +346,11 @@ class CustomArrayTest {
         //Arrange
         int[] array = {1, 24, 32, 4, 5, 63};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {24, 32, 63};
-        int[] result = myArray.overAverageAlgarisms();
+        Array myArray = new Array(array);
+        int[] exp = {24, 32, 63};
+        int[] res = myArray.overAverageAlgarisms();
         //Act
-        assertArrayEquals(expected, result);
+        assertArrayEquals(exp, res);
     }
 
     @Test
@@ -659,11 +358,11 @@ class CustomArrayTest {
         //Arrange
         int[] array = {1, 2, 342, 4, 5, 63, 1000};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {342, 63, 1000};
-        int[] result = myArray.overAverageAlgarisms();
+        Array myArray = new Array(array);
+        int[] exp = {342, 63, 1000};
+        int[] res = myArray.overAverageAlgarisms();
         //Act
-        assertArrayEquals(expected, result);
+        assertArrayEquals(exp, res);
     }
 
     @Test
@@ -671,7 +370,7 @@ class CustomArrayTest {
         //Arrange
         int[] array = {};
         //Act
-        CustomArray myArray = new CustomArray(array);
+        Array myArray = new Array(array);
         //Act
         assertThrows(IllegalArgumentException.class, myArray::overAverageAlgarisms);
     }
@@ -681,11 +380,11 @@ class CustomArrayTest {
         //Arrange
         int[] array = {1, 1, 1};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {};
-        int[] result = myArray.overAverageAlgarisms();
+        Array myArray = new Array(array);
+        int[] exp = {};
+        int[] res = myArray.overAverageAlgarisms();
         //Act
-        assertArrayEquals(expected, result);
+        assertArrayEquals(exp, res);
     }
 
     @Test
@@ -693,11 +392,11 @@ class CustomArrayTest {
         //Arrange
         int[] array = {1, 2, 342, 4, 5, 63, 1000};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {2, 342, 4, 1000};
-        int[] result = myArray.overAveragePairs();
+        Array myArray = new Array(array);
+        int[] exp = {2, 342, 4, 1000};
+        int[] res = myArray.overAveragePairs();
         //Act
-        assertArrayEquals(expected, result);
+        assertArrayEquals(exp, res);
     }
 
     @Test
@@ -705,7 +404,7 @@ class CustomArrayTest {
         //Arrange
         int[] array = {};
         //Act
-        CustomArray myArray = new CustomArray(array);
+        Array myArray = new Array(array);
         //Act
         assertThrows(IllegalArgumentException.class, myArray::overAveragePairs);
     }
@@ -715,11 +414,11 @@ class CustomArrayTest {
         //Arrange
         int[] array = {2, 2, 2};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {};
-        int[] result = myArray.overAveragePairs();
+        Array myArray = new Array(array);
+        int[] exp = {};
+        int[] res = myArray.overAveragePairs();
         //Act
-        assertArrayEquals(expected, result);
+        assertArrayEquals(exp, res);
     }
 
     @Test
@@ -727,11 +426,11 @@ class CustomArrayTest {
         //Arrange
         int[] array = {1, 1, 1};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {};
-        int[] result = myArray.overAveragePairs();
+        Array myArray = new Array(array);
+        int[] exp = {};
+        int[] res = myArray.overAveragePairs();
         //Act
-        assertArrayEquals(expected, result);
+        assertArrayEquals(exp, res);
     }
 
     @Test
@@ -739,239 +438,547 @@ class CustomArrayTest {
         //Arrange
         int[] array = {1, 2, 3};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {2};
-        int[] result = myArray.overAveragePairs();
+        Array myArray = new Array(array);
+        int[] exp = {2};
+        int[] res = myArray.overAveragePairs();
         //Act
-        assertArrayEquals(expected, result);
+        assertArrayEquals(exp, res);
     }
 
     @Test
-    void numbersPerfectPairsEmpty() throws IllegalArgumentException {
+    void hasDuplicatesZero() {
+        //Arrange
+        int[] array = {1, 2, 3, 4, 5, 6, 10};
+        //Act
+        Array myArray = new Array(array);
+        //Act
+        assertFalse(myArray.hasDuplicates());
+    }
+
+    @Test
+    void hasDuplicatesOne() {
+        //Arrange
+        int[] array = {1, 2, 3, 4, 5, 6, 10, 10};
+        //Act
+        Array myArray = new Array(array);
+        //Act
+        assertTrue(myArray.hasDuplicates());
+    }
+
+    @Test
+    void hasDuplicatesAll() {
+        //Arrange
+        int[] array = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+        //Act
+        Array myArray = new Array(array);
+        //Act
+        assertTrue(myArray.hasDuplicates());
+    }
+
+    @Test
+    void elementsWithOnlyEvenDigits() {
+        //Arrange
+        int[] array = {2, 4, 6, 8, 20};
+        //Act
+        Array myArray = new Array(array);
+        int[] exp = {2, 4, 6, 8, 20};
+        int[] res = myArray.elementsWithOnlyEvenDigits();
+        //Act
+        assertArrayEquals(exp, res);
+    }
+
+    @Test
+    void elementsWithOnlyEvenDigitsEmptyArray() throws IllegalArgumentException {
         //Arrange
         int[] array = {};
         //Act
-        CustomArray myArray = new CustomArray(array);
+        Array myArray = new Array(array);
         //Act
-        assertThrows(IllegalArgumentException.class, myArray::numbersPerfectPairs);
+        assertThrows(IllegalArgumentException.class, myArray::elementsWithOnlyEvenDigits);
     }
 
     @Test
-    void numbersPerfectPairsAllNonPairs() {
+    void elementsWithOnlyEvenDigitsAllOdd() {
         //Arrange
-        int[] array = {1, 1, 1};
+        int[] array = {1, 3, 5, 7, 9};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {};
-        int[] result = myArray.numbersPerfectPairs();
+        Array myArray = new Array(array);
+        int[] exp = {};
+        int[] res = myArray.elementsWithOnlyEvenDigits();
         //Act
-        assertArrayEquals(expected, result);
+        assertArrayEquals(exp, res);
     }
 
     @Test
-    void numbersPerfectPairsAllPairs() {
+    void elementsWithOnlyEvenDigitsSomeEven() {
         //Arrange
-        int[] array = {2, 2, 2};
+        int[] array = {1, 2, 3, 4, 5, 6, 10};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {2, 2, 2};
-        int[] result = myArray.numbersPerfectPairs();
+        Array myArray = new Array(array);
+        int[] exp = {2, 4, 6};
+        int[] res = myArray.elementsWithOnlyEvenDigits();
         //Act
-        assertArrayEquals(expected, result);
+        assertArrayEquals(exp, res);
     }
 
     @Test
-    void numbersPerfectPairsSomePairs() {
+    void noArmstrongNumbers() {
         //Arrange
-        int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int[] array = {1, 2, 3, 4, 5, 6, 10, 10};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {2, 4, 6, 8};
-        int[] result = myArray.numbersPerfectPairs();
+        Array myArray = new Array(array);
+        int[] exp = {10, 10};
+        int[] res = myArray.noArmstrongNumbers();
         //Act
-        assertArrayEquals(expected, result);
+        assertArrayEquals(exp, res);
     }
 
     @Test
-    void numbersPerfectPairsSomeAreAnd4Digits() {
-        //Arrange
-        int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 4246};
-        //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {2, 4, 6, 8, 4246};
-        int[] result = myArray.numbersPerfectPairs();
-        //Act
-        assertArrayEquals(expected, result);
-    }
-
-    @Test
-    void getCrescentNumbersValid() {
-        //Arrange
-        int[] array = {12, 243, 367, 42, 5, 6, 7, 8, 9};
-        //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {12, 367};
-            int[] result = myArray.crescentNumbers();
-        //Act
-        assertArrayEquals(expected, result);}
-    @Test
-    void getCrescentsNoCrescents(){
-        //Arrange
-        int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {};
-        int[] result = myArray.crescentNumbers();
-        //Act
-        assertArrayEquals(expected, result);
-    }
-    @Test
-    void getCrescentsEmptyArray(){
+    void noArmstrongNumbersEmptyArray() throws IllegalArgumentException {
         //Arrange
         int[] array = {};
         //Act
-        CustomArray myArray = new CustomArray(array);
+        Array myArray = new Array(array);
         //Act
-        assertThrows(IllegalArgumentException.class, myArray::crescentNumbers);} //throw exception
-
-    @Test
-    void getCapicuas(){
-        //Arrange
-        int[] array = {12, 243, 367, 42, 5, 6, 7, 8, 9, 11, 22, 33, 44, 55};
-        //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {5,6,7,8,9,11, 22, 33, 44, 55};
-        int[] result = myArray.getCapicuas();
-        //Act
-        assertArrayEquals(expected, result);}
-    @Test
-    void getCapicuasEmptyArray(){
-        //Arrange
-        int[] array = {};
-        //Act
-        CustomArray myArray = new CustomArray(array);
-        //Act
-        assertThrows(IllegalArgumentException.class, myArray::getCapicuas);} //throw exception
-
-    @Test
-    void getCapicuasNoCapicuas(){
-        //Arrange
-        int[] array = {12, 243, 367, 42, 51, 61, 74, 81, 91};
-        //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {};
-        int[] result = myArray.getCapicuas();
-        //Act
-        assertArrayEquals(expected, result);
+        assertThrows(IllegalArgumentException.class, myArray::noArmstrongNumbers);
     }
+
     @Test
-    void getNumbersSameAlgarism(){
+    void noArmstrongNumbersAllArmstrong() {
         //Arrange
-        int[] array = {1,2,3,12, 222, 367, 42, 51, 61, 74, 81, 91};
+        int[] array = {153, 370, 371, 407};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {1,2,3,222};
-        int[] result = myArray.getNumbersSameAlgarism();
+        Array myArray = new Array(array);
+        int[] exp = {};
+        int[] res = myArray.noArmstrongNumbers();
         //Act
-        assertArrayEquals(expected, result);}
+        assertArrayEquals(exp, res);
+    }
+
     @Test
-    void getNumbersSameAlgarismEmptyArray(){
+    void findCapicuasValid() throws IllegalArgumentException {
         //Arrange
-        int[] array = {};
+        int[] array = {-1, 0, 1, 10, 11, 100, 111, 998, 999};
         //Act
-        CustomArray myArray = new CustomArray(array);
+        Array myArray = new Array(array);
+        int[] exp = {0, 1, 11, 111, 999};
+        int[] res = myArray.findCapicuas();
         //Act
-        assertThrows(IllegalArgumentException.class, myArray::getNumbersSameAlgarism);} //throw exception
+        assertArrayEquals(exp, res);
+    }
+
     @Test
-    void getNumbersSameAlgarismAllSameAlgarism(){
-        //Arrange
-        int[] array = {1,1,1,1,1,1,1,1,1,1,1,1,1};
-        //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {1,1,1,1,1,1,1,1,1,1,1,1,1};
-        int[] result = myArray.getNumbersSameAlgarism();
-        //Act
-        assertArrayEquals(expected, result);}
-    @Test
-    void getNonArmstrongs(){
-        //Arrange
-        int[] array = {1,2,3,12, 222, 367, 42, 51, 61, 74, 81, 91};
-        //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {12, 222, 367, 42, 51, 61, 74, 81, 91};
-        int[] result = myArray.getNonArmstrongs();
-        //Act
-        assertArrayEquals(expected, result);}
-    @Test
-    void getNonArmstrongsEmptyArray(){
+    void findCapicuasEmptyArray() throws IllegalArgumentException {
         //Arrange
         int[] array = {};
         //Act
-        CustomArray myArray = new CustomArray(array);
+        Array myArray = new Array(array);
         //Act
-        assertThrows(IllegalArgumentException.class, myArray::getNonArmstrongs);} //throw exception
+        assertThrows(IllegalArgumentException.class, myArray::findCapicuas);
+    }
+
     @Test
-    void getNonArmstrongsAllArmstrongs(){
+    void findCapicuasNoCapicuas() {
         //Arrange
-        int[] array = {1,153,370,371,407};
+        int[] array = {12, 23, 34};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {};
-        int[] result = myArray.getNonArmstrongs();
+        Array myArray = new Array(array);
+        int[] exp = {};
+        int[] res = myArray.findCapicuas();
         //Act
-        assertArrayEquals(expected, result);}
+        assertArrayEquals(exp, res);
+    }
+
     @Test
-    void getNumbersCrescentatLeastSequenceX(){
+    void sameDigitsValid() {
         //Arrange
-        int[] array = {1,2,3,12, 222, 367, 42, 51, 61, 74, 81, 91};
+        int[] array = {1, 11, 121, 1111};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {367};
-        int[] result = myArray.getNumbersCrescentatLeastXSequence(3);
+        Array myArray = new Array(array);
+        int[] exp = {1, 11, 1111};
+        int[] res = myArray.sameDigits();
         //Act
-        assertArrayEquals(expected, result);}
+        assertArrayEquals(exp, res);
+    }
+
     @Test
-    void getNumbersCrescentatLeastSequenceXEmptyArray()throws IllegalArgumentException{
+    void sameDigitsEmptyArray() throws IllegalArgumentException {
         //Arrange
         int[] array = {};
         //Act
-        CustomArray myArray = new CustomArray(array);
+        Array myArray = new Array(array);
         //Act
-        Exception exception = new Exception(assertThrows(IllegalArgumentException.class, () ->
-                myArray.getNumbersCrescentatLeastXSequence(3)));
+        assertThrows(IllegalArgumentException.class, myArray::sameDigits);
+    }
+
+    @Test
+    void sameDigitsNoSameDigits() {
+        //Arrange
+        int[] array = {21, 23, 34, 45};
+        //Act
+        Array myArray = new Array(array);
+        int[] exp = {};
+        int[] res = myArray.sameDigits();
+        //Act
+        assertArrayEquals(exp, res);
+    }
+
+    @Test
+    void crescentsAllOneDigitNumbers() {
+        //Arrange
+        int[] array = {1, 2, 3, 4, 5};
+        //Act
+        Array myArray = new Array(array);
+        int[] exp = {};
+        int[] res = myArray.crescents();
+        //Act
+        assertArrayEquals(exp, res);
+    }
+
+    @Test
+    void crescentsEmptyArray() {
+        //Arrange
+        int[] array = {};
+        Array myArray = new Array(array);
+        //Act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, myArray::crescents);
         //Assert
-        assertTrue(exception.getMessage().contains("Array is empty"));}
+        String expectedMessage = "Array Vazio.";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
     @Test
-    void getNumbersCrescentatLeastSequenceNegativeInvalid()throws IllegalArgumentException{
+    void crescentsValid() {
         //Arrange
-        int[] array = {1,2,3,12, 222, 367, 42, 51, 61, 74, 81, 91};
+        int[] array = {21, 12, 123, 1234, 12345};
         //Act
-        CustomArray myArray = new CustomArray(array);
+        Array myArray = new Array(array);
+        int[] exp = {12, 123, 1234, 12345};
+        int[] res = myArray.crescents();
         //Act
-        Exception exception = new Exception(assertThrows(IllegalArgumentException.class, () ->
-                myArray.getNumbersCrescentatLeastXSequence(-1)));
+        assertArrayEquals(exp, res);
+    }
+
+    @Test
+    void isAllEvenAllEven() {
+        //Arrange
+        int[] array = {2, 4, 6, 8, 20};
+        //Act
+        Array myArray = new Array(array);
+        //Act
+        assertTrue(myArray.isAllEven());
+    }
+
+    @Test
+    void isAllEvenEmptyArray() throws IllegalArgumentException {
+        //Arrange
+        int[] array = {};
+        //Act
+        Array myArray = new Array(array);
+        //Act
+        assertThrows(IllegalArgumentException.class, () -> myArray.isAllEven());
+    }
+
+    @Test
+    void isAllEvenSomeOdd() {
+        //Arrange
+        int[] array = {2, 4, 6, 8, 21};
+        //Act
+        Array myArray = new Array(array);
+        //Act
+        assertFalse(myArray.isAllEven());
+    }
+
+    @Test
+    void isAllEvenAllOdds() {
+        //Arrange
+        int[] array = {1, 3, 5, 7, 9};
+        //Act
+        Array myArray = new Array(array);
+        //Act
+        assertFalse(myArray.isAllEven());
+    }
+
+    @Test
+    void isAllOdds() {
+        //Arrange
+        int[] array = {1, 3, 5, 7, 9};
+        //Act
+        Array myArray = new Array(array);
+        //Act
+        assertTrue(myArray.isAllOdds());
+    }
+
+    @Test
+    void isAllOddsEmptyArray() throws IllegalArgumentException {
+        //Arrange
+        int[] array = {};
+        //Act
+        Array myArray = new Array(array);
+        //Act
+        assertThrows(IllegalArgumentException.class, () -> myArray.isAllOdds());
+    }
+
+    @Test
+    void isAllOddsSomeEven() {
+        //Arrange
+        int[] array = {1, 3, 5, 7, 8};
+        //Act
+        Array myArray = new Array(array);
+        //Act
+        assertFalse(myArray.isAllOdds());
+    }
+
+    @Test
+    void isAllOddsAllEven() {
+        //Arrange
+        int[] array = {2, 4, 6, 8, 20};
+        //Act
+        Array myArray = new Array(array);
+        //Act
+        assertFalse(myArray.isAllOdds());
+    }
+
+    @Test
+    void equalsArray() {
+        //Arrange
+        int[] array = {1, 2, 3};
+        int[] array1 = {1, 2, 3};
+        //Act
+        Array myArray = new Array(array);
         //Assert
-        assertTrue(exception.getMessage().contains("Invalid Value"));}
+        assertTrue(myArray.equalsArray(array1));
+    }
+
     @Test
-    void getNumbersCrescentatLeastSequence1Invalid()throws IllegalArgumentException{
+    void equalsArrayDifferentSize() {
         //Arrange
-        int[] array = {1,2,3,12, 222, 367, 42, 51, 61, 74, 81, 91};
+        int[] array = {1, 2, 3};
+        int[] array1 = {1, 2, 3, 4};
         //Act
-        CustomArray myArray = new CustomArray(array);
+        Array myArray = new Array(array);
         //Act
-        Exception exception = new Exception(assertThrows(IllegalArgumentException.class, () ->
-                myArray.getNumbersCrescentatLeastXSequence(1)));
+        assertFalse(myArray.equalsArray(array1));
+    }
+
+    @Test
+    void averageMultiplesEmptyArray() throws IllegalArgumentException {
+        //Arrange
+        int[] array = {};
+        //Act
+        Array myArray = new Array(array);
         //Assert
-        assertTrue(exception.getMessage().contains("Invalid Value"));}
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> myArray.averageMultiples(3));
+        assertTrue(exception.getMessage().contains("Array Vazio."));
+    }
+
     @Test
-    void getNumbersCrescentatLeastSequenceXNoSequence(){
+    void isEmptyTrue() {
         //Arrange
-        int[] array = {1,2,3,12, 222, 364, 42, 51, 61, 743, 811, 912};
+        int[] array = {};
         //Act
-        CustomArray myArray = new CustomArray(array);
-        int[] expected = {};
-        int[] result = myArray.getNumbersCrescentatLeastXSequence(3);
+        Array myArray = new Array(array);
+        //Assert
+        assertTrue(myArray.isEmpty());
+    }
+
+    @Test
+    void isEmptyFalse() {
+        //Arrange
+        int[] array = {1, 2, 3};
         //Act
+        Array myArray = new Array(array);
+        //Assert
+        assertFalse(myArray.isEmpty());
+    }
+
+    @Test
+    void onlyOneelement() {
+        //Arrange
+        int[] array = {1};
+        //Act
+        Array myArray = new Array(array);
+        //Assert
+        assertTrue(myArray.onlyOneElement());
+    }
+
+    @Test
+    void onlyOneElementFalse() {
+        //Arrange
+        int[] array = {1, 2, 3};
+        //Act
+        Array myArray = new Array(array);
+        //Assert
+        assertFalse(myArray.onlyOneElement());
+    }
+
+    @Test
+    void crescentForMin3Valid() {
+        //Arrange
+        int[] array = {123, 245, 311, 42, 51};
+        //Act
+        Array myArray = new Array(array);
+        int[] expected = {123, 245};
+        int[] result = myArray.crescentforMin(3);
+        //Assert
+        assertArrayEquals(expected, result);}
+    @Test
+    void crescentforMin1AllAre(){
+        //Arrange
+        int[] array = {123, 245, 311, 42, 51};
+        //Act
+        Array myArray = new Array(array);
+        int[] expected = {123, 245, 311, 42, 51};
+        int[] result = myArray.crescentforMin(1);
+        //Assert
         assertArrayEquals(expected, result);}
 
+    @Test
+    void crescentforMinZero(){
+        //Arrange
+        int[] array = {123, 245, 311, 42, 51};
+        //Act
+        Array myArray = new Array(array);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> myArray.crescentforMin(0));
+        //Assert
+        assertTrue(exception.getMessage().contains("Argumento Inválido."));}
+
+
+    @Test
+    void crescentForMin2NoONe() {
+        //Arrange
+        int[] array = {100, 211, 311, 42, 51};
+        //Act
+        Array myArray = new Array(array);
+        int[] expected = {};
+        int[] result = myArray.crescentforMin(2);
+        //Assert
+        assertArrayEquals(expected, result);
+    }
+
+    @Test
+    void crescentForMin3EmptyArray() {
+        //Arrange
+        int[] array = {};
+        //Act
+        Array myArray = new Array(array);
+        //Assert
+        assertThrows(IllegalArgumentException.class, () -> myArray.crescentforMin(3));
+    }
+
+    @Test
+    void equalsArrays() {
+        //Arrange
+        int[] array = {1, 2, 3};
+        int[] array1 = {1, 2, 3};
+        //Act
+        Array myArray = new Array(array);
+        //Assert
+        assertTrue(myArray.equalsArray(array1));
+    }
+
+    @Test
+    void equalsArraysFalse() {
+        //Arrange
+        int[] array = {1, 2, 3};
+        int[] array1 = {1, 2, 3, 4};
+        //Act
+        Array myArray = new Array(array);
+        //Assert
+        assertFalse(myArray.equalsArray(array1));
+    }
+
+    @Test
+    void equalsArraysDifferentSize() {
+        //Arrange
+        int[] array = {1, 2, 3};
+        int[] array1 = {1, 2, 3, 4};
+        //Act
+        Array myArray = new Array(array);
+        //Assert
+        assertFalse(myArray.equalsArray(array1));
+    }
+
+    @Test
+    void equalsArraysDifferentElements() {
+        //Arrange
+        int[] array = {1, 2, 3};
+        int[] array1 = {1, 2, 4};
+        //Act
+        Array myArray = new Array(array);
+        //Assert
+        assertFalse(myArray.equalsArray(array1));
+    }
+
+    @Test
+    void equalsArraysNull() {
+        //Arrange
+        int[] array = {1, 2, 3};
+        int[] array1 = null;
+        //Act
+        Array myArray = new Array(array);
+        //Assert
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> myArray.equalsArray(array1));
+        assertTrue(exception.getMessage().contains("Array Nulo."));
+    }
+    @Test
+    void smallestEmptyArray()throws IllegalArgumentException{
+        //Arrange
+        int[] array = {};
+        //Act
+        Array myArray = new Array(array);
+        //Assert
+        assertThrows(IllegalArgumentException.class, myArray::smallest);}
+
+    @Test
+    void averageEvensEmptyArray()throws IllegalArgumentException{
+        //Arrange
+        int[] array = {};
+        //Act
+        Array myArray = new Array(array);
+        //Assert
+        assertThrows(IllegalArgumentException.class, myArray::averageEvens);}
+
+    @Test
+    void removeFirstValueValidValueinIndex0(){
+        //Arrange
+        int[] array = {1,2,3};
+        int value = 1;
+        //Act
+        Array myArray = new Array(array);
+        int[] exp = {2,3};
+        myArray.removeFirstValue(value);
+        //Assert
+        assertEquals(myArray.getSize(), exp.length);}
+    @Test
+    void removeFirstValueLastIndex(){
+        //Arrange
+        int[] array = {1,2,3};
+        int value = 3;
+        //Act
+        Array myArray = new Array(array);
+        int[] exp = {1,2};
+        myArray.removeFirstValue(value);
+        //Assert
+        assertEquals(myArray.getSize(), exp.length);}
+    @Test
+    void removeFirstValueIndexEqualsLength()throws IllegalArgumentException{
+        //Arrange
+        int[] array = {1,2,3};
+        int value = 4;
+        //Act
+        Array myArray = new Array(array);
+        //Assert
+        assertThrows(IllegalArgumentException.class, () -> myArray.removeFirstValue(value));}
+    @Test
+    void removeFirstValueEmptyArray(){
+        //Arrange
+        int[] array = {};
+        int value = 4;
+        //Act
+        Array myArray = new Array(array);
+        //Assert
+        assertEquals(myArray.getSize(),array.length);}
     }

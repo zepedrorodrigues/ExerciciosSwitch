@@ -3,155 +3,208 @@ package org.example;
 import java.util.Arrays;
 
 public class CustomMatrix {
-    private int[][] matrix; // guarda matrix
-    private static final String nullMatrix = "Matrix is null"; // guarda string
-    private static final String emptyArray = "Empty Array"; // mensagem Erro Array Vazio
-    private static final String notSquare = "Matrix is not square"; // mensagem Erro Matrix não é quadrada
-    private static final String notRectangle = "Matrix is not rectangle"; // mensagem Erro Matrix não é retangular
-    private static final String invalid = "Invalid Argument"; // mensagem Erro Argumento Inválido
-    private static final String outofBounds = "Out of Bounds"; // mensagem Erro Fora dos Limites
+    private int[][] matrix;
+    private static final String outofBounds = "Index out of bounds";
+    private static final String invalid = "Invalid argument";
+    private static final String vazio = "Empty Array";
+    private static final String naoRetangulo = "Not a Rectangle";
+    private static final String notSquare = "Matrix is not square";
 
-    @Override
-    public boolean equals(Object o) { // verifica se o objeto é igual (override Arrays.equals)
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        CustomMatrix that = (CustomMatrix) o;
-        return Arrays.equals(matrix, that.matrix);
-    } //so funciona se for instancia de CustomMatrix
-
-    @Override
-    public int hashCode() { // retorna hashcode (override Arrays.deepHashCode)
-        return Arrays.deepHashCode(matrix);
-    }
-
+    /**
+     * alínea a
+     */
     public CustomMatrix() {
         this.matrix = new int[0][0];
-    } // construtor sem parametros
+    }
 
-    public CustomMatrix(int[][] mtrx) throws NullPointerException { // construtor com parametros
-        if (mtrx == null)
-            throw new NullPointerException(nullMatrix); // se for null, lança exceção
+    /**
+     * alínea b
+     */
+    public CustomMatrix(int[][] mtrx) {
         this.matrix = deepCopy(mtrx);
-    } // se não for null, copia a matrix
+        int size = mtrx.length;
+    }
 
-    private int[][] deepCopy(int[][] mtrx) { // copia a matrix
-        int[][] copy = new int[mtrx.length][];
-        for (int i = 0; i < mtrx.length; i++) {
-            copy[i] = mtrx[i].clone();
+    private int[][] deepCopy(int[][] mtrx) { // copia a matriz
+        int max = mtrx[0].length;
+        for (int[] line : mtrx) {
+            max = Math.max(max, line.length);
         }
+        int[][] copy = new int[mtrx.length][max];
+        System.arraycopy(mtrx, 0, copy, 0, mtrx.length);
         return copy;
     }
 
-    public int[][] getMatrix() { // retorna a matrix
-        return matrix;
-    }
-
-    private CustomArray getColumn(int column) throws ArrayIndexOutOfBoundsException, IllegalArgumentException {
-        int[] columnArray = new int[matrix.length];
-        for (int i = 0; i < matrix.length && column < matrix[i].length; i++) {
-            columnArray[i] = matrix[i][column];}
-        return new CustomArray(columnArray);}
-
-    public int getSize() { // retorna o tamanho da matrix
-        return matrix.length;
-    }
-
-    public void add(int element, int line) { // adiciona elemento a linha
-        if (line < 0)
-            throw new IllegalArgumentException(invalid);
-        if (line >= matrix.length)
+    /**
+     * alínea c
+     */
+    public void add(int value, int line) throws ArrayIndexOutOfBoundsException{
+        if (line < 0 || line >= matrix.length)
             throw new ArrayIndexOutOfBoundsException(outofBounds);
-        int[] newLine = matrix[line];
-        CustomArray array = new CustomArray(newLine);
-        array.addElement(element);
-        matrix[line] = array.getArray();}
-
-    public void remove(int element) { //
-        int[][] copy = deepCopy(matrix);
-        if (matrix.length == 0)
-            throw new IllegalArgumentException(emptyArray);
-        for (int i = 0; i < matrix.length; i++) {
-            CustomArray array = new CustomArray(matrix[i]);
-            int index = array.detectIndexFirstNumberX(element);
-            if (index == -1) continue;
-            array.removeFirstElement(element);
-            matrix[i] = array.getArray();}
-        if (Arrays.deepEquals(copy, matrix))
-            throw new IllegalArgumentException(invalid);}
-
-    public boolean isEmpty() { // verifica se a matrix está vazia
-        return matrix.length == 0;
+        int[] newMatrix = matrix[line];
+        newMatrix = Arrays.copyOf(newMatrix, newMatrix.length + 1);
+        newMatrix[newMatrix.length - 1] = value;
+        matrix[line] = newMatrix;
     }
 
-    public int minMax(boolean largestTrueSmallestFalse) { // retorna o maior/menor numero da matrix
+    /**
+     * alínea d
+     */
+    public void remove(int value) {
+        int[] position = detectValuePosition(value);
         if (matrix.length == 0)
-            throw new IllegalArgumentException(emptyArray); // se vazio dá erro
-        int largestSmallest = matrix[0][0];
-        if (largestTrueSmallestFalse) { // retorna o maior numero da matrix
-            for (int[] line : matrix) {
-                CustomArray array = new CustomArray(line);
-                largestSmallest = Math.max(array.getBiggestSmallestNumber(true), largestSmallest);
-            }
-            return largestSmallest;
-        }
-        for (int[] line : matrix) { // retorna o menor numero da matrix
-            CustomArray array = new CustomArray(line);
-            largestSmallest = Math.min(array.getBiggestSmallestNumber(false), largestSmallest);
-        }
-        return largestSmallest;
+            throw new IllegalArgumentException(vazio);
+        if (position[0] == -1 && position[1] == -1)
+            throw new IllegalArgumentException(invalid);
+        int[] line = matrix[position[0]];
+        line = removeValue(line, position[1]);
+        matrix[position[0]] = line;
     }
 
-    public CustomArray linesSum() {
-        int[] sumLines = new int[matrix.length];
-        for (int i = 0; i < matrix.length; i++) {
-            CustomArray arr = new CustomArray(matrix[i]);
-            sumLines[i] = arr.getSum();}
-        return new CustomArray(sumLines);}
+    private int[] detectValuePosition(int value) {
+        for (int i = 0; i < matrix.length; i++)
+            for (int j = 0; j < matrix[i].length; j++)
+                if (matrix[i][j] == value)
+                    return new int[]{i, j};
+        return new int[]{-1, -1};
+    }
 
-    public double average() { // retorna a média das linhas, se vazio dá erro
+    private int[] removeValue(int[] line, int index) {
+        int[] newArray = new int[line.length - 1];
         int contador = 0;
-        for (int[] i : matrix)
-            contador += i.length;
-        if (matrix.length == 0)
-            throw new IllegalArgumentException(emptyArray); // se vazio dá erro
-        CustomArray sum = linesSum();
-        return (double) sum.getSum() / contador;
+        for (int i = 0; i < line.length; i++) {
+            if (i == index) {
+                continue;
+            }
+            newArray[contador++] = line[i];
+        }
+        return newArray;
     }
 
-    public CustomArray rowsSum() throws IllegalArgumentException { // retorna Array com soma das colunas, se vazio dá erro
+    /**
+     * alínea e
+     */
+    public boolean isEmpty() { // verifica se a matrix está vazia
+        return this.matrix.length == 0;
+    }
+
+    /**
+     * alínea f
+     */
+    public int largest() throws IllegalArgumentException {
+        if (isEmpty())
+            throw new IllegalArgumentException(vazio);
+        int max = matrix[0][0];
+        for (int[] line : matrix) {
+            for (int element : line) {
+                if (element > max)
+                    max = element;
+            }
+        }
+        return max;
+    }
+
+    /**
+     * alínea g
+     */
+    public int smallest() throws IllegalArgumentException {
+        if (isEmpty())
+            throw new IllegalArgumentException(vazio);
+        int min = matrix[0][0];
+        for (int[] line : matrix) {
+            for (int element : line) {
+                if (element < min)
+                    min = element;
+            }
+        }
+        return min;
+    }
+
+    /**
+     * alínea h
+     */
+    public double average() throws IllegalArgumentException { // retorna a média dos elementos da matrix
         if (matrix.length == 0) // se vazio dá erro
-            throw new IllegalArgumentException(emptyArray);
+            throw new IllegalArgumentException(vazio);
+        int sum = 0;
+        int count = 0;
+        for (int[] line : matrix) {
+            for (int element : line) {
+                sum += element;
+                count++;
+            }
+        }
+        return (double) sum / count;
+    }
+
+    /**
+     * alínea i
+     */
+    public int[] arraySumOfLines() throws IllegalArgumentException {
+        if (matrix.length == 0) // se vazio dá erro
+            throw new IllegalArgumentException(vazio);
+        int[] sumLine = new int[matrix.length];
+        for (int i = 0; i < matrix.length; i++)
+            sumLine[i] = sumLine(matrix[i]);
+        return sumLine;
+    }
+
+    private int sumLine(int[] linhas) {
+        int sum = 0;
+        for (int linha : linhas) {
+            sum += linha;
+        }
+        return sum;
+    }
+
+    /**
+     * alínea j
+     */
+    public int[] arraySomaColunas() throws IllegalArgumentException {
+        if (matrix.length == 0) // se vazio dá erro
+            throw new IllegalArgumentException(vazio);
         int max = matrix[0].length;
         for (int[] line : matrix) {
             max = Math.max(max, line.length);
-        } // guarda o maior tamanho de linha
-        int[] sumRows = new int[max];
-        for (int[] line : matrix)
-            for (int j = 0; j < line.length; j++) {
-                sumRows[j] += line[j];
-            }
-        // soma as colunas e guarda no array
-        return new CustomArray(sumRows);
+        }
+        int[] sumColumn = new int[max];
+        for (int i = 0; i < max; i++)
+            sumColumn[i] = somadorColuna(matrix, i);
+        return sumColumn;
     }
 
-    public int biggestLine() throws IllegalArgumentException { // retorna a linha com maior soma, se vazio dá erro
-        if (matrix.length == 0)
-            throw new IllegalArgumentException(emptyArray); // se vazio dá erro
-        CustomArray sumLines = linesSum();
-        int max = sumLines.getbyIndex(0);
-        int index = 0;
-        for (int i = 0; i < sumLines.getSize(); i++) {
-            if (sumLines.getbyIndex(i) > max) {
-                max = sumLines.getbyIndex(i);
-                index = i;
+    private int somadorColuna(int[][] matriz, int coluna) {
+        int soma = 0;
+        for (int[] ints : matriz) {
+            if (coluna >= ints.length)
+                continue;
+            soma += ints[coluna];
+        }
+        return soma;
+    }
+
+    /**
+     * alínea k
+     */
+    public int biggestLine() {
+        int[] arraySoma = arraySumOfLines();
+        int indexMax = 0;
+        int max = arraySoma[0];
+        for (int i = 1; i < arraySoma.length; i++) {
+            if (arraySoma[i] > max) {
+                max = arraySoma[i];
+                indexMax = i;
             }
         }
-        return index;
+        return indexMax;
     }
 
-    public boolean isSquare() throws IllegalArgumentException { // verifica se a matrix é quadrada, se vazio dá erro
+    /**
+     * alínea l
+     */
+    public boolean isSquare() throws IllegalArgumentException { // verifica se a matriz é quadrada, se vazio dá erro
         if (matrix.length == 0)
-            throw new IllegalArgumentException(emptyArray); // se vazio dá erro
+            throw new IllegalArgumentException(vazio);
         for (int[] line : matrix) {
             if (line.length != matrix.length)
                 return false;
@@ -159,19 +212,14 @@ public class CustomMatrix {
         return true;
     }
 
-    private boolean isRectangle() {
-        for (int[] line : matrix) {
-            if (line.length != matrix[0].length)
-                return false;
-        }
-        return true;
-    }
-
-    public boolean simetricSquare() throws IllegalArgumentException {
+    /**
+     * alínea m
+     */
+    public boolean simetricSquare() throws IllegalArgumentException { // verifica se a matriz é simétrica, se vazio dá erro
         if (matrix.length == 0)
-            throw new IllegalArgumentException(emptyArray);
+            throw new IllegalArgumentException(vazio);
         if (!isSquare())
-            throw new IllegalArgumentException(invalid);
+            throw new IllegalArgumentException(notSquare);
         int[][] transposedMAtrix = deepCopy(matrix);
         CustomMatrix transposed = new CustomMatrix(transposedMAtrix);
         transposed.transposeMatrix();
@@ -179,206 +227,199 @@ public class CustomMatrix {
     }
 
     private void transposeMatrix() throws IllegalArgumentException { // retorna a matrix transposta, se vazio dá erro
-        int[][] transposedMatrix = new int[matrix[0].length][matrix.length]; // cria array com tamanho da matrix
+        int MaxRowLength = matrix[0].length;
+        for (int[] line : matrix)
+            MaxRowLength = Math.max(MaxRowLength, line.length);
+        int[][] transposedMatrix = new int[MaxRowLength][matrix.length];
         for (int i = 0; i < matrix.length; i++)
-            for (int j = 0; j < matrix.length; j++) {
-                transposedMatrix[i][j] = matrix[j][i];}
+            for (int j = 0; j < matrix[i].length; j++)
+                transposedMatrix[j][i] = matrix[i][j];
         matrix = transposedMatrix;
     }// transpõe a matrix
 
-    public int elementsDiagonal() {
-        if (!isSquare())
+    public int[][] getMatrix() { // retorna a matriz
+        return matrix;
+    }
+
+    /**
+     * alínea n
+     */
+    public int nonZeroElementsDiagonal() throws IllegalArgumentException { // retorna o número de elementos não nulos da diagonal principal
+        if (matrix.length == 0) // se vazio dá erro
+            throw new IllegalArgumentException(vazio);
+        if (matrix.length != matrix[0].length) // se não for quadrada devolve -1
             return -1;
-        CustomArray mainDiagonal = mainDiagonal();
-        int contador = 0;
-        for (int i = 0; i < mainDiagonal.getSize(); i++) {
-            if (mainDiagonal.getbyIndex(i) != 0)
-                contador++;
+        int count = 0;
+        for (int i = 0; i < matrix.length; i++) { // percorre a diagonal princial
+            if (matrix[i][i] != 0)
+                count++;
         }
-        return contador;
+        return count;
     }
 
-    public boolean equalDiagonals() throws IllegalArgumentException {
-        if (matrix.length == 0)
-            throw new IllegalArgumentException(emptyArray);
+    /**
+     * alínea o
+     */
+    public boolean sameDiagonals() {
+        if (matrix.length == 0) // se vazio dá erro
+            throw new IllegalArgumentException(vazio);
         if (!isRectangle())
-            throw new IllegalArgumentException(notRectangle);
-        CustomArray mainDiagonal = mainDiagonal();
-        CustomArray secondaryDiagonal = secondaryDiagonal();
-        return Arrays.equals(mainDiagonal.getArray(), secondaryDiagonal.getArray());
+            throw new IllegalArgumentException(naoRetangulo);
+        int[] diagonalPrincipal = returnDiagonalPrincipal();
+        int[] diagonalSecundaria = returnDiagonalSecundaria();
+        return Arrays.equals(diagonalPrincipal, diagonalSecundaria);
     }
 
-    private CustomArray mainDiagonal() { // retorna a diagonal principal
-        int min = Math.min(matrix.length, matrix[0].length);
-        int[] mainDiagonal = new int[min];
-        for (int i = 0; i < min; i++) {
-            mainDiagonal[i] = matrix[i][i];
-        } // guarda a diagonal principal
-        return new CustomArray(mainDiagonal);
+    private int[] returnDiagonalPrincipal() {
+        int min = matrix.length;
+        for (int[] line : matrix)
+            min = Math.min(min, line.length);
+        int[] diagonalPrincipal = new int[min];
+        for (int i = 0; i < min; i++)
+            diagonalPrincipal[i] = matrix[i][i];
+        return diagonalPrincipal;
     }
 
-    private CustomArray secondaryDiagonal() { // retorna a diagonal secundaria
-        int min = Math.min(matrix.length, matrix[0].length);
-        int[] secondaryDiagonal = new int[min];
-        for (int i = 0; i < min; i++) {
-            secondaryDiagonal[i] = matrix[i][matrix[i].length - 1 - i];
-        } // guarda a diagonal secundaria
-        return new CustomArray(secondaryDiagonal);
+    private int[] returnDiagonalSecundaria() {
+        int min = matrix.length;
+        for (int[] line : matrix)
+            min = Math.min(min, line.length);
+        int[] diagonalSecundaria = new int[min];
+        for (int i = 0; i < min; i++)
+            diagonalSecundaria[i] = matrix[i][matrix[i].length - 1 - i];
+        return diagonalSecundaria;
     }
 
-    private int[][] matrixofNumberstoMatrixofDigits() {
-        int[][] matrixofDigits = new int[matrix.length][matrix[0].length];
-        for (int i = 0; i < matrix.length; i++) {
-            CustomArray array = new CustomArray(matrix[i]);
-            matrixofDigits[i] = array.arrayofNumberstoArrayofDigits();
-        }
-        return matrixofDigits;
-    }
-
-    private double[][] matrixofNumberstoMatrixofPairs() {
-        double[][] matrixofPercentageofPairs = new double[matrix.length][matrix[0].length];
-        for (int i = 0; i < matrix.length; i++) {
-            CustomArray array = new CustomArray(matrix[i]);
-            matrixofPercentageofPairs[i] = array.arrayofNumberstoArrayofPercentageofPairs();
-        }
-        return matrixofPercentageofPairs;
-    }
-
-    private double average(boolean digitTruePairsFalse) {
-        int[][] matrixofDigits = matrixofNumberstoMatrixofDigits();
-        double[][] matrixofPercentageofPairs = matrixofNumberstoMatrixofPairs();
-        int sumDigits = 0;
-        int contador = 0;
-        if (digitTruePairsFalse) {
-            for (int[] matrixofDigit : matrixofDigits) {
-                for (int i : matrixofDigit) {
-                    sumDigits += i;
-                    contador++;
-                }
-            }
-        } else {
-            for (double[] matrixofPercentageofPair : matrixofPercentageofPairs) {
-                for (double v : matrixofPercentageofPair) {
-                    sumDigits += v;
-                    contador++;
-                }
-            }
-        }
-        return (double) sumDigits / contador;
-    }
-
-    public int[][] digitsOverAverage() { // retorna a matrix com os digitos acima da média
-        if (matrix.length == 0)
-            throw new IllegalArgumentException(emptyArray); // se vazio dá erro
-        int maxLength = matrix[0].length;
+    private boolean isRectangle() {
+        int lines = matrix[0].length;
         for (int[] line : matrix) {
-            maxLength = Math.max(maxLength, line.length);
-        } // guarda o maior tamanho de linha ou matriz  length
-        int[][] matrixofDigits = matrixofNumberstoMatrixofDigits(); // cria matrix de digitos
-        double average = average(true); // calcula a média dos digitos
-        int[][] matrixofDigitsOverAverage = new int[matrix.length][maxLength];// cria matrix de digitos acima da média
-        int line = 0;
-        int coluna;
-        for (int i = 0; i < matrix.length; i++) {
-            int[] finalLine = new int[0]; // cria linha vazia
-            coluna = 0;
-            for (int j = 0; j < getMatrix()[i].length; j++) {
-                if (matrixofDigits[i][j] > average) { // se o no de digitos for maior que a média
-                    finalLine = Arrays.copyOf(finalLine, finalLine.length + 1);
-                    finalLine[coluna] = matrix[i][j];
-                    coluna++;
-                }
-            } // adiciona o digito a linha
-            //adiciona 1 a coluna
-            matrixofDigitsOverAverage[line] = finalLine; // troca a linha a matrix
-            line++;
-        } // adiciona a linha a matrix
-        return matrixofDigitsOverAverage;
-    }
+            if (line.length != lines)
+                return false;}
+        return true;}
 
-    public int[][] pairsOverAverage() { // retorna a matrix com os pares acima da média
+    /**alínea p*/
+    public int[] algarismsOverAverage() throws IllegalArgumentException {
         if (matrix.length == 0)
-            throw new IllegalArgumentException(emptyArray); // se vazio dá erro
-        int maxLength = matrix[0].length;
+            throw new IllegalArgumentException(vazio);
+        double average = algarismsAverage();
+        int[] algarismsOverAverage = new int[0];
         for (int[] line : matrix) {
-            maxLength = Math.max(maxLength, line.length);
-        } // guarda o maior tamanho de linha ou matriz  length
-        double average = average(false); // calcula a média dos pares
-        double[][] matrixofPercentageofPairs = matrixofNumberstoMatrixofPairs(); // cria matrix de pares
-        int[][] matrixofPairsOverAverage = new int[matrix.length][maxLength];// cria matrix de pares acima da média
-        int line = 0;
-        int coluna;
-        for (int i = 0; i < matrix.length; i++) {
-            CustomArray array = new CustomArray(); // cria linha vazia
-            coluna = 0;
-            for (int j = 0; j < getMatrix()[i].length; j++) {
-                if (matrixofPercentageofPairs[i][j] > average) { // se o no de pares for maior que a média
-                    array.addElement(matrix[i][j]);
-                    coluna++;
-                }
-            } // adiciona o par a linha
-            //adiciona 1 a coluna
-            matrixofPairsOverAverage[line] = array.getArray(); // troca a linha a matrix
-            line++;
-        } // adiciona a linha a matrix
-        return matrixofPairsOverAverage;
-    }
+            for (int element : line)
+                if (algarisms(element) > average){
+                    algarismsOverAverage = Arrays.copyOf(algarismsOverAverage, algarismsOverAverage.length+1);
+                    algarismsOverAverage[algarismsOverAverage.length-1] = element;}}
+        return algarismsOverAverage;}
 
-    public void reverseLine(int line) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+    private double algarismsAverage(){
+        int sum = 0;
+        int count = 0;
+        for (int[] line : matrix) {
+            for (int element : line) {
+                sum += algarisms(element);
+                count++;}}
+        return (double) sum / count;}
+    private int algarisms(int number) {
+        int count = 0;
+        if(number==0)
+            return 1;
+        while (number != 0) {
+            number /= 10;
+            count++;}
+        return count;}
+
+    /**alínea q*/
+
+    public int[] pairAlgarismsOverAverage()throws IllegalArgumentException{
         if (matrix.length == 0)
-            throw new IllegalArgumentException(emptyArray);
-        if (line < 0 || line >= matrix.length)
-            throw new ArrayIndexOutOfBoundsException(outofBounds);
-        CustomArray array = new CustomArray(matrix[line]);
-        array.reverse();
-        matrix[line] = array.getArray();}
+            throw new IllegalArgumentException(vazio);
+        double average = pairAlgarismsAverage();
+        int[] pairAlgarismsOverAverage = new int[0];
+        for (int[] line : matrix) {
+            for (int element : line) {
+                if (pairAlgarismsPercentage(element) > average){
+                    pairAlgarismsOverAverage = Arrays.copyOf(pairAlgarismsOverAverage, pairAlgarismsOverAverage.length+1);
+                    pairAlgarismsOverAverage[pairAlgarismsOverAverage.length-1] = element;}}}
+        return pairAlgarismsOverAverage;}
 
-    private void reverseAlllines(){
-        for (int i = 0; i < matrix.length; i++) {
-            reverseLine(i);}}
+    private double pairAlgarismsAverage(){
+        int sum = 0;
+        int count = 0;
+        for (int[] line : matrix) {
+            for (int element : line) {
+                sum += pairAlgarismsPercentage(element);
+                count++;}}
+        return (double) sum / count;}
 
-    public void reverseColumn(int column) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+    private double pairAlgarismsPercentage(int number) {
+        int count = 0;
+        int sum = 0;
+        if(number==0)
+            return 100;
+        while (number != 0) {
+            int remainder = number%10;
+            if(remainder%2==0)
+                sum++;
+            number /= 10;
+            count++;}
+        return (double)sum/count*100;}
+
+    /** alínea r*/
+    public void reverseLines() { // inverte cada linha da matriz
         if (matrix.length == 0)
-            throw new IllegalArgumentException(emptyArray);
-        if (column < 0 || column >= matrix[0].length)
-            throw new ArrayIndexOutOfBoundsException(outofBounds);
-        CustomArray columnArray = getColumn(column);
-        columnArray.reverse();
-        int[] column1 = columnArray.getArray();
-        for (int i = 0; i < matrix.length && column < matrix[i].length; i++) {
-            matrix[i][column] = column1[i];}}
+            throw new IllegalArgumentException(vazio);
+        for (int i = 0; i < matrix.length; i++) // percorre cada linha da matriz
+            matrix[i] = reverseEachLine(this.matrix[i]);} // inverte a linha
+    private int[] reverseEachLine(int[] array) {
+        int[] reversed = new int[array.length];
+        for (int i = 0; i < array.length; i++) {
+            reversed[i] = array[array.length - 1 - i];}
+        return reversed;}
 
-    private void reverseAllColumns(){
-        for (int i = 0; i < matrix[0].length; i++) {
-            reverseColumn(i);}}
+    /** alínea s*/
+    public void invertColumnOrder() throws IllegalArgumentException {
+        if (matrix.length == 0)
+            throw new IllegalArgumentException(vazio);
+        int[][] newMatrix = new int[matrix.length][matrix[0].length];
+        for(int i = 0; i < matrix.length; i++)
+            newMatrix[i] = matrix[matrix.length-1-i];
+        matrix = newMatrix;}
 
-    public void rotateMatrix(int angle) throws IllegalArgumentException {
-        if (matrix.length == 0 || matrix[0].length == 0)
-            throw new IllegalArgumentException(emptyArray);
-        if(!isSquare())
-            throw new IllegalArgumentException(notSquare);
-        if (angle % 90 != 0)
-            throw new IllegalArgumentException(invalid);
-        angle = ((angle % 360) + 360) % 360;
-        int rotations = angle / 90;
-        if (rotations==0) return;
-        int[][]newCustomMatrix = deepCopy(matrix);
-        CustomMatrix newCustomMatrix1 = new CustomMatrix(newCustomMatrix);
-        switch (rotations) {
-            case 1: // 90 degrees
-                newCustomMatrix1.transposeMatrix();
-                newCustomMatrix1.reverseAllColumns();
-                matrix = newCustomMatrix1.getMatrix();
-                break;
-            case 2: // 180 degrees
-                newCustomMatrix1.reverseAlllines();
-                newCustomMatrix1.reverseAllColumns();
-                matrix= newCustomMatrix1.getMatrix();
-                break;
-            default: // 270 degrees
-                newCustomMatrix1.transposeMatrix();
-                newCustomMatrix1.reverseAlllines();
-                matrix = newCustomMatrix1.getMatrix();
-                break;}
-    }
+    /**alínea t*/
+    public void rotate90Degrees() throws IllegalArgumentException {
+        if (matrix.length == 0)
+            throw new IllegalArgumentException(vazio);
+        if(!isRectangle())
+            throw new IllegalArgumentException(naoRetangulo);
+        if(isSquare()){
+            transposeMatrix();
+            reverseLines();
+            return;}
+            int[][] newMatrix = new int[matrix[0].length][matrix.length];
+            for(int i = 0; i < matrix.length; i++)
+                for(int j = 0; j < matrix[i].length; j++)
+                    newMatrix[j][i] = matrix[i][j];
+            for(int i = 0; i < newMatrix.length; i++)
+                newMatrix[i] = reverseEachLine(newMatrix[i]);
+            matrix = newMatrix;}
+
+
+    /**alínea u*/
+    public void rotate180Degrees() throws IllegalArgumentException {
+        if (matrix.length == 0)
+            throw new IllegalArgumentException(vazio);
+        if(!isRectangle())
+            throw new IllegalArgumentException(naoRetangulo);
+        rotate90Degrees();
+        rotate90Degrees();}
+
+    /** alínea v*/
+    public void rotateMinus90Degrees() throws IllegalArgumentException {
+        if (matrix.length == 0)
+            throw new IllegalArgumentException(vazio);
+        if(!isRectangle())
+            throw new IllegalArgumentException(naoRetangulo);
+        rotate90Degrees();
+        rotate90Degrees();
+        rotate90Degrees();}
+
 }
