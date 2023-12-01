@@ -52,10 +52,10 @@ public class MatrixofArrays {
             throw new IllegalArgumentException(emptyMatrix);
         int max = matrix[0].getSize();
         for(Array array : matrix)
-            Math.max(max, array.getSize());
+            max = Math.max(max, array.getSize());
         int[] sum = new int[max];
-        for(int i=0; i<matrix.length;i++){
-            for(int j = 0; j < matrix[i].getSize(); j++){
-                sum[j] += matrix[i].returnElement(j);}}
+        for (Array array : matrix) {
+            for (int j = 0; j < array.getSize(); j++) {
+                sum[j] += array.returnElement(j);}}
         return new Array(sum);}
 }
