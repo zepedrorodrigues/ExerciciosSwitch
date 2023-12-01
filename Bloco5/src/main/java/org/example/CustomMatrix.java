@@ -46,9 +46,7 @@ public class CustomMatrix {
         matrix[line] = newMatrix;
     }
 
-    /**
-     * alínea d
-     */
+    /**alínea d*/
     public void remove(int value) {
         int[] position = detectValuePosition(value);
         if (matrix.length == 0)
@@ -57,8 +55,7 @@ public class CustomMatrix {
             throw new IllegalArgumentException(invalid);
         int[] line = matrix[position[0]];
         line = removeValue(line, position[1]);
-        matrix[position[0]] = line;
-    }
+        matrix[position[0]] = line;}
 
     private int[] detectValuePosition(int value) {
         for (int i = 0; i < matrix.length; i++)

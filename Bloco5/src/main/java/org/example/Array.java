@@ -482,8 +482,14 @@ public class Array {
             return false;
         for (int i = 0; i < this.array.length; i++) {
             if (this.array[i] != arr[i]) //se os arrays tiverem elementos diferentes
-                return false;
-        }
-        return true;
+                return false;}
+        return true;}
+
+    public boolean equalsArray(Array arr){
+        if (this.array.length != arr.getSize()) //se os arrays tiverem tamanhos diferentes
+            return false;
+        for (int i = 0; i < this.array.length; i++) {
+            if (this.array[i] != arr.returnElement(i)) //se os arrays tiverem elementos diferentes
+                return false;}
+        return true;}
     }
-}
