@@ -25,18 +25,13 @@ public class CustomMatrix {
     }
 
     private int[][] deepCopy(int[][] mtrx) { // copia a matriz
-        int max = mtrx[0].length;
-        for (int[] line : mtrx) {
-            max = Math.max(max, line.length);
-        }
-        int[][] copy = new int[mtrx.length][max];
-        System.arraycopy(mtrx, 0, copy, 0, mtrx.length);
-        return copy;
-    }
+        int[][] copy = new int[mtrx.length][];
+        for (int i = 0; i < mtrx.length; i++)
+            for(int j=0; j<mtrx[i].length; j++)
+                copy[i][j] = mtrx[i][j];
+        return copy;}
 
-    /**
-     * alínea c
-     */
+    /** alínea c*/
     public void add(int value, int line) throws ArrayIndexOutOfBoundsException{
         if (line < 0 || line >= matrix.length)
             throw new ArrayIndexOutOfBoundsException(outofBounds);
@@ -233,7 +228,7 @@ public class CustomMatrix {
         matrix = transposedMatrix;
     }// transpõe a matrix
 
-    public int[][] getMatrix() { // retorna a matriz
+    private int[][] getMatrix() { // retorna a matriz
         return matrix;
     }
 
