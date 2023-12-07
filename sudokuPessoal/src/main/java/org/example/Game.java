@@ -33,9 +33,9 @@ public class Game {
 
     /**Métodos conectores do UI com o Board*/
     public void add(int line, int column, int value){
-        board.addValue(line,column,value);}
+        if(board.addValue(line,column,value)==false){System.out.println("Invalid value");}}
     public void remove(int line, int column){
-        board.removeValue(line,column);}
+        if(board.removeValue(line,column)==false){System.out.println("Invalid value");}}
     /**Verifica se o jogador ganhou o Jogo (tabuleiro Cheio)*/
     public boolean checkWin(){
         int[][] mask = board.getMaskMatrix(); //cria um array com a máscara

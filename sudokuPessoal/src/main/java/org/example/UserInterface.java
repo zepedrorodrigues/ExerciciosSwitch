@@ -60,7 +60,8 @@ public class UserInterface {
                 if(option==1){
                     chooseValue(game, line, column-1);}
                 else{
-                    game.remove(line, column-1);}}
+                    game.remove(line, column-1);
+                }}
         }catch (InputMismatchException e) {
             System.out.println("Invalid column");}}
 
