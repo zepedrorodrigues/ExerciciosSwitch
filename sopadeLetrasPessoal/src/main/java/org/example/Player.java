@@ -12,12 +12,15 @@ public class Player {
         // Empty Constructor because we don't need to initialize anything
         //We just need the player to have methods to make plays
 
+    public String playerAskWord() {//retrieves player input to make the plays
+        System.out.println("Word: ");
+        String word = n.next();
+        return word;}
     public int[][] playerInput() {//retrieves player input to make the plays
         int[][] playerInput = new int[2][2];
         for(int i=0;i<2;i++) {
             System.out.println("Column: ");
-            try {
-                int start = n.nextInt();
+            try {int start = n.nextInt();
                 playerInput[i][0] = start;
                 return getRow(playerInput, i);
             } catch (InputMismatchException e) {

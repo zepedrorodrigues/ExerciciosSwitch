@@ -11,3 +11,11 @@ U
 %src/main/java/org/example/Player.java,d\b\db455f11f40504110fb1ef2567ff0b7b6044c09c
 X
 (src/test/java/org/example/BoardTest.java,1\7\178bb9f006e6698450eebf1a78417bf88f73f37d
+S
+#src/main/java/org/example/Game.java,f\1\f1d67a7ee35efa3e1601241987bec47697a781ba
+\
+,src/main/java/org/example/UserInterface.java,8\f\8fa41e63b64d85c8e568fd2f74558b626e4dac3e
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+]
+-.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
