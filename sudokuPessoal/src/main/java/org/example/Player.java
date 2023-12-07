@@ -10,7 +10,6 @@ public class Player {
         //sem carateristicas e que não guarda nada, só faz métodos
         }
     public int[] playerInput(){
-
         System.out.println("What do you want to do?");
         System.out.println("1 - Add a value");
         System.out.println("2 - Remove a value");
@@ -41,8 +40,10 @@ public class Player {
             int column = scanner.nextInt();
             if(column < 1 || column > 9)
                 System.out.println("Invalid column");
-            else
-                return getvalue(option, line, column-1);
+            else{
+                if(option == 2)
+                    return new int[]{option, line, column-1};
+                return getvalue(option, line, column-1);}
         } catch (InputMismatchException e) {
             System.out.println("Invalid column");}
         return new int[0];}

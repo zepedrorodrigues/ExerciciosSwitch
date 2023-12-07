@@ -24,18 +24,23 @@ public class Board {
                     mask[i][j] = 1;}}
         return mask;}
     public void validAdd(int line, int column, int value){
+        if(line<0||line>8||column<0||column>8||value<1||value>9)
+            throw new IllegalArgumentException("Invalid move");
         matrizMascara[line][column] = 2;
         board[line][column] = value;}
     public void validRemove(int line, int column){
+        if(line<0||line>8||column<0||column>8)
+            throw new IllegalArgumentException("Invalid move");
         matrizMascara[line][column] = 0;
         board[line][column] = 0;}
-
     public int getMaskbyIndex(int line, int column){
+        if(line<0||line>8||column<0||column>8)
+            throw new IllegalArgumentException("Invalid move");
         return matrizMascara[line][column];}
-
     public int getValuebyIndex(int line, int column){
+        if(line<0||line>8||column<0||column>8)
+            throw new IllegalArgumentException("Invalid move");
         return board[line][column];}
-
     public void printBoard() {
         for (int i = 0; i < 9; i++) {
             if (i % 3 == 0) {
@@ -45,8 +50,7 @@ public class Board {
                     System.out.print("| ");}
                 System.out.print(board[i][j] == 0 ? "  " : board[i][j] + " ");}
             System.out.println("|");}
-        System.out.println(" -----------------------");
-    }
+        System.out.println(" -----------------------");}
 }
 
 
