@@ -9,3 +9,5 @@ Y
 )src/main/java/org/example/GameLogics.java,6\9\69230b1bd8c2214ee18b40644c2fbedb6def73e3
 U
 %src/main/java/org/example/Player.java,d\b\db455f11f40504110fb1ef2567ff0b7b6044c09c
+X
+(src/test/java/org/example/BoardTest.java,1\7\178bb9f006e6698450eebf1a78417bf88f73f37d
