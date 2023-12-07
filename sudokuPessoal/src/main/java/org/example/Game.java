@@ -10,7 +10,6 @@ public class Game {
         if (!validBoard(board))
             throw new IllegalArgumentException("Invalid board");
         this.board = new Board(board);}
-
     /**Os 3 Métodos Seguintes verificam a VALIDADE DA MATRIZ RECEBIDA*/
     //Coordenador dos Restantes Métodos
     private boolean validBoard(int[][]board){
@@ -26,11 +25,8 @@ public class Game {
         for (int[] ints : board) {
             for (int anInt : ints) {
                 if (anInt < 0 || anInt > 9)
-                    return false;
-            }
-        }
+                    return false;}}
         return true;}
-
     /**Métodos conectores do UI com o Board*/
     public void add(int line, int column, int value){
         if(!board.addValue(line,column,value)){System.out.println("Invalid value");}}

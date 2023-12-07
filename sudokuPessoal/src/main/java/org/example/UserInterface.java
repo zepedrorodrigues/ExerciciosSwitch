@@ -5,7 +5,7 @@ import java.util.Scanner;
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class UserInterface {
-    public static void UI() {
+    public void UI() {
         int[][] board = new int[][]{
                 {1, 3, 4, 5, 6, 7, 8, 2, 9},
                 {5, 8, 6, 1, 3, 2, 7, 9, 4},
@@ -36,7 +36,7 @@ public class UserInterface {
                 scanner.nextInt();}}
         System.out.println("Congratulations! You won!");}
 
-    public static void chooseLine(Game game, int option){
+    private void chooseLine(Game game, int option){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the line");
         try{
@@ -48,7 +48,7 @@ public class UserInterface {
         }catch (InputMismatchException e) {
             System.out.println("Invalid line");}}
 
-    public static void chooseColumn(Game game, int option, int line){
+    private void chooseColumn(Game game, int option, int line){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the column");
         try{
@@ -64,7 +64,7 @@ public class UserInterface {
         }catch (InputMismatchException e) {
             System.out.println("Invalid column");}}
 
-    private static void chooseValue(Game game, int line, int column){
+    private void chooseValue(Game game, int line, int column){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the value");
         try{
