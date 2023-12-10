@@ -7,8 +7,8 @@ import java.util.Scanner;
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
-   Scanner sc = new Scanner(System.in);
-    public void sopadeLetras(){
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
         List<Word> wordList = new ArrayList<>();
         //adicionar palavras!
         Game game = new Game(wordList);
@@ -18,8 +18,7 @@ public class Main {
             String word = sc.nextLine().strip().toUpperCase();
             Word w = game.checkWord(word);
             if(w==null){
-                System.out.println("Palavra não encontrada!");
-                continue;}
+                System.out.println("Palavra não encontrada!");}
             else{
                 int[][] positions = getPlayerInput();
                 if(game.findWord(word, positions)){
@@ -28,7 +27,8 @@ public class Main {
                     System.out.println("Palavara não encontrada!");}}}
         System.out.println("Parabéns! Ganhou o jogo!");}
 
-    private int[][] getPlayerInput(){
+    private static int[][] getPlayerInput(){
+        Scanner sc = new Scanner(System.in);
         int[][] positions = new int[2][2];
         System.out.println("Escreva as coordenadas da primeira letra: ");
         System.out.println("Linha: ");

@@ -16,7 +16,7 @@ public class Board {
     //passes every word in the list to check if it is possible to add (checkIfWordPossible)
     //if so, creates a replica of the board with the word added
     //if not, removes the word from the list
-    private List checkList(List<Word>wordList){
+    private List<Word> checkList(List<Word>wordList){
         char[][] brd = new char[10][10]; //board of letters 10x10 (default)
         for(Word w: wordList){
             if(!checkIfWordPossible(brd, w)){ //if word is not possible, remove from list
@@ -74,9 +74,7 @@ public class Board {
         int[] direction = makeDirection(positions[1], positions[0]);
         positions = makePositions(positions[0], direction, word.length());
         Word wrd = checkWordPresent(word);
-        if(checkWordPositions(wrd, positions))
-            return true;
-        return false;}
+        return checkWordPositions(wrd, positions);}
 
     //checks if word is present in the wordlist
     //if so, return the word itself
@@ -120,9 +118,9 @@ public class Board {
 
     /**Print Board*/
     public void printBoard(){
-        for(int i=0; i< board.length;i++){
-            for (int j=0; j<board[0].length;j++){
-                System.out.print(board[i][j] + " ");}
+        for (char[] chars : board) {
+            for (int j = 0; j < board[0].length; j++) {
+                System.out.print(chars[j] + " ");}
             System.out.println();}}
 
 
