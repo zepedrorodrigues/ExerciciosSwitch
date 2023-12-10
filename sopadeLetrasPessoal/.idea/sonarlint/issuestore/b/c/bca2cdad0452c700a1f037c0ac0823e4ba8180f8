@@ -1,3 +1,11 @@
 
-
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Á»›ê8“íÅ¥Ä1
+Q
+java:S3740"/Provide the parametrized type for this generic.(Ë¿™ºøÿÿÿÿ8Ãá¥Å1
+U
+java:S1117"8Rename "board" which hides the field declared at line 7.(çó­¼8™Ãá¥Å1
+U
+java:S1117!"8Rename "board" which hides the field declared at line 7.(çó­¼8šÃá¥Å1
+@
+java:S2119)"Save and re-use this "Random".(úš™ùÿÿÿÿ8›Ãá¥Å1
+^
+java:S1126M"AReplace this if-then-else statement by a single return statement.(ÊÓÏœ8ñÃ‚¦Å1
