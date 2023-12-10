@@ -17,29 +17,29 @@ public class Board {
     //if so, creates a replica of the board with the word added
     //if not, removes the word from the list
     private List checkList(List<Word>wordList){
-        char[][] board = new char[10][10]; //board of letters 10x10 (default)
+        char[][] brd = new char[10][10]; //board of letters 10x10 (default)
         for(Word w: wordList){
-            if(!checkIfWordPossible(board, w)){ //if word is not possible, remove from list
+            if(!checkIfWordPossible(brd, w)){ //if word is not possible, remove from list
                 wordList.remove(w);}
             else{
                 int[][] coordinates = w.getCoordinates();
                 for(int i=0; i<coordinates.length; i++){
-                    board[coordinates[i][0]][coordinates[i][1]] = w.getWord().charAt(i);}}}
+                    brd[coordinates[i][0]][coordinates[i][1]] = w.getWord().charAt(i);}}}
         return wordList;}
 
     //Creates an empty 10x10 board and adds all the characters of the words in their positions
     //fills the rest of the board with random letters
     private char[][] finalBoard (List<Word>wordList){
-        char[][] board = new char[10][10]; //board of letters 10x10 (default)
+        char[][] brd = new char[10][10]; //board of letters 10x10 (default)
         for(Word w: wordList){
             int[][] coordinates = w.getCoordinates(); //get coordinates of word
             for(int i=0; i<coordinates.length; i++){
-                board[coordinates[i][0]][coordinates[i][1]] = w.getWord().charAt(i);}} //fill board with words
-        for(int i=0; i< board.length;i++)
-            for (int j=0; j<board[0].length;j++)
-                if(board[i][j] == '\0') { //if board is empty, fill with random capitalized letters
-                    board[i][j] = (char) ('A' + new Random().nextInt(26));} //random letter
-        return board;}
+                brd[coordinates[i][0]][coordinates[i][1]] = w.getWord().charAt(i);}} //fill board with words
+        for(int i=0; i< brd.length;i++)
+            for (int j=0; j<brd[0].length;j++)
+                if(brd[i][j] == '\0') { //if board is empty, fill with random capitalized letters
+                    brd[i][j] = (char) ('A' + new Random().nextInt(26));} //random letter
+        return brd;}
 
     //checks if word is possible to add to board, helping method checkList
     private boolean checkIfWordPossible(char[][] board, Word w){ //check if word is possible
