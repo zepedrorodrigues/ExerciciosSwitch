@@ -1,0 +1,114 @@
+@startuml
+
+class House{
+- name: String
+- address: String[] -> Address, ZIP Code and GPS Location
+- rooms: List<Room>
+- users: List<User>
+- administrator: User
+- powerUsers: List<User>
++ void editAddress(newAddress)
++ void addRoom(Room)
++ List<Room> getRooms()
++ void addUser(User)
++ void changeAdministrator(User)
++ void addPowerUser(User)
+}
+
+class Room{
+- name: String
+- floor: int
+- dimension: int[]
+- owners = List<User>
+- devices: List<Device>
++ String returnRoomId() -> Return the room id (name + floor)
++ void changeName(newName)
++ void addDevice(Device) -> Add the device to the list of devices
++ void removeDevice(Device) -> Remove the device from the list of devices
++ int[] returnDimension() -> Return the dimensions of the room
++ void changeDimension(newDimensions) -> Change the dimensions of the room
++ void addOwner(User) -> Add the user to the list of owners
++ void removeOwner(User) -> Remove the user from the list of owners
+}
+
+class Device{
+- name: String
+- location: String -> Room
+- type: String -> Sensor/Actuator/Hybrid
+- measuredVariable: String
+- value: int
+- state: boolean
++ void changeName(newName) -> Change the name of the device
++ void changeLocation(newRoom) -> Change the location of the device
++ void changeType(newType) -> Change the type of the device (Sensor/Actuator)
++ void changeState(newState) -> Change the state of the device (ON/OFF)
++ String returnLocation() -> Return the location of the device (e.g. Kitchen, Living Room)
++ DeviceType returnType() -> Return the type of the device (e.g. Sensor, Actuator)
++ boolean returnStatus() -> Return the status of the device (e.g. ON/OFF)
++ String returnMeasure() -> Return the measured variable (Temperature, Humidity, etc)
+}
+
+enum DeviceType {
+  Sensor
+    . provide measurement of physical quantities or states
+  Actuator
+    . change state or output values
+  Hybrid
+    . both sensor and actuator
+  }
+
+class User{
+- name: String
+- List<House> houses
+- List<Device> devices
+- List<Room> rooms
+- Usertype type
++ void addUser(name, type)
++ void removeUser(name)
++ void addDevice(name, type)
++ void removeDevice(name,location)
++ void changeDeviceState(Device,newState)
++ void defineDeviceType(Device,newType)
++ void addHouse(name,address) -> Add to its list of houses (Administrator)
++ void addRoomtoHouse(House,Room) - > Add Room to this House (Administrator)
++ void removeRoomfromHouse(House,Room) -> Remove Room from this House (Administrator)
++ void addRoomtoUser(Room,User) -> Add Room to this User (RoomOwner)
++ void removeRoomfromUser(Room,User) -> Remove Room from this User (RoomOwner)
++ void defineTypeDevice(Device,NewType)
++ void defineLocationDevice(Device,RoomNew)
+}
+
+enum UserType {
+  - Regular User
+    . Uses Devices
+  - Power User
+    . Override Permissions in House
+  - Room Owner
+    . Override Permission in Room
+  - Administrator
+    . Defines Permissions in House
+    . Creates Houses
+    . Configure Location of House
+    . Creates Rooms
+    . Adds Sensor to Room
+    . Define Sensor Type
+    . Configure Sensor
+    . Retrieves List of Rooms
+    . Creates Users
+  }
+
+
+DeviceType "1" o-- "1..*" Device : has
+Room "1..*" *-- "1" House : contains
+User "1" o-- "1..*" House : has
+House "1..*" o-- "1" User: configures
+House "1..*" o-- "1" User : manages
+Device "1..*" *-- "1" Room : contains
+Device "1..*" o-- "1..*" User : uses
+Device "1..*" o-- "1..*" User : manages
+User "1..*" *-- "1" User : creates
+Room "1..*" *-- "0" User : owns
+UserType "1" o-- "1..*" User : has
+
+
+@enduml

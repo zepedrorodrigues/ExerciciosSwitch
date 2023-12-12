@@ -3,8 +3,6 @@
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 S
 #src/main/java/org/example/Main.java,0\b\0ba1b9c7a4878802f938e331cc2d8a042087ec6b
-U
-%src/main/java/org/example/Player.java,d\b\db455f11f40504110fb1ef2567ff0b7b6044c09c
 S
 #src/main/java/org/example/Word.java,7\7\77839dfe222f798b3ade16eace95beda0e4ef794
 T

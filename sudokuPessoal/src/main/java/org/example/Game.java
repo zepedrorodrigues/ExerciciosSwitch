@@ -27,11 +27,6 @@ public class Game {
                 if (anInt < 0 || anInt > 9)
                     return false;}}
         return true;}
-    /**Métodos conectores do UI com o Board*/
-    public void add(int line, int column, int value){
-        if(!board.addValue(line,column,value)){System.out.println("Invalid value");}}
-    public void remove(int line, int column){
-        if(!board.removeValue(line,column)){System.out.println("Invalid value");}}
     /**Verifica se o jogador ganhou o Jogo (tabuleiro Cheio)*/
     public boolean checkWin(){
         int[][] mask = board.getMaskMatrix(); //cria um array com a máscara
@@ -40,6 +35,4 @@ public class Game {
                 if(number == 0) //se houver algum 0 na máscara (por preencher)
                     return false;}
         return true;} //se não houver nenhum 0 na máscara, retorna true
-    public void printBoard(){
-        board.printBoard();}
 }

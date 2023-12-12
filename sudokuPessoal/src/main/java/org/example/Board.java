@@ -4,7 +4,7 @@ public class Board {
     private int[][] matrizMascara;
 
     /**Construtor*/
-    public Board(int[][] board){
+    public Board(int[][] board)throws IllegalArgumentException{
         this.board = deepCopy(board);
         this.matrizMascara = createMaskMatrix(board);}
     private int[][] deepCopy(int[][] original) {
@@ -29,6 +29,8 @@ public class Board {
 
     /**Matriz Máscara para Valor X*/
     public int[][] createMaskMatrixValue(int value){
+        if(value<1||value>9)
+            throw new IllegalArgumentException("Invalid value"); //se o valor não estiver entre 1 e 9, lança exceção
         int[][] maskValue = new int[board.length][board.length];
         for(int i = 0; i < board.length; i++) {
             for(int j = 0; j < board.length; j++){
@@ -44,6 +46,7 @@ public class Board {
     public boolean addValue(int line, int column, int value){
         if (checkValidAdd(line, column, value)){
             board[line][column] = value;
+            getMaskMatrix()[line][column] = 2;
             return true;}
         return false;}
     public boolean removeValue(int line, int column){
@@ -55,24 +58,24 @@ public class Board {
     /**Métodos de Avaliação de Validade de Adição*/
     //Coordenador dos Restantes Métodos
     private boolean checkValidAdd(int line, int column, int value){
-        if (getMaskMatrix()[line][column] == 1||getMaskMatrix()[line][column]==2)
+        if(line<0||line>8||column<0||column>8)
+            return false; //se a posição não estiver entre 0 e 8, retorna falso
+        if (getMaskMatrix()[line][column] !=0 )
             return false; //se a posição estiver fixada, retorna falso
-        if (value < 1 || value > 9)
-            return false; //se o valor não estiver entre 1 e 9, retorna falso
+        if (value < 1 || value > 9)return false; //se o valor não estiver entre 1 e 9, retorna falso
         return(checkLine(line, value) && checkColumn(column, value) && checkSquare(line,column,value));}
 
     //verifica se o valor é válido na linha
     private boolean checkLine(int line, int value){
         for (int i = 0; i < 9; i++) {
-            if (createMaskMatrixValue(value)[line][i] == value)
+            if (createMaskMatrixValue(value)[line][i] == 1)
                 return false;}
         return true;}
 
     //verifica se o valor é válido na coluna
     private boolean checkColumn(int column, int value){ //verifica se o valor é válido na coluna
         for (int i = 0; i < 9; i++) {
-            if (createMaskMatrixValue(value)[i][column] == value) //se o valor estiver na coluna falso
-                return false;}
+            if (createMaskMatrixValue(value)[i][column] == 1) return false;}
         return true;} //se o valor não estiver na coluna retorna true
 
     //verifica se o valor é válido no quadrado
@@ -82,25 +85,15 @@ public class Board {
         int firstColumn = column - (column % 3); //primeira coluna do quadrado
         for (int i = firstLine; i < firstLine + 3; i++) { //percorre as linhas do quadrado
             for (int j = firstColumn; j < firstColumn + 3; j++) { //percorre as colunas do quadrado
-                if (maskMatrixValue[i][j] == value) //se o valor estiver no quadrado
+                if (maskMatrixValue[i][j] == 1) //se o valor estiver no quadrado
                     return false;}}
         return true;} //se o valor não estiver no quadrado retorna true
 
     /**Seguintes Método Avalia se a Remoção é Válida*/
-    public boolean checkValidRemove(int line, int column){ //verifica se o valor é válido de remover
-        return (getMaskMatrix()[line][column] == 2);}
-
-    /**Imprime o Board no Terminal*/
-    public void printBoard() {
-        for (int i = 0; i < 9; i++) {
-            if (i % 3 == 0) {
-                System.out.println(" -----------------------");}
-            for (int j = 0; j < 9; j++) {
-                if (j % 3 == 0) {
-                    System.out.print("| ");}
-                System.out.print(board[i][j] == 0 ? "  " : board[i][j] + " ");}
-            System.out.println("|");}
-        System.out.println(" -----------------------");}
+    private boolean checkValidRemove(int line, int column){ //verifica se o valor é válido de remover
+        if(line<0||line>8||column<0||column>8)
+            return false; //se a posição não estiver entre 0 e 8, retorna falso
+        return getMaskMatrix()[line][column]==2;}
 }
 
 

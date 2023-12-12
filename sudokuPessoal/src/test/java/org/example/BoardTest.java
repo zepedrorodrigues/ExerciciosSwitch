@@ -1,445 +1,278 @@
 package org.example;
-import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class BoardTest {
+    @Test
+    void createMaskMatrixValue9() {
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        Board b = new Board(board);
+        //Act
+        int[][] mask = b.createMaskMatrixValue(9);
+        //Assert
+        assertEquals(1, mask[0][0]);
+        for(int i=0;i< board.length;i++){
+            for(int j=0;j< board.length;j++){
+                if(i==0&&j==0)
+                    continue;
+                assertEquals(0, mask[i][j]);}}}
 
     @Test
-    void validAdd() {
+    void createMaskMartrixValue3NonExistant(){
         //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 2, 0},
-                {0, 8, 0, 0, 0, 7, 0, 9, 0},
-                {6, 0, 2, 0, 0, 0, 5, 0, 0},
-                {0, 7, 0, 0, 6, 0, 0, 0, 0},
-                {0, 0, 0, 9, 0, 1, 0, 0, 0},
-                {0, 0, 0, 0, 2, 0, 0, 4, 0},
-                {0, 0, 5, 0, 0, 0, 6, 0, 3},
-                {0, 9, 0, 4, 0, 0, 0, 7, 0},
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};
-        Board board1 = new Board(board);
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
         //Act
-        board1.validAdd(0,0,1);
+        Board b = new Board(board);
+        int[][] mask = b.createMaskMatrixValue(3);
         //Assert
-        assertEquals(1, board1.getValuebyIndex(0,0));
-        assertEquals(2, board1.getMaskbyIndex(0,0));}
-    @Test
-    void validAddInvalidLineoutofRange(){
-        //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 2, 0},
-                {0, 8, 0, 0, 0, 7, 0, 9, 0},
-                {6, 0, 2, 0, 0, 0, 5, 0, 0},
-                {0, 7, 0, 0, 6, 0, 0, 0, 0},
-                {0, 0, 0, 9, 0, 1, 0, 0, 0},
-                {0, 0, 0, 0, 2, 0, 0, 4, 0},
-                {0, 0, 5, 0, 0, 0, 6, 0, 3},
-                {0, 9, 0, 4, 0, 0, 0, 7, 0},
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};
-        Board board1 = new Board(board);
-        //Act
-        //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.validAdd(-1,0,1));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-    @Test
-    void validAddInvalidLineoutofRange2(){
-        //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 2, 0},
-                {0, 8, 0, 0, 0, 7, 0, 9, 0},
-                {6, 0, 2, 0, 0, 0, 5, 0, 0},
-                {0, 7, 0, 0, 6, 0, 0, 0, 0},
-                {0, 0, 0, 9, 0, 1, 0, 0, 0},
-                {0, 0, 0, 0, 2, 0, 0, 4, 0},
-                {0, 0, 5, 0, 0, 0, 6, 0, 3},
-                {0, 9, 0, 4, 0, 0, 0, 7, 0},
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};
-        Board board1 = new Board(board);
-        //Act
-        //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.validAdd(9,0,1));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-    @Test
-    void validAddInvalidColumnoutofRange(){
-        //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 2, 0},
-                {0, 8, 0, 0, 0, 7, 0, 9, 0},
-                {6, 0, 2, 0, 0, 0, 5, 0, 0},
-                {0, 7, 0, 0, 6, 0, 0, 0, 0},
-                {0, 0, 0, 9, 0, 1, 0, 0, 0},
-                {0, 0, 0, 0, 2, 0, 0, 4, 0},
-                {0, 0, 5, 0, 0, 0, 6, 0, 3},
-                {0, 9, 0, 4, 0, 0, 0, 7, 0},
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};
-        Board board1 = new Board(board);
-        //Act
-        //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.validAdd(0,-1,1));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-    @Test
-    void validAddInvalidColumnoutofRange2(){
-        //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 2, 0},
-                {0, 8, 0, 0, 0, 7, 0, 9, 0},
-                {6, 0, 2, 0, 0, 0, 5, 0, 0},
-                {0, 7, 0, 0, 6, 0, 0, 0, 0},
-                {0, 0, 0, 9, 0, 1, 0, 0, 0},
-                {0, 0, 0, 0, 2, 0, 0, 4, 0},
-                {0, 0, 5, 0, 0, 0, 6, 0, 3},
-                {0, 9, 0, 4, 0, 0, 0, 7, 0},
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};
-        Board board1 = new Board(board);
-        //Act
-        //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.validAdd(0,9,1));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-    @Test
-    void validAddInvalidValueoutofRange(){
-        //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 2, 0},
-                {0, 8, 0, 0, 0, 7, 0, 9, 0},
-                {6, 0, 2, 0, 0, 0, 5, 0, 0},
-                {0, 7, 0, 0, 6, 0, 0, 0, 0},
-                {0, 0, 0, 9, 0, 1, 0, 0, 0},
-                {0, 0, 0, 0, 2, 0, 0, 4, 0},
-                {0, 0, 5, 0, 0, 0, 6, 0, 3},
-                {0, 9, 0, 4, 0, 0, 0, 7, 0},
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};
-        Board board1 = new Board(board);
-        //Act
-        //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.validAdd(0,0,0));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-    @Test
-    void validAddInvalidValueoutofRange2(){
-        //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 2, 0},
-                {0, 8, 0, 0, 0, 7, 0, 9, 0},
-                {6, 0, 2, 0, 0, 0, 5, 0, 0},
-                {0, 7, 0, 0, 6, 0, 0, 0, 0},
-                {0, 0, 0, 9, 0, 1, 0, 0, 0},
-                {0, 0, 0, 0, 2, 0, 0, 4, 0},
-                {0, 0, 5, 0, 0, 0, 6, 0, 3},
-                {0, 9, 0, 4, 0, 0, 0, 7, 0},
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};
-        Board board1 = new Board(board);
-        //Act
-        //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.validAdd(0,0,10));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-
-
-    @org.junit.jupiter.api.Test
-    void validRemove() {
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 2, 0},
-                {0, 8, 0, 0, 0, 7, 0, 9, 0},
-                {6, 0, 2, 0, 0, 0, 5, 0, 0},
-                {0, 7, 0, 0, 6, 0, 0, 0, 0},
-                {0, 0, 0, 9, 0, 1, 0, 0, 0},
-                {0, 0, 0, 0, 2, 0, 0, 4, 0},
-                {0, 0, 5, 0, 0, 0, 6, 0, 3},
-                {0, 9, 0, 4, 0, 0, 0, 7, 0},
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};
-        Board board1 = new Board(board);
-        board1.validAdd(0,0,1);
-        board1.validRemove(0,0);
-        //Assert
-        assertEquals(0, board1.getValuebyIndex(0,0));
-        assertEquals(0, board1.getMaskbyIndex(0,0));}
-    @Test
-    void validRemoveInvalidLineoutofRange(){
-        //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 2, 0}, //0
-                {0, 8, 0, 0, 0, 7, 0, 9, 0}, //1
-                {6, 0, 2, 0, 0, 0, 5, 0, 0}, //2
-                {0, 7, 0, 0, 6, 0, 0, 0, 0}, //3
-                {0, 0, 0, 9, 0, 1, 0, 0, 0}, //4
-                {0, 0, 0, 0, 2, 0, 0, 4, 0}, //5
-                {0, 0, 5, 0, 0, 0, 6, 0, 3}, //6
-                {0, 9, 0, 4, 0, 0, 0, 7, 0}, //7
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};//8
-        Board board1 = new Board(board);
-        //Act
-        //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.validRemove(-1,0));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-    @Test
-    void validRemoveInvalidLineoutofRange2(){
-        //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 2, 0}, //0
-                {0, 8, 0, 0, 0, 7, 0, 9, 0}, //1
-                {6, 0, 2, 0, 0, 0, 5, 0, 0}, //2
-                {0, 7, 0, 0, 6, 0, 0, 0, 0}, //3
-                {0, 0, 0, 9, 0, 1, 0, 0, 0}, //4
-                {0, 0, 0, 0, 2, 0, 0, 4, 0}, //5
-                {0, 0, 5, 0, 0, 0, 6, 0, 3}, //6
-                {0, 9, 0, 4, 0, 0, 0, 7, 0}, //7
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};//8
-        Board board1 = new Board(board);
-        //Act
-        //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.validRemove(9,0));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-    @Test
-    void validRemoveInvalidColumnoutofRange(){
-        //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 2, 0}, //0
-                {0, 8, 0, 0, 0, 7, 0, 9, 0}, //1
-                {6, 0, 2, 0, 0, 0, 5, 0, 0}, //2
-                {0, 7, 0, 0, 6, 0, 0, 0, 0}, //3
-                {0, 0, 0, 9, 0, 1, 0, 0, 0}, //4
-                {0, 0, 0, 0, 2, 0, 0, 4, 0}, //5
-                {0, 0, 5, 0, 0, 0, 6, 0, 3}, //6
-                {0, 9, 0, 4, 0, 0, 0, 7, 0}, //7
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};//8
-        Board board1 = new Board(board);
-        //Act
-        //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.validRemove(0,-1));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-    @Test
-    void validRemoveInvalidColumnoutofRange2(){
-        //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 2, 0}, //0
-                {0, 8, 0, 0, 0, 7, 0, 9, 0}, //1
-                {6, 0, 2, 0, 0, 0, 5, 0, 0}, //2
-                {0, 7, 0, 0, 6, 0, 0, 0, 0}, //3
-                {0, 0, 0, 9, 0, 1, 0, 0, 0}, //4
-                {0, 0, 0, 0, 2, 0, 0, 4, 0}, //5
-                {0, 0, 5, 0, 0, 0, 6, 0, 3}, //6
-                {0, 9, 0, 4, 0, 0, 0, 7, 0}, //7
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};//8
-        Board board1 = new Board(board);
-        //Act
-        //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.validRemove(0,9));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-
+        for(int i=0;i< board.length;i++){
+            for(int j=0;j< board.length;j++){
+                assertEquals(0, mask[i][j]);}}}
 
     @Test
-    void getMaskbyIndexValid() {
+    void createMaskMatrixValueInvalid0(){
         //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 1, 2, 3}, //0
-                {0, 8, 0, 0, 0, 7, 4, 9, 5}, //1
-                {6, 0, 2, 0, 0, 0, 5, 0, 0}, //2
-                {0, 7, 0, 0, 6, 0, 0, 0, 0}, //3
-                {0, 0, 0, 9, 0, 1, 0, 0, 0}, //4
-                {0, 0, 0, 0, 2, 0, 0, 4, 0}, //5
-                {0, 0, 5, 0, 0, 0, 6, 0, 3}, //6
-                {0, 9, 0, 4, 0, 0, 0, 7, 0}, //7
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};//8
-        Board board1 = new Board(board);
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
         //Act
+        Board b = new Board(board);
         //Assert
-        assertEquals(1, board1.getMaskbyIndex(0,6));
-        assertEquals(1, board1.getMaskbyIndex(1,6));
-        assertEquals(1, board1.getMaskbyIndex(2,6));
-        assertEquals(0, board1.getMaskbyIndex(1,0));
-        assertEquals(1, board1.getMaskbyIndex(1,8));}
+        assertThrows(IllegalArgumentException.class, () -> b.createMaskMatrixValue(0));}
 
     @Test
-    void getMaskbyIndexInvalidLineoutofRange(){
+    void createMaskMatrixValueInvalid10(){
         //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 1, 2, 3}, //0
-                {0, 8, 0, 0, 0, 7, 4, 9, 5}, //1
-                {6, 0, 2, 0, 0, 0, 5, 0, 0}, //2
-                {0, 7, 0, 0, 6, 0, 0, 0, 0}, //3
-                {0, 0, 0, 9, 0, 1, 0, 0, 0}, //4
-                {0, 0, 0, 0, 2, 0, 0, 4, 0}, //5
-                {0, 0, 5, 0, 0, 0, 6, 0, 3}, //6
-                {0, 9, 0, 4, 0, 0, 0, 7, 0}, //7
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};//8
-        Board board1 = new Board(board);
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
         //Act
+        Board b = new Board(board);
         //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.getMaskbyIndex(-1,0));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-    @Test
-    void getMaskbyIndexInvalidLineoutofRange2(){
-        //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 1, 2, 3}, //0
-                {0, 8, 0, 0, 0, 7, 4, 9, 5}, //1
-                {6, 0, 2, 0, 0, 0, 5, 0, 0}, //2
-                {0, 7, 0, 0, 6, 0, 0, 0, 0}, //3
-                {0, 0, 0, 9, 0, 1, 0, 0, 0}, //4
-                {0, 0, 0, 0, 2, 0, 0, 4, 0}, //5
-                {0, 0, 5, 0, 0, 0, 6, 0, 3}, //6
-                {0, 9, 0, 4, 0, 0, 0, 7, 0}, //7
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};//8
-        Board board1 = new Board(board);
-        //Act
-        //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.getMaskbyIndex(9,0));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
+        assertThrows(IllegalArgumentException.class, () -> b.createMaskMatrixValue(10));}
 
     @Test
-    void getMaskbyIndexInvalidColumnoutofRange(){
+    void getMaskMatrixValid() {
         //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 1, 2, 3}, //0
-                {0, 8, 0, 0, 0, 7, 4, 9, 5}, //1
-                {6, 0, 2, 0, 0, 0, 5, 0, 0}, //2
-                {0, 7, 0, 0, 6, 0, 0, 0, 0}, //3
-                {0, 0, 0, 9, 0, 1, 0, 0, 0}, //4
-                {0, 0, 0, 0, 2, 0, 0, 4, 0}, //5
-                {0, 0, 5, 0, 0, 0, 6, 0, 3}, //6
-                {0, 9, 0, 4, 0, 0, 0, 7, 0}, //7
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};//8
-        Board board1 = new Board(board);
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[0][2] = 3;
+        board[3][5] = 6;
         //Act
+        Board b = new Board(board);
+        int[][] mask = b.getMaskMatrix();
         //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.getMaskbyIndex(0,-1));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-    @Test
-    void getMaskbyIndexInvalidColumnoutofRange2(){
-        //Arrange
-        int[][] board = new int[][]{
-                {0, 0, 0, 0, 0, 0, 1, 2, 3}, //0
-                {0, 8, 0, 0, 0, 7, 4, 9, 5}, //1
-                {6, 0, 2, 0, 0, 0, 5, 0, 0}, //2
-                {0, 7, 0, 0, 6, 0, 0, 0, 0}, //3
-                {0, 0, 0, 9, 0, 1, 0, 0, 0}, //4
-                {0, 0, 0, 0, 2, 0, 0, 4, 0}, //5
-                {0, 0, 5, 0, 0, 0, 6, 0, 3}, //6
-                {0, 9, 0, 4, 0, 0, 0, 7, 0}, //7
-                {0, 4, 0, 0, 0, 0, 0, 0, 0}};//8
-        Board board1 = new Board(board);
-        //Act
-        //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.getMaskbyIndex(0,9));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
-
+        assertEquals(1, mask[0][0]);
+        assertEquals(1, mask[0][2]);
+        assertEquals(1, mask[3][5]);
+        for(int i=0;i< board.length;i++){
+            for(int j=0;j< board.length;j++){
+                if((i==0&&j==0)||(i==0&&j==2)||(i==3&&j==5))
+                    continue;
+                assertEquals(0, mask[i][j]);}}}
 
     @Test
-    void getValuebyIndex() {
+    void addValueValid() {
         //Arrange
-        int[][] board = new int[][]{
-                {1, 2, 3, 4, 5, 6, 0, 0, 0}, //0
-                {4, 5, 6, 7, 8, 9, 0, 0, 0}, //1
-                {7, 8, 9, 1, 2, 3, 0, 0, 0}, //2
-                {2, 3, 1, 5, 6, 4, 0, 0, 0}, //3
-                {5, 6, 4, 8, 9, 7, 0, 0, 0}, //4
-                {8, 9, 7, 2, 3, 1, 0, 0, 0}, //5
-                {3, 1, 2, 6, 4, 5, 0, 0, 0}, //6
-                {6, 4, 5, 9, 7, 8, 0, 0, 0}, //7
-                {9, 7, 8, 3, 1, 2, 0, 0, 0}};//8
-        Board board1 = new Board(board);
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
         //Act
+        Board b = new Board(board);
         //Assert
-        assertEquals(1, board1.getValuebyIndex(0,0));
-        assertEquals(2, board1.getValuebyIndex(0,1));
-        assertEquals(3, board1.getValuebyIndex(0,2));
-        assertEquals(4, board1.getValuebyIndex(0,3));
-        assertEquals(5, board1.getValuebyIndex(0,4));
-        assertEquals(6, board1.getValuebyIndex(0,5));
-        assertEquals(0, board1.getValuebyIndex(0,6));
-        assertEquals(0, board1.getValuebyIndex(0,7));
-        assertEquals(0, board1.getValuebyIndex(0,8));
-        assertEquals(4, board1.getValuebyIndex(1,0));
-        assertEquals(5, board1.getValuebyIndex(1,1));
-        assertEquals(6, board1.getValuebyIndex(1,2));
-        assertEquals(7, board1.getValuebyIndex(1,3));}
+        assertTrue(b.addValue(0,1,3));}
 
     @Test
-    void getValuebyIndexInvalidLineoutofRange(){
+    void addValueInvalidColumn12(){
         //Arrange
-        int[][] board = new int[][]{
-                {1, 2, 3, 4, 5, 6, 0, 0, 0}, //0
-                {4, 5, 6, 7, 8, 9, 0, 0, 0}, //1
-                {7, 8, 9, 1, 2, 3, 0, 0, 0}, //2
-                {2, 3, 1, 5, 6, 4, 0, 0, 0}, //3
-                {5, 6, 4, 8, 9, 7, 0, 0, 0}, //4
-                {8, 9, 7, 2, 3, 1, 0, 0, 0}, //5
-                {3, 1, 2, 6, 4, 5, 0, 0, 0}, //6
-                {6, 4, 5, 9, 7, 8, 0, 0, 0}, //7
-                {9, 7, 8, 3, 1, 2, 0, 0, 0}};//8
-        Board board1 = new Board(board);
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
         //Act
+        Board b = new Board(board);
         //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.getValuebyIndex(-1,0));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
+        assertFalse(b.addValue(0,12,3));}
+
     @Test
-    void getValuebyIndexInvalidLineoutofRange2(){
+    void addValueInvalidColumnMinus1(){
         //Arrange
-        int[][] board = new int[][]{
-                {1, 2, 3, 4, 5, 6, 0, 0, 0}, //0
-                {4, 5, 6, 7, 8, 9, 0, 0, 0}, //1
-                {7, 8, 9, 1, 2, 3, 0, 0, 0}, //2
-                {2, 3, 1, 5, 6, 4, 0, 0, 0}, //3
-                {5, 6, 4, 8, 9, 7, 0, 0, 0}, //4
-                {8, 9, 7, 2, 3, 1, 0, 0, 0}, //5
-                {3, 1, 2, 6, 4, 5, 0, 0, 0}, //6
-                {6, 4, 5, 9, 7, 8, 0, 0, 0}, //7
-                {9, 7, 8, 3, 1, 2, 0, 0, 0}};//8
-        Board board1 = new Board(board);
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
         //Act
+        Board b = new Board(board);
         //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.getValuebyIndex(9,0));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
+        assertFalse(b.addValue(0,-1,3));}
+
     @Test
-    void getValuebyIndexInvalidColumnoutofRange(){
+    void addValueInvalidLineMinus1(){
         //Arrange
-        int[][] board = new int[][]{
-                {1, 2, 3, 4, 5, 6, 0, 0, 0}, //0
-                {4, 5, 6, 7, 8, 9, 0, 0, 0}, //1
-                {7, 8, 9, 1, 2, 3, 0, 0, 0}, //2
-                {2, 3, 1, 5, 6, 4, 0, 0, 0}, //3
-                {5, 6, 4, 8, 9, 7, 0, 0, 0}, //4
-                {8, 9, 7, 2, 3, 1, 0, 0, 0}, //5
-                {3, 1, 2, 6, 4, 5, 0, 0, 0}, //6
-                {6, 4, 5, 9, 7, 8, 0, 0, 0}, //7
-                {9, 7, 8, 3, 1, 2, 0, 0, 0}};//8
-        Board board1 = new Board(board);
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
         //Act
+        Board b = new Board(board);
         //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.getValuebyIndex(0,-1));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
+        assertFalse(b.addValue(-1,0,3));}
+
     @Test
-    void getValuebyIndexInvalidColumnoutofRange2(){
+    void addValueInvalidLine11(){
         //Arrange
-        int[][] board = new int[][]{
-                {1, 2, 3, 4, 5, 6, 0, 0, 0}, //0
-                {4, 5, 6, 7, 8, 9, 0, 0, 0}, //1
-                {7, 8, 9, 1, 2, 3, 0, 0, 0}, //2
-                {2, 3, 1, 5, 6, 4, 0, 0, 0}, //3
-                {5, 6, 4, 8, 9, 7, 0, 0, 0}, //4
-                {8, 9, 7, 2, 3, 1, 0, 0, 0}, //5
-                {3, 1, 2, 6, 4, 5, 0, 0, 0}, //6
-                {6, 4, 5, 9, 7, 8, 0, 0, 0}, //7
-                {9, 7, 8, 3, 1, 2, 0, 0, 0}};//8
-        Board board1 = new Board(board);
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
         //Act
+        Board b = new Board(board);
         //Assert
-        IllegalArgumentException exc = assertThrows(IllegalArgumentException.class, () ->
-                board1.getValuebyIndex(0,9));
-        assertTrue(exc.getMessage().contains("Invalid move"));}
+        assertFalse(b.addValue(11,0,3));}
+
+    @Test
+    void addValueInvalid12(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.addValue(0,0,12));}
+
+    @Test
+    void addValueInvalid0(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.addValue(0,0,0));}
+
+    @Test
+    void addValueNotEmpty(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        b.addValue(0,2,6);
+        //Assert
+        assertFalse(b.addValue(0,2,5));}
+
+    @Test
+    void addValueNotEmptyVaueFromOriginalMatrix(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.addValue(0,0,6));}
+
+    @Test
+    void addValueInvalidValueAlreadyExistsInLine(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[1][0] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.addValue(1,1,3));}
+
+    @Test
+    void addValueInvalidValueAlreadyExistsInColumn(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.addValue(1,1,9));}
+
+    @Test
+    void addValueInvalidValueAlreadyExistsInSquare(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[1][1] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.addValue(2,2,3));}
+
+    @Test
+    void removeValueValid() {
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        b.addValue(0,2,4);
+        //Assert
+        assertTrue(b.removeValue(0,2));}
+    @Test
+    void removeValueInvalidEmptySpace() {
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.removeValue(0,2));}
+
+    @Test
+    void removeValueInvalidInitialMatrixValue() {
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.removeValue(0,1));}
+
+    @Test
+    void removeValueInvalidColumn12() {
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.removeValue(0,12));}
+    @Test
+    void removeValueInvalidColumnMinus1() {
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.removeValue(0,-1));}
+    @Test
+    void removeValueInvalidLineMinus1() {
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.removeValue(-1,1));
+    }
+
+    @Test
+    void removeValueInvalidLine11() {
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.removeValue(11,1));}
 }
