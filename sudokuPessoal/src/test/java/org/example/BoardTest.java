@@ -35,6 +35,38 @@ class BoardTest {
                 assertEquals(0, mask[i][j]);}}}
 
     @Test
+    void createMatrixMaskValue1(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 1;
+        Board b = new Board(board);
+        //Act
+        int[][] mask = b.createMaskMatrixValue(1);
+        //Assert
+        assertEquals(1, mask[0][0]);
+        for(int i=0;i< board.length;i++){
+            for(int j=0;j< board.length;j++){
+                if(i==0&&j==0)
+                    continue;
+                assertEquals(0, mask[i][j]);}}}
+
+    @Test
+    void createMatrixMaskValue9(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        Board b = new Board(board);
+        //Act
+        int[][] mask = b.createMaskMatrixValue(9);
+        //Assert
+        assertEquals(1, mask[0][0]);
+        for(int i=0;i< board.length;i++){
+            for(int j=0;j< board.length;j++){
+                if(i==0&&j==0)
+                    continue;
+                assertEquals(0, mask[i][j]);}}}
+
+    @Test
     void createMaskMatrixValueInvalid0(){
         //Arrange
         int[][] board = new int[9][9];
@@ -83,6 +115,44 @@ class BoardTest {
         Board b = new Board(board);
         //Assert
         assertTrue(b.addValue(0,1,3));}
+
+    @Test
+    void addValueValidValue1(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][0] = 9;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertTrue(b.addValue(0,1,1));}
+
+    @Test
+    void addValueValidValue9(){
+        //Arrange
+        int[][] board = new int[9][9];
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertTrue(b.addValue(0,1,9));}
+
+    @Test
+    void addValueValidinLine0ColumnZero(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertTrue(b.addValue(0,0,6));}
+
+    @Test
+    void addValueValidLine8Column8(){
+        //Arrange
+        int[][] board = new int[9][9];
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertTrue(b.addValue(8,8,3));}
 
     @Test
     void addValueInvalidColumn12(){
@@ -179,6 +249,56 @@ class BoardTest {
         assertFalse(b.addValue(1,1,3));}
 
     @Test
+    void addValueInvalidValueAlreadyExistsInLine0Column0(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.addValue(0,0,3));}
+
+    @Test
+    void addValueInvalidValueAlreadyExistsInLine8Column8(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[8][7] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.addValue(8,8,3));}
+
+    @Test
+    void addValueInvalidValueAlreadyExistsinColumnLine8Column8(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[7][8] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.addValue(8,8,3));}
+
+    @Test
+    void addValueInvalidValueAlreadyExistisInSquareLine0Column0(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[1][1] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.addValue(0,0,3));}
+
+    @Test
+    void addValueInvalidValueAlreadyExistsInSquareLine8Column8(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[7][7] = 3;
+        //Act
+        Board b = new Board(board);
+        //Assert
+        assertFalse(b.addValue(8,8,3));}
+
+    @Test
     void addValueInvalidValueAlreadyExistsInColumn(){
         //Arrange
         int[][] board = new int[9][9];
@@ -211,6 +331,27 @@ class BoardTest {
         b.addValue(0,2,4);
         //Assert
         assertTrue(b.removeValue(0,2));}
+
+    @Test
+    void removeValueValidLine8Column8(){
+        //Arrange
+        int[][] board = new int[9][9];
+        //Act
+        Board b = new Board(board);
+        b.addValue(8,8,4);
+        //Assert
+        assertTrue(b.removeValue(8,8));}
+
+    @Test
+    void removeValueValueLine0Column0(){
+        //Arrange
+        int[][] board = new int[9][9];
+        board[0][1] = 3;
+        //Act
+        Board b = new Board(board);
+        b.addValue(0,0,4);
+        //Assert
+        assertTrue(b.removeValue(0,0));}
     @Test
     void removeValueInvalidEmptySpace() {
         //Arrange

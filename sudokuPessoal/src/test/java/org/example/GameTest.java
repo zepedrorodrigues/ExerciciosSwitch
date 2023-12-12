@@ -50,6 +50,23 @@ class GameTest {
         assertEquals("Invalid board", exc.getMessage());}
 
     @Test
+    void testConstructorValidAllZeros()throws IllegalArgumentException{
+        //Arrange
+        int[][] board = new int[9][9];
+        //Act and Assert
+        Game g = new Game(board);}
+
+    @Test
+    void testConstructorValidAllNines()throws IllegalArgumentException{
+        //Arrange
+        int[][] board = new int[9][9];
+        for(int i=0;i< board.length;i++){
+            for(int j=0;j< board.length;j++){
+                board[i][j]=9;}}
+        //Act and Assert
+        Game g = new Game(board);}
+
+    @Test
     void testConstructorInvalidOneAbove9()throws IllegalArgumentException{
         //Arrange
         int[][] board = new int[9][9];
