@@ -1,58 +1,52 @@
 package org.example;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Board {
     private List<Word> words; //list of words
     private char[][] board; //board of letters 10x10 (default)
 
     /**Constructor*/
-    public Board(List<Word>wordlist){
-       this.words = checkList(wordlist); //Edits the WordList regarding if the words are possible to add to the board
-       this.board = finalBoard(wordlist);} //Creates the final board
+    public Board(List<Word>wordlist)throws IllegalArgumentException, NullPointerException{
+        if(wordlist.size() == 0)
+            throw new IllegalArgumentException("Wordlist is empty");
+        if(wordlist==null)
+            throw new NullPointerException("Wordlist is null");
+        this.board = new char[10][10]; //board of letters 10x10 (default)
+        this.words = List.copyOf(wordlist);
+        for(Word word: words){
+            if(checkPossibleCoordinates(word.getCoordinates(), word.getWord())){
+                addWordtoBoard(word);}
+            else {removeWordFromList(word.getWord());}}
+        fillBoardwithRandomLetters();}
+    private boolean checkPossibleCoordinates(int[][] coordinates, String word){
+        if(coordinates.length != word.length())
+            return false;
+        for (int[] coordinate : coordinates) {
+            if (coordinate[0] < 0 || coordinate[0] > 9 || coordinate[1] < 0 || coordinate[1] > 9)
+                return false;}
+        for(int i=0; i<coordinates.length; i++){
+            if(board[coordinates[i][0]][coordinates[i][1]] != '\0' &&
+                    board[coordinates[i][0]][coordinates[i][1]] != word.charAt(i))
+                return false;}
+        return true;}
 
-    /**These 3 methods initialize a Board*/
+    private void removeWordFromList(String word){
+        List<Word> newWords = new ArrayList<>();
+        for(Word w: words){
+            if(!w.getWord().equals(word)){
+                newWords.add(w);}}
+        words = newWords;}
 
-    //passes every word in the list to check if it is possible to add (checkIfWordPossible)
-    //if so, creates a replica of the board with the word added
-    //if not, removes the word from the list
-    private List<Word> checkList(List<Word>wordList){
-        char[][] brd = new char[10][10]; //board of letters 10x10 (default)
-        for(Word w: wordList){
-            if(!checkIfWordPossible(brd, w)){ //if word is not possible, remove from list
-                wordList.remove(w);}
-            else{
-                int[][] coordinates = w.getCoordinates();
-                for(int i=0; i<coordinates.length; i++){
-                    brd[coordinates[i][0]][coordinates[i][1]] = w.getWord().charAt(i);}}}
-        return wordList;}
-
-    //Creates an empty 10x10 board and adds all the characters of the words in their positions
-    //fills the rest of the board with random letters
-    private char[][] finalBoard (List<Word>wordList){
-        char[][] brd = new char[10][10]; //board of letters 10x10 (default)
-        for(Word w: wordList){
-            int[][] coordinates = w.getCoordinates(); //get coordinates of word
-            for(int i=0; i<coordinates.length; i++){
-                brd[coordinates[i][0]][coordinates[i][1]] = w.getWord().charAt(i);}} //fill board with words
-        for(int i=0; i< brd.length;i++)
-            for (int j=0; j<brd[0].length;j++)
-                if(brd[i][j] == '\0') { //if board is empty, fill with random capitalized letters
-                    brd[i][j] = (char) ('A' + new Random().nextInt(26));} //random letter
-        return brd;}
-
-    //checks if word is possible to add to board, helping method checkList
-    private boolean checkIfWordPossible(char[][] board, Word w){ //check if word is possible
-            int[][] coordinates = w.getCoordinates();
-            for(int[] coordinate: coordinates){ //check if coordinates are inside board
-                if(coordinate[0] < 0 || coordinate[0] >= board.length ||
-                        coordinate[1] < 0 || coordinate[1] >= board[0].length)
-                    return false;}
-            for(int i=0; i<coordinates.length; i++){ //check if coordinates are empty or have the same letter
-                if(board[coordinates[i][0]][coordinates[i][1]] != ' ' &&
-                        board[coordinates[i][0]][coordinates[i][1]] != w.getWord().charAt(i))
-                    return false;}
-            return true;}
+    private void addWordtoBoard(Word word){
+        int[][] coordinates = word.getCoordinates();
+        for(int i=0;i<coordinates.length;i++){
+            board[coordinates[i][0]][coordinates[i][1]] = word.getWord().charAt(i);}}
+    private void fillBoardwithRandomLetters(){
+        for(int i=0;i<10;i++){
+            for(int j=0;j<10;j++){
+                if(board[i][j] == '\0'){
+                    board[i][j] = (char) (Math.random() * 26 + 'A');}}}}
 
     /**These 6 methods check for the word
      * if it is present, removes the word from the wordlist and returns true
@@ -63,7 +57,7 @@ public class Board {
     //if so, removes the word from the list and returns true
     public boolean wordCheck(String word, int[][] positions){
         if(checkWordCoordinator(word,positions)){
-            words.remove(checkWordPresent(word));
+            removeWordFromList(word);
             return true;}
         return false;}
 
@@ -71,15 +65,16 @@ public class Board {
     //respecting every position of the word
     //if so, return true
     private boolean checkWordCoordinator(String word, int[][] positions){
-        int[] direction = makeDirection(positions[1], positions[0]);
-        positions = makePositions(positions[0], direction, word.length());
         Word wrd = checkWordPresent(word);
+        if(wrd == null)
+            return false;
+        int[] direction = makeDirection(positions[1], positions[0]);
+        positions = makePositions(positions[0], direction,Math.max(Math.abs(positions[1][0] - positions[0][0]),
+                Math.abs(positions[1][1] - positions[0][1]))+1);
         return checkWordPositions(wrd, positions);}
 
-    //checks if word is present in the wordlist
-    //if so, return the word itself
-    public Word checkWordPresent(String word){
-        for(Word w: words){
+    private Word checkWordPresent(String word)
+    {for(Word w: words){
             if(w.getWord().equals(word)){
                 return w;}}
         return null;}
@@ -87,8 +82,9 @@ public class Board {
     //given the word and its coordinates, checks if the coordinates are the same as the word's
     private boolean checkWordPositions(Word word, int[][] positions){
         int[][] coordinates = word.getCoordinates();
-        for(int i=0; i<coordinates.length; i++){
-            if(coordinates[i][0] != positions[i][0] || coordinates[i][1] != positions[i][1])
+        for(int i=0; i<positions.length; i++){
+            if(coordinates[i][0] != positions[i][0] || coordinates[i][1] != positions[i][1] ||
+            positions.length != coordinates.length)
                 return false;}
         return true;}
 
@@ -116,12 +112,10 @@ public class Board {
     public int getWordListSize(){
         return words.size();}
 
-    /**Print Board*/
-    public void printBoard(){
-        for (char[] chars : board) {
-            for (int j = 0; j < board[0].length; j++) {
-                System.out.print(chars[j] + " ");}
-            System.out.println();}}
+    public char getIndexRowColumn(int row, int column)throws ArrayIndexOutOfBoundsException{
+        if(row<0 || row>9 || column<0 || column>9)
+            throw new ArrayIndexOutOfBoundsException();
+        return board[row][column];}
 
 
 

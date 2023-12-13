@@ -1,16 +1,11 @@
 package org.example;
-
 public class Word {
-    private String word; //word to be found
-    private int[][] coordinates; //coordinates of start and end of word
-
-    /***/
-    public Word(String word, int[][]coordinates){ //constructor
+    private String word;
+    private int[][] coordinates;
+    public Word(String word, int[][]coordinates){
         this.word = word;
         this.coordinates = coordinates;}
-    public String getWord(){ //getter String of word
+    public String getWord(){
         return word;}
-    public int[][] getCoordinates(){ //getter coordinates
-        return coordinates;}
-
-}
+    public int[][] getCoordinates(){
+        return coordinates;}}

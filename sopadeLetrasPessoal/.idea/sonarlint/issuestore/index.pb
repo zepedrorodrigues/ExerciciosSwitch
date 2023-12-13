@@ -2,8 +2,6 @@
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 S
-#src/main/java/org/example/Main.java,0\b\0ba1b9c7a4878802f938e331cc2d8a042087ec6b
-S
 #src/main/java/org/example/Word.java,7\7\77839dfe222f798b3ade16eace95beda0e4ef794
 T
 $src/main/java/org/example/Board.java,b\c\bca2cdad0452c700a1f037c0ac0823e4ba8180f8
@@ -13,3 +11,9 @@ S
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
 S
 #src/main/java/org/example/Game.java,f\1\f1d67a7ee35efa3e1601241987bec47697a781ba
+W
+'src/test/java/org/example/GameTest.java,9\4\9443f7c28186b815251bdd4f4f464224350982e0
+X
+(src/test/java/org/example/BoardTest.java,1\7\178bb9f006e6698450eebf1a78417bf88f73f37d
+W
+'src/test/java/org/example/WordTest.java,6\b\6b53f5a58a3a5508cad30285d52f55c1306a3c56
