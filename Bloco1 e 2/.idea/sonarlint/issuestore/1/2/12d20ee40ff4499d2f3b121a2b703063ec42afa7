@@ -1,7 +1,0 @@
-
-m	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(þ©¢‚8üð“àµ1
-\
-java:S1118":Add a private constructor to hide the implicit public one.(®±˜µüÿÿÿÿ8Ôñ“àµ1
-j	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(šñÌ˜8Ôñ“àµ1
-{
-java:S3012"YUse "Arrays.copyOf", "Arrays.asList", "Collections.addAll" or "System.arraycopy" instead.(æŽÞŠýÿÿÿÿ8×ñ“àµ1

@@ -1,0 +1,19 @@
+@startuml
+
+title US01 As an Administrator, I want to configure the location of the house
+
+[o-> ":House": configLocation(address, zipCode, gpsLocation)
+activate ":House"
+
+":House"->":House": configLocation(address, zipCode, gpsLocation)
+":House"->":Location": new Location(address, zipCode, gpsLocation)
+activate ":Location"
+":House"->":House": this.location=Location
+deactivate ":Location"
+note left #LightBlue
+    Assuming success
+end note
+
+
+
+@enduml

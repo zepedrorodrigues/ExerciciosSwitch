@@ -1,0 +1,44 @@
+@startuml
+
+class House{
+- Location location
+}
+
+class Room{
+- String name
+- int floor
+- Dimensions dimensions
+}
+
+class Device{
+- String name
+- String type
+}
+
+class Sensor{
+- String name
+- SensorType type
+}
+
+class Actuator{
+- String name
+- List<String> characteristics
+}
+
+class SensorType{
+- String name
++ static List<SensorTypes> validSensorTypes
+- List<String> characteristics
+}
+
+
+House "1" *-- "*" Room : contains
+
+Room "1" *-- "*" Device : has
+
+Device "1" o-- "1..*" Sensor :  contains
+Device "1" o-- "*" Actuator : contains
+
+Sensor "1..*" --> "1" SensorType: has
+
+@enduml

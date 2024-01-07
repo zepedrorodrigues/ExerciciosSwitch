@@ -1,0 +1,14 @@
+@startuml
+title US02: As an Administrator, I want to add a new room to the house, in order to configure it (name, house floor and dimensions).
+
+[o-> ":House" : 1. addRoom (name, floor, width, length, height)
+activate ":House"
+
+
+    ":House" -> ":Room": 1.1 new Room(name, floor, width, length, height)
+    activate ":Room"
+    ":House" -> ":House": 1.2 roomList.add(Room)
+    deactivate ":Room"
+
+@enduml
+

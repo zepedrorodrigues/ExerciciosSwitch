@@ -1,0 +1,19 @@
+@startuml
+left to right direction
+skinparam ranksep 0
+skinparam nodesep 0
+
+actor Administrator
+actor "Power User" as PUser
+usecase UC1 as "To configure Location of House"
+usecase UC2 as "To add Room to House"
+usecase UC3 as "To have Room List"
+usecase UC5 as "To add Device to Room"
+Administrator --> UC1
+Administrator --> UC2
+Administrator --> UC3
+usecase UC4 as "To define Sensor Type"
+Administrator --> UC4
+Administrator --> UC5
+PUser --> UC5
+@enduml

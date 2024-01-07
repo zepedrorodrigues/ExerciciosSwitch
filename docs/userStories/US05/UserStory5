@@ -1,0 +1,13 @@
+@startuml
+title US05: As a Power User [or Administrator], I want to add a new sensor to a room from the list of available sensor types, in order to configure it.
+
+    [o-> ":House": addDeviceToRoom(name, type, sens, acts, roomName)
+    activate ":House"
+    ":House" -> ":Device": Device(name, type, sens, acts)
+    ":House" -> ":Room": addDevice (Device)
+    deactivate ":Device"
+    deactivate ":House"
+    activate ":Room"
+    ":Room" -> ":Room": deviceList.add()
+    deactivate ":Room"
+@enduml

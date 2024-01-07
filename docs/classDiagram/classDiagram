@@ -1,0 +1,92 @@
+@startuml
+
+class House{
+-Location location
+-List<Room> roomList
++ House(String address, String zipCode, String gpsLocation)
+-boolean validLocationArguments(String address, String zipCode, String gpsLocation)
++boolean configLocation(String newAddress, String newZipCode, String newGPSLocation)
++void addRoom(String name, int floor, double width, double length, double height)
++List<Room> getRoomList()
++void addDevicetoRoom(String name, String type, List<Sensor> sens, List<Actuator> acts, String roomName)
+}
+
+class Location{
+-String address
+-String zipCode
+-String gpsLocation
++Location(String address, String zipCode, String gpsLocation)
+}
+
+class Room{
+-String name
+-int floor
+-Dimensions dimensions
+-List<Device> deviceList
++Room(String name, int floor, double width, double length, double height)
++String getName()
++String getFloor()
++double getWidth()
++double getLength()
++double getHeight()
++void addDevice(Device device)
+}
+
+class Dimensions{
+-double width
+-double length
+-double height
++Dimensions(double width, double length, double height)
++double getWidth()
++double getLength()
++double getHeight()
+}
+
+class Device{
+-String name
+-String type
+-List<Sensor> sensors
+-List<Actuator> actuators
++public Device(String name, String type, List<Sensor> sens, List<Actuator> acts)
+-List<Sensor> deepCopyListSensors(List<Sensor> list)
+-List<Actuator> deepCopyListActuators(List<Actuator> list)
++String getName()
+}
+
+class Sensor{
+-String name
+-SensorType type
+-List<String> characteristics
++Sensor(String name, String type)
++String getType()
++String getName()
+}
+
+class SensorType{
+-String name
+-List<SensorType> validSensorTypes
+-List<String> characteristics
++SensorType(String name, List<String> characteristics)
+-List<String> deepCopy(List<String> characteristics)
++String getName()
++List<String> getCharacteristics()
++isSensorTypeAvailable(String type)
+}
+
+class Actuator{
+-String name
+-List<String> characteristics
++public Actuator(String name, List<String> characteristics)
+-List<String> deepCopyList(List<String> list)
++String getName()
++List<String> getCharacteristics()
+}
+
+House "1" *-- "*" Room : has
+House "1" -- "1" Location : has
+Room "1" *-- "*" Device : has
+Room "1" -- "1" Dimensions : has
+Device "1" -- "1..*" Sensor :  contains
+Device "1" -- "*" Actuator : contains
+Sensor "*" o-- "1" SensorType : has >
+@enduml
