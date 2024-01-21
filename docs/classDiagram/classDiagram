@@ -3,9 +3,10 @@
 class House{
 -Location location
 -List<Room> roomList
-+ House(String address, String zipCode, String gpsLocation)
--boolean validLocationArguments(String address, String zipCode, String gpsLocation)
-+boolean configLocation(String newAddress, String newZipCode, String newGPSLocation)
++ House(String address, String zipCode, double latitude, double longitude)
+-boolean validLocationArguments(String address, String zipCode)
+-boolean validGPSArguments(double latitude, double longitude)
++boolean configLocation(String newAddress, String newZipCode, double newLatitude, double newLongitude)
 +void addRoom(String name, int floor, double width, double length, double height)
 +List<Room> getRoomList()
 +void addDevicetoRoom(String name, String type, List<Sensor> sens, List<Actuator> acts, String roomName)
@@ -14,8 +15,17 @@ class House{
 class Location{
 -String address
 -String zipCode
--String gpsLocation
-+Location(String address, String zipCode, String gpsLocation)
+-GPSLocation gpsLocation
++Location(String address, String zipCode, double latitude, double longitude)
+}
+
+class GPSLocation{
+-double latitude
+-double longitude
++GPSLocation(double latitude, double longitude)
++getLatitude()
++getLongitude()
++setLocation(double latitude,double longitude)
 }
 
 class Room{

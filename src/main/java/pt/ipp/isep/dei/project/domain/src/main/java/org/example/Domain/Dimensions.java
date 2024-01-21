@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Domain;
 
 /**
  * Represents the dimensions of a room in a house.

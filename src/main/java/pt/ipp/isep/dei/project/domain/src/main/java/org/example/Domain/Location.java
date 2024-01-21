@@ -1,4 +1,6 @@
-package org.example;
+package org.example.Domain;
+
+import org.example.Domain.GPSLocation;
 
 /**
  * Represents the location of a house.
@@ -11,20 +13,17 @@ public class Location {
     /**the zip code of the house
      */
     private String zipCode;
-    /**GPS location of the house
-     */
-    private String gpsLocation;
+
 
     /**
      * Constructor
      *
      * @param address the address of the house (Street, Number, Door)
-     * @param zipCode the zip code of the house
-     * @param gpsLocation the GPS location of the house
-     */
-    public Location(String address, String zipCode, String gpsLocation) {
+     * @param zipCode the zip code of the house*/
+    public Location(String address, String zipCode) {
+        if(address.isEmpty()||zipCode.isEmpty())
+            throw new IllegalArgumentException("Address and zip code must not be empty");
         this.address = address;
         this.zipCode = zipCode;
-        this.gpsLocation = gpsLocation;
     }
 }
