@@ -7,9 +7,9 @@ import org.example.Maps.MapsHouse;
 
 import java.util.List;
 
-public class ControllerUS03 {
+public class ControllerUC03 {
 
-    public ControllerUS03() {
+    public ControllerUC03() {
         //Empty constructor, is a Controller
     }
 

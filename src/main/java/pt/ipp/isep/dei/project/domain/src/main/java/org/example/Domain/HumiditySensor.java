@@ -25,4 +25,7 @@ public class HumiditySensor implements Sensor {
     public SensorType getType() {
         return type;
     }
+
+    public String getFunctionality() {
+        return "Humidity";}
 }

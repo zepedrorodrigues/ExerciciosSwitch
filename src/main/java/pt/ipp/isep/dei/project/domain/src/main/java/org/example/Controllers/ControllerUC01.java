@@ -3,8 +3,8 @@ package org.example.Controllers;
 import org.example.DTOs.LocationDTO;
 import org.example.Maps.MapsHouse;
 
-public class ControllerUS01 {
-    public ControllerUS01() {
+public class ControllerUC01 {
+    public ControllerUC01() {
         //Empty constructor, is a controller
     }
     public boolean defineLocation(String houseId, LocationDTO locationDTO, MapsHouse mapHouse){

@@ -3,9 +3,9 @@ package org.example.Controllers;
 import org.example.DTOs.SensorTypeDTO;
 import org.example.Maps.MapsHouse;
 
-public class ControllerUS04 {
+public class ControllerUC04 {
 
-    public ControllerUS04() {
+    public ControllerUC04() {
         //Empty constructor, is a Controller
     }
 

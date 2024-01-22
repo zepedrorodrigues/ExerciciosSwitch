@@ -21,10 +21,12 @@ public class TemperatureSensor implements Sensor {
         return name;
     }
 
-
     public SensorType getType() {
         return type;
     }
+
+    public String getFunctionality() {
+        return "Temperature";}
 
 }
 

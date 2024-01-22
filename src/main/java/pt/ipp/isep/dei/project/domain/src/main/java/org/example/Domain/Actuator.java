@@ -41,4 +41,7 @@ public class Actuator {
     /**Returns a deepCopy of the characteristics of the Actuator*/
     public List<String> getCharacteristics() {
         return deepCopyList(characteristics);}
+
+    public String getFunctionality(){
+        return name;}
 }

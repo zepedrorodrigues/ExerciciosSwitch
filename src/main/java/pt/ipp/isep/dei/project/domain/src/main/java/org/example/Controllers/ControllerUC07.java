@@ -7,9 +7,9 @@ import org.example.Maps.MapDevices;
 import org.example.Maps.MapRooms;
 import org.example.Maps.MapsHouse;
 
-public class ControllerUS07 {
+public class ControllerUC07 {
 
-    public ControllerUS07(){}
+    public ControllerUC07(){}
 
     public boolean addSensorToDevice(String houseId, DeviceDTO deviceDTO, SensorDTO sensorDTO, MapsHouse mapsHouse){
         MapRooms mapRooms = mapsHouse.housetoRoom.get(houseId);

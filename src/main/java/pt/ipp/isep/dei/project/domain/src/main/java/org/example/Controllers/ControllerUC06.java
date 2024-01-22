@@ -9,8 +9,8 @@ import org.example.Maps.MapsHouse;
 
 import java.util.List;
 
-public class ControllerUS06 {
-    public ControllerUS06(){}
+public class ControllerUC06 {
+    public ControllerUC06(){}
 
     public List<DeviceDTO> getListOfDevices(String houseId, RoomDTO roomDTO, MapsHouse mapsHouse){
         MapRooms mapRooms = mapsHouse.housetoRoom.get(houseId);

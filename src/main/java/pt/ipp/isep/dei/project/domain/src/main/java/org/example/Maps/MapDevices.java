@@ -11,16 +11,20 @@ public class MapDevices {
     public Map<String,String> devicetoType;
     public Map<String, List<Sensor>> deviceToSensors;
     public Map<String,List<Actuator>> deviceToActuators;
+
+    public Map<String,Boolean> devicetoStatus;
     public MapDevices() {
         devicetoType = new HashMap<>();
         deviceToSensors = new HashMap<>();
-        deviceToActuators = new HashMap<>();}
+        deviceToActuators = new HashMap<>();
+        devicetoStatus = new HashMap<>();}
     public boolean createDevice(String deviceId,String type) {
         if (deviceToSensors.containsKey(deviceId))
             return false;
         try{devicetoType.put(deviceId,type);
             deviceToSensors.put(deviceId, new ArrayList<>());
             deviceToActuators.put(deviceId, new ArrayList<>());
+            devicetoStatus.put(deviceId,false);
             return true;}
         catch (Exception e) {return false;}}
     public boolean addSensortoDevice(String deviceId, String typeOfSensor, SensorType sensorType ) {
@@ -35,4 +39,11 @@ public class MapDevices {
                 return true;}
             return false;}
         catch (Exception e) {return false;}}
+
+    public boolean deactivateDevice(String deviceId){
+        boolean status = devicetoStatus.get(deviceId);
+        if(status){
+            devicetoStatus.put(deviceId,false);
+            return true;}
+        return false;}
 }
