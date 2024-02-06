@@ -1,0 +1,7 @@
+@startuml
+
+title US09: As a Power User [or Administrator], I want to get a list of all devices in a house, grouped by device functionality types. It must include device location.
+
+autonumber
+
+@enduml

@@ -1,0 +1,66 @@
+@startuml
+
+title US07: As a Power User [or Administrator], I want to add a sensor to an existing device in a room. The sensor must be of a model of an existing type of sensor.
+
+autonumber
+
+participant ":ControllerUC07" as C7
+participant ":ControllerGetRoomList" as CGRL
+participant ":ControllerGetDeviceList" as CGDL
+participant ":MapperSensorTypesDTO" as MSTD
+participant ":Catalog" as Catalog
+participant ":House" as H
+participant "_room:Room" as R
+participant "_device:Device" as D
+participant "_sensor:Sensor" as S
+
+[o->C7: getRoomList()
+activate C7
+C7->CGRL: getRoomList()
+activate CGRL
+ref  over C7,CGRL: (US03 diagram for details)
+CGRL-->C7: listRoomDTO
+deactivate CGRL
+C7->CGDL: getDeviceList()
+activate CGDL
+ref over C7,CGDL: (US06 diagram for details)
+CGDL-->C7: listDeviceDTO
+deactivate CGDL
+[o<--C7: listDeviceDTO
+[o->C7: getSensorTypeList()
+C7->Catalog: getAvailableSensorTypes()
+activate H
+H->H: return List<String> _sensorTypes
+H-->C7: _sensorTypes
+deactivate H
+C7->MSTD: getSensorTypesDTO(List<String> _sensorTypes)
+activate MSTD
+MSTD->MSTD: return List<SensorTypeDTO> _sensorTypesDTO
+MSTD-->C7: _sensorTypesDTO
+deactivate MSTD
+[o<--C7: _sensorTypesDTO
+[o->C7: addSensorToDevice(DeviceDTO _deviceDTO, SensorDTO _sensorDTO)
+C7->H: getRoomByName(String _roomName)
+activate H
+H->H: return _room
+H-->C7: _room
+deactivate H
+C7->R: getDeviceByName(String _deviceName)
+activate R
+R->R: return _device
+R-->C7: _device
+deactivate R
+C7->D: _device.addSensor(String _sensorName,String sensorType)
+activate D
+D-->S**: create Sensor(String _sensorName, String _sensorType) _sensor
+D->D: return true
+D-->C7: true
+deactivate D
+[o<--C7: true
+
+note left #LightBlue
+Assuming success
+end note
+
+@enduml
+

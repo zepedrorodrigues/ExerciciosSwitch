@@ -1,0 +1,55 @@
+@startuml
+class House{
+}
+
+class Location{
+- String address
+- String zipCode
+}
+
+class GPSLocation{
+-latitude
+-longitude
+}
+
+class Room{
+- String name
+- int floor
+}
+
+class Dimensions{
+- double width
+- double length
+- double height
+}
+
+class Device{
+- String name
+- String type
+- boolean active
+}
+
+class Sensor{
+- String name
+}
+
+class Actuator{
+- String name
+}
+
+class SensorType{
+- String functionality
+}
+
+House "1" *--> "*" Room : contains >
+House "1" *-> "1" Location : has >
+House "1" -> "*" SensorType : knows >
+Location "1" *-> "1" GPSLocation : has >
+Room "1" *--> "*" Device : contains >
+Room "1" *--> "1" Dimensions : has >
+Device "1" o--> "*" Sensor :  aggregates >
+Device "1" o--> "*" Actuator : aggregates >
+Sensor "*" *--> "1" SensorType : is of >
+
+
+@enduml

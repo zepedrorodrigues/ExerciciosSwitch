@@ -1,0 +1,51 @@
+@startuml
+
+title US08: As a Power User [or Administrator],\n I want to deactivate a device, so that it is no longer used. Nevertheless,\nit should be possible to access its configuration and activity log.
+
+autonumber
+
+participant ":ControllerUC08" as C8
+participant ":ControllerGetRoomList" as CGRL
+participant ":ControllerGetDeviceList" as CGDL
+participant ":House" as H
+participant "_room:Room" as R
+participant "_device:Device" as D
+
+[o-> C8 : getRoomList()
+activate C8
+C8 -> CGRL : getRoomList()
+activate CGRL
+ref over C8, CGRL : view US03 for more details
+CGRL --> C8 : _listRoomDTO
+[o<-- C8 : _listRoomDTO
+deactivate CGRL
+[o-> C8 : getDeviceList()
+C8 -> CGDL : getDeviceList()
+activate CGDL
+ref over C8, CGDL : view US06 for more details
+CGDL --> C8 : _listDeviceDTO
+deactivate CGDL
+[o<-- C8 : _listDeviceDTO
+[o-> C8 : deactivateDevice(DeviceDTO _deviceDTO)
+C8-> H : .getRoomByName(String _roomName)
+activate H
+H-> H : return _room
+H --> C8 : _room
+deactivate H
+C8-> R : _room.getDeviceByName(String _deviceName)
+activate R
+R-> R : return _device
+R --> C8 : _device
+deactivate R
+C8-> D : _device.deactivate()
+activate D
+D-> D : return true
+D --> C8 : true
+deactivate D
+[o<-- C8 : true
+
+note left #LightBlue
+Assuming success
+end note
+
+@enduml

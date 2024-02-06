@@ -1,0 +1,30 @@
+@startuml
+
+title US02: As an Administrator, I want to add a new room to the house, in order to configure it(name, house floor and dimensions).
+
+autonumber
+
+participant "_UC02:ControllerUC02" as C
+participant ":House" as H
+participant "_room:Room" as R
+participant ":Dimensions" as D
+
+[o-> C: addNewRoomToHouse(roomDTO)
+activate C
+C -> H: addRoom(String name,int floor,double width,double length,double height)
+activate H
+H --> R**: create Room(name, floor, width, length, height)
+R--> D**: create Dimensions(width,length, height)
+H->H: roomList.add(_room)
+deactivate R
+H --> C: true
+deactivate H
+[o<-- C: true
+deactivate H
+deactivate C
+
+note left #LightBlue
+Assuming success
+end note
+
+@enduml

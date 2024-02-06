@@ -1,0 +1,27 @@
+@startuml
+
+title US01: As an Administrator, I want to configure the location of the house
+
+autonumber
+
+participant ":ControllerUC01" as C1
+participant ":House" as H1
+participant "_location:Location" as L1
+participant ":GPSLocation" as G1
+
+[o-> C1: configureHouseLocation(locationDTO location)
+activate C1
+C1 -> H1: configLocation(String address,String zipCode, double latitude, double longitude)
+activate H1
+H1--> L1**: create Location(String address,String zipCode, double latitude, double longitude) _location
+L1--> G1**: create GPSLocation(double latitude, double longitude)
+H1->H1: this.location = _location
+H1--> C1: true
+deactivate H1
+[o<--C1: true
+
+note left #LightBlue
+Assuming success
+end note
+
+@enduml

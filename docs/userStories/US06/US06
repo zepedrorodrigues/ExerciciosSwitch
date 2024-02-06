@@ -1,0 +1,52 @@
+@startuml
+
+title US06: As a Room Owner [or Power User, or Administrator], I want to get a list of all devices in a room, so that I can configure them.
+
+autonumber
+
+participant ":ControllerUC06" as C6
+participant ":ControllerGetRoomList" as CGRL
+participant ":ControllerGetDeviceList" as CGDL
+participant ":MapperToDeviceDTO" as MDTD
+participant "_deviceDTOList:ListDeviceDTO" as LDDTO
+participant "_deviceDTO:DeviceDTO" as DDTO
+participant ":House" as H
+participant "_room:Room" as R
+
+[o->C6: getRoomList()
+activate C6
+C6->CGRL: getRoomList()
+activate CGRL
+ref  over C6,CGRL: (US03 diagram for details)
+CGRL-->C6: listRoomDTO
+deactivate CGRL
+[o<--C6: listRoomDTO
+[o->C6: getDeviceList(String roomName)
+C6->CGDL: getDeviceList(String roomName)
+CGDL->H: getRoomByName(String roomName)
+activate H
+H->H: return _room
+H-->CGDL: _room
+deactivate H
+CGDL->R: _room.getDeviceList()
+activate R
+R->R: return _deviceList
+R-->CGDL: _deviceList
+deactivate R
+CGDL->MDTD: getDeviceList(_deviceList)
+activate MDTD
+MDTD-->LDDTO**: create List<DeviceDTO> _deviceDTOList
+loop
+MDTD--> DDTO**: create DeviceDTO _deviceDTO
+MDTD->MDTD: _deviceDTOList.add(_deviceDTO)
+end
+MDTD-->CGDL: _deviceDTOList
+deactivate MDTD
+CGDL-->C6: _deviceDTOList
+[o<--C6: _deviceDTOList
+
+note left #LightBlue
+Assuming success
+end note
+
+@enduml

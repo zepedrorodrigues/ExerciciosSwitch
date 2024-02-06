@@ -1,0 +1,23 @@
+@startuml
+
+title US04: As an Administrator, I want to define a sensor type.
+
+autonumber
+
+participant ":ControllerUS04" as C
+participant ":House" as H
+
+[o->C: defineSensorType(String sensorType)
+Activate C
+C->H: addSensorType(sensorType)
+Activate H
+H->H: validSensorTypes.add(sensorType)
+H-->C: true
+Deactivate H
+[o<--C: true
+
+note right C #LightBlue
+Assuming success
+end note
+
+@enduml

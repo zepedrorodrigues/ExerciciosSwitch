@@ -1,15 +1,17 @@
 @startuml
 
 class House{
--Location location
--List<Room> roomList
-+ House(String address, String zipCode, double latitude, double longitude)
--boolean validLocationArguments(String address, String zipCode)
--boolean validGPSArguments(double latitude, double longitude)
-+boolean configLocation(String newAddress, String newZipCode, double newLatitude, double newLongitude)
-+void addRoom(String name, int floor, double width, double length, double height)
+-List<String> availableSensorTypes
+-House()
++House getInstance()
++boolean addRoom(String name, int floor, double width, double length, double height)
++Room getRoomByName(String name)
 +List<Room> getRoomList()
-+void addDevicetoRoom(String name, String type, List<Sensor> sens, List<Actuator> acts, String roomName)
++Location getLocation()
++boolean configLocation(String address, String zipCode, double latitude, double longitude)
++boolean isSensorTypeAvailable(String type)
++boolean addSensorType(String type)
++List<String> getAvailableSensorTypes()
 }
 
 class Location{
@@ -17,29 +19,31 @@ class Location{
 -String zipCode
 -GPSLocation gpsLocation
 +Location(String address, String zipCode, double latitude, double longitude)
++String getAddress()
++String getZipCode()
++GPSLocation getGpsLocation()
 }
 
 class GPSLocation{
 -double latitude
 -double longitude
 +GPSLocation(double latitude, double longitude)
-+getLatitude()
-+getLongitude()
-+setLocation(double latitude,double longitude)
++double getLatitude()
++double getLongitude()
 }
 
 class Room{
 -String name
 -int floor
 -Dimensions dimensions
--List<Device> deviceList
 +Room(String name, int floor, double width, double length, double height)
 +String getName()
-+String getFloor()
-+double getWidth()
-+double getLength()
-+double getHeight()
-+void addDevice(Device device)
++int getFloor()
++Dimensions getDimensions()
+-boolean addDevice(Device device)
++boolean createDevice(String name, String deviceType)
++List<Device> getDeviceList()
++Device getDeviceByName(String name)
 }
 
 class Dimensions{
@@ -55,48 +59,47 @@ class Dimensions{
 class Device{
 -String name
 -String type
--List<Sensor> sensors
--List<Actuator> actuators
-+public Device(String name, String type, List<Sensor> sens, List<Actuator> acts)
--List<Sensor> deepCopyListSensors(List<Sensor> list)
--List<Actuator> deepCopyListActuators(List<Actuator> list)
+-boolean active
++Device(String name, String type)
 +String getName()
-}
-
-class Sensor{
--String name
--SensorType type
--List<String> characteristics
-+Sensor(String name, String type)
 +String getType()
-+String getName()
++boolean addSensor(String sensorName, String typeOfSensor)
++boolean deactivate
++List<Sensor> getDeviceSensors()
 }
 
-class SensorType{
--String name
--List<SensorType> validSensorTypes
--List<String> characteristics
-+SensorType(String name, List<String> characteristics)
--List<String> deepCopy(List<String> characteristics)
-+String getName()
-+List<String> getCharacteristics()
-+isSensorTypeAvailable(String type)
+interface Sensor{
++getName()
++getType()
 }
 
 class Actuator{
 -String name
--List<String> characteristics
-+public Actuator(String name, List<String> characteristics)
--List<String> deepCopyList(List<String> list)
+-String type
++Actuator(String name, String type)
 +String getName()
-+List<String> getCharacteristics()
++String getType()
 }
 
-House "1" *-- "*" Room : has
-House "1" -- "1" Location : has
-Room "1" *-- "*" Device : has
-Room "1" -- "1" Dimensions : has
-Device "1" -- "1..*" Sensor :  contains
-Device "1" -- "*" Actuator : contains
-Sensor "*" o-- "1" SensorType : has >
+class SensorOfHumidity{
+-String name
+-String type
++SensorOfHumidity(String name)
+}
+
+class SensorOfTemperature{
+-String name
+-String type
++SensorOfTemperature(String name)
+}
+
+House "1" *--> "1" Location : has >
+Location "1" *--> "1" GPSLocation : has >
+House "1" *--> "*" Room : contains >
+Room "1" *--> "*" Device : contains >
+Room "1" *--> "1" Dimensions : has >
+Device "1" o--> "1..*" Sensor :  aggregates >
+Device "1" o--> "*" Actuator : aggregates >
+SensorOfHumidity "*" ..|> "1" Sensor : implements >
+SensorOfTemperature "*" ..|> "1" Sensor : implements >
 @enduml

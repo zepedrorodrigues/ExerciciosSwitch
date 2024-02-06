@@ -1,0 +1,33 @@
+@startuml
+title US05: As a Power User [or Administrator], I want to add a new device to a room, in order to configure it.
+
+autonumber
+
+participant ":ControllerUC05" as C5
+participant ":ControllerGetRoomList" as CGRL
+participant ":House" as H
+participant "_room:Room" as R
+participant "_device:Device" as D
+
+[o->C5: getRoomList()
+activate C5
+C5->CGRL: getRoomList()
+activate CGRL
+ref  over C5,CGRL: (US03 diagram for details)
+CGRL-->C5: listRoomDTO
+deactivate CGRL
+[o->C5: addDeviceToRoom(DeviceDTO deviceDTO)
+C5->H: getRoomByName(String roomName)
+H->H: return _room
+H-->C5: _room
+C5->R: _room.createDevice(String deviceName, String deviceType)
+R-->D**: create Device(String deviceName, String deviceType)
+R->R: deviceList.add(_device)
+R-->C5: true
+[o<--C5: true
+
+note left #LightBlue
+Assuming success
+end note
+
+@enduml

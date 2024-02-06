@@ -1,0 +1,43 @@
+@startuml
+title US03 As an Administrator, I want to have a list of existing rooms, so that I can choose one to edit it.
+
+autonumber
+
+participant ":ControllerUC03" as UC3
+participant ":ControllerGetRoomList" as CGRL
+participant ":MapperToRoomDTO" as M
+participant "roomDTO:RoomDTO" as RD
+participant "listDTO:List<RoomDTO>" as LRD
+participant ":House" as H
+
+[o-> UC3 : getRoomList()
+activate UC3
+UC3 -> CGRL : getRoomList()
+activate CGRL
+CGRL-> H : getRoomList()
+activate H
+H -> H : return List<Room> roomList
+H --> CGRL : roomList
+deactivate H
+CGRL -> M : toRoomDTO(roomList)
+activate M
+M--> LRD** : create List<RoomDTO> listRoomDTO
+loop
+M-->RD** : create RoomDTO roomDTO
+M-> M: listRoomDTO.add(roomDTO)
+end
+M-->CGRL: listRoomDTO
+CGRL-->UC3: listRoomDTO
+[o<--UC3: listRoomDTO
+
+note left #LightBlue
+Assuming success
+end note
+
+
+
+
+
+
+
+@enduml
